@@ -3,7 +3,7 @@
 # Load libraries
 library(Seurat)
 library(data.table)
-library(dpylr)
+library(dplyr)
 
 # Input files
 mat_file <- "GSE202601/GSE202601_human_ovary_snRNA-seq_count.rds"
