@@ -1,5 +1,6 @@
 # This code is for preparing the snRNA-seq dataset GSE202601
 # We need to filter out all of the older donors
+# Use conda env 'seurat2h5'
 ##############################################
 
 # Seurat command list:
