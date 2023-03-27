@@ -7,20 +7,20 @@ dirIn = 'counts/GSE202601/'
 dirOut='esmu'
 
 # Input files
-matrix_file = 'GSE202601.h5ad'
+matrix_file = 'counts_GSE202601.h5ad'
 metadata_file = 'metadata_GSE202601.csv'
 
 # Output files
-prefixData_sym='GSE202601_sym.esmu'
-prefixData_ens='GSE202601_ens.esmu'
+prefixData_sym='GSE202601_sym'
+prefixData_ens='GSE202601_ens'
 
 # Read in data
-adata = sc.read_h5ad(data_path + matrix_file)
+adata = sc.read_h5ad(dirIn + matrix_file)
 adata = adata.transpose()
 mat = adata.to_df()
 mat
 
-metadata = pd.read_csv(data_path + metadata_file, index_col=0)
+metadata = pd.read_csv(dirIn + metadata_file, index_col=0)
 metadata
 
 # Check how many cells there are of each cell type
