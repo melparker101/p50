@@ -1,3 +1,6 @@
+# This script reads in a count matrix and metadata, runs cellex, and outputs esmu and essd
+# Use the cellex conda env
+
 import scanpy as sc
 import pandas as pd
 import cellex
