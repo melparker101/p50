@@ -1,29 +1,53 @@
-import loompy # needed for importing data for this tutorial
-import numpy as np # needed for formatting data for this tutorial
-import pandas as pd # needed for formatting data for this tutorial
+import scanpy as sc
+import pandas as pd
 import cellex
 
-dirOut = "cellex_demo_out" # output directory for results and plots
-prefixData = "mousebrain_vascular_cells" # prefix to prepend to files
+# Define data paths
+dirIn = 'counts/GSE202601/'
+dirOut='esmu'
 
-pathData = "GSE202601.loom"
-nameAnno = "ClusterName" # metadata annotation column attribute name
-nameId = "CellID" # metadata cell id column attribute name
-nameClass = "Class"
+# Input files
+matrix_file = 'GSE202601.h5ad'
+metadata_file = 'metadata_GSE202601.csv'
 
-with loompy.connect(pathData) as ds:
-    rows = (ds.row_attrs["Accession"])
-    cols = (ds.col_attrs[nameId])
-    data = pd.DataFrame(ds[:, :], index=rows, columns=cols)
-    n_cells_total = data.shape[1]
-    
-    
-pathData = "GSE202601.loom"
+# Output files
+prefixData_sym='GSE202601_sym.esmu'
+prefixData_ens='GSE202601_ens.esmu'
 
-ds = loompy.connect("GSE202601.loom")
-# do something with the connection object ds
-ds.close()
-    
-  # not working... we could read in with scanpy then extract count matrix?
-    
- or just read in as a normal h5 file using h5py
+# Read in data
+adata = sc.read_h5ad(data_path + matrix_file)
+adata = adata.transpose()
+mat = adata.to_df()
+mat
+
+metadata = pd.read_csv(data_path + metadata_file, index_col=0)
+metadata
+
+# Check how many cells there are of each cell type
+print(metadata.groupby('cell_type').cell_type.count())
+
+# Run CELLEX
+# Compute ESO object
+eso = cellex.ESObject(data=mat, annotation=metadata, verbose=True)
+
+# Compute ESw, ESw* and ESmu
+eso.compute(verbose=True)
+
+# Save and inspect results
+# Save expression specificity mu and sd matrix for gene symbols
+eso.save_as_csv(file_prefix=prefixData_sym, path=dirOut, verbose=True)
+eso.results["esmu"].head()
+
+# Map symbols to ensembl ids
+cellex.utils.mapping.human_symbol_to_human_ens(eso.results["esmu"], drop_unmapped=True, verbose=True)
+eso.results["esmu"].head()
+
+# Save expression specificity matrix for gene ensembl ids
+eso.save_as_csv(file_prefix=prefixData_ens, path=dirOut, verbose=True)
+
+# Other save options
+# eso.save_as_csv(keys=["all"], verbose=True)  # Save all results
+# eso.results["esmu"].to_csv("esmu/" + "GSE202601.esmu.csv.gz")
+
+# Delete object to release memory
+del eso
