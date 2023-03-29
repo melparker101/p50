@@ -1,15 +1,10 @@
 # Using CELLEX and CELLECT on single cell RNA-seq ovary datasets with infertility GWAS summary statistics
 ### 1. Download datasets
+We need scRNA-seq count data and the corresponding cell type annotations metadata.
 ### 2. Run CELLEX
+Using the counts and metadata as input, we use CELLEX to produce expression specificity files (ESMU).
 ### 3. Run CELLECT
-Munge sumstats
-4. Clone the CELLECT git
-``` bash
-git clone --recurse-submodules https://github.com/perslab/CELLECT.git
-```
-
-### Datasets:
-Sumstats: 
-build 37/hg19
-UKBB_Finngen_EstBB_GandH
+Using munged summary stats and ESMU files as input, we use CELLECT to prioritise etilogical cell types.
+### 4. Visualisation
+Use R to visualise the results.
 
