@@ -24,7 +24,7 @@ conda deactivate
 conda env create --name cellex --file=cellex.yml
 conda activate cellex
 ```
-Use **python_files/GSE123456.py** to load in the count and metadata into python then run CELLEX.
+Use **python_files/GSE123456.py** to load in the count and metadata into python then run CELLEX on it.
 ``` bash
 # Deactivate conda environment when done
 conda deactivate
