@@ -13,6 +13,10 @@ module load R-bundle-Bioconductor/3.14-foss-2021b-R-4.1.2
 ```
 Then use the corresponding R file **R_files/GSE123456.R** to prepare the count and metadata required as input for CELLEX. 
 This must be done manually because the datasets are all in different formats and also need dataset-specific filtering.
+``` bash
+# Deactivate conda environment when done
+conda deactivate
+```
 
 2. Create the cellex conda environment using the **cellex.yml** yaml file:
 ``` bash
@@ -21,3 +25,7 @@ conda env create --name cellex --file=cellex.yml
 conda activate cellex
 ```
 Use **python_files/GSE123456.py** to load in the count and metadata into python then run CELLEX.
+``` bash
+# Deactivate conda environment when done
+conda deactivate
+```
