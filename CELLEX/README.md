@@ -4,6 +4,6 @@ The CELLEX conda environment is recommended for this step. Make sure conda is in
 conda env create --name cellex --file=cellex.yml
 conda activate cellex
 ```
-1. Use the corresponding R file R_files/accession.R to prepare the count and metadata required as input for CELLEX. 
+1. Use the corresponding R file **R_files/GSE123456.R** to prepare the count and metadata required as input for CELLEX. 
 This must be done manually because the datasets are all in different formats and also need dataset-specific filtering.
-2. Use python_files/accession.py to load in the count and metadata into python then run CELLEX.
+2. Use **python_files/GSE123456.py** to load in the count and metadata into python then run CELLEX.
