@@ -1,5 +1,5 @@
 # Create map file for GRCh37
-First, download the required VCF file from website.
+These instructions are for creating a SNP map file for GRCh37, but the same process could be followed to create a map for GRCh38. First, download the required VCF file from website.
 
 ``` text
 /VCF               RefSNP VCF files for GRC (Genome Reference Consortium) human assembly
