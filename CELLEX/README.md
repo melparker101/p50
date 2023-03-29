@@ -1,4 +1,4 @@
-# Using CELLEX on ovary datasets
+# Running CELLEX on ovary datasets
 Using conda environments is recommended for the following steps; make sure conda is already installed.
 (For more details about the CELLEX tool, see their [github](https://github.com/perslab/CELLEX).)
 
