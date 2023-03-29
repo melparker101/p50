@@ -1,5 +1,5 @@
 # Using CELLEX on ovary datasets
-The CELLEX conda environment is recommended for this step. Make sure conda is installed, then create this using the yaml file provided using this command:
+The CELLEX conda environment is recommended for this step. Make sure conda is installed, then create this using the **cellex.yml** yaml file provided using this command:
 ``` bash
 conda env create --name cellex --file=cellex.yml
 conda activate cellex
