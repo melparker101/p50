@@ -1,5 +1,5 @@
 # Using CELLEX on ovary datasets
-Make sure conda is installed. Using conda environments is recommended for the following steps. 
+Using conda environments is recommended for the following steps; make sure conda is already installed.
 
 1. Create this using the **seurat2h5.yml** yaml file provided using this command:
 ``` bash
