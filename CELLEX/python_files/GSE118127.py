@@ -8,8 +8,19 @@ import scanpy as sc
 import pandas as pd
 import cellex
 
-# Read in data
-adata = sc.read_h5ad('local.h5ad')
+# Define data paths
+dirIn = 'counts/GSE118127/'
+dirOut = 'esmu'
+
+# Input files
+input_file = 'local.h5ad'
+
+# Output files
+prefixData_sym = 'GSE118127_sym'
+prefixData_ens = 'GSE118127_ens'
+
+# Read in h5ad file to an annData object
+adata = sc.read_h5ad(dirIn + input_file)
 
 # Extract metadata
 metadata = adata.obs["cell_type"]
@@ -21,9 +32,10 @@ raw = raw.transpose()
 mat = raw.to_df()
 mat
 
+# Check how many cells there are of each cell type
 print(metadata.groupby('cell_type').cell_type.count())
 
-# Run CELLEX
+### Run CELLEX ###
 # Compute ESO object
 eso = cellex.ESObject(data=mat, annotation=metadata, verbose=True)
 
@@ -41,10 +53,6 @@ eso.results["esmu"].head()
 
 # Save expression specificity matrix for gene ensembl ids
 eso.save_as_csv(file_prefix=prefixData_ens, path=dirOut, verbose=True)
-
-# Other save options
-# eso.save_as_csv(keys=["all"], verbose=True)  # Save all results
-# eso.results["esmu"].to_csv("esmu/" + "GSE202601.esmu.csv.gz")
 
 # Delete object to release memory
 del eso
