@@ -66,7 +66,7 @@ bcftools query -f '%CHROM %POS %ID %REF %ALT\n' corrected_GCF_000001405.25.gz | 
 bcftools query -f '%CHROM %POS %ID %REF %ALT\n' corrected_GCF_000001405.25.gz > GRCh37_GCF_000001405.25_map.txt
 ```
 
-The map file should look like this:
+The map file should look like this (chr, pos, rsid, allele1, allele2):
 ``` text
 1 10001 rs1570391677 T A,C
 1 10002 rs1570391692 A C
