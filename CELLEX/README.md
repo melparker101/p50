@@ -2,7 +2,7 @@
 Using conda environments is recommended for the following steps; make sure conda is already installed.
 (For more details about the CELLEX tool, see their [github](https://github.com/perslab/CELLEX).)
 
-# 1. Create the seurat2h5 conda environment by using the **seurat2h5.yml** yaml file provided, then load R:
+## 1. Create the seurat2h5 conda environment by using the **seurat2h5.yml** yaml file provided, then load R:
 ``` bash
 # Create and activate conda env
 conda env create --name seurat2h5 --file=seurat2h5.yml
@@ -19,7 +19,7 @@ This must be done manually because the datasets are all in different formats and
 conda deactivate
 ```
 
-# 2. Create the cellex conda environment using the **cellex.yml** yaml file:
+## 2. Create the cellex conda environment using the **cellex.yml** yaml file:
 ``` bash
 # Create and activate conda env
 conda env create --name cellex --file=cellex.yml
