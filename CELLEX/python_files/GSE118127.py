@@ -1,6 +1,6 @@
 ############################################################
 # This script is for running CELLEX on dataset GSE118127.
-# melodyjparker14@gmail.com
+# melodyjparker14@gmail.com - Mar 2023
 # Use the cellex conda environment.
 ############################################################
 
