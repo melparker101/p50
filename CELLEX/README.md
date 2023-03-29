@@ -1,6 +1,6 @@
 # Using CELLEX on ovary datasets
-For more details about the CELLEX tool, see their [github](https://github.com/perslab/CELLEX).
 Using conda environments is recommended for the following steps; make sure conda is already installed.
+(For more details about the CELLEX tool, see their [github](https://github.com/perslab/CELLEX).)
 
 1. Create the seurat2h5 conda environment by using the **seurat2h5.yml** yaml file provided, then load R:
 ``` bash
