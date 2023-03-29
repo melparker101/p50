@@ -8,5 +8,6 @@ Using munged summary stats and ESMU files as input, we use CELLECT to prioritise
 ### 4. Visualisation
 Use R to visualise the results.
 
+---
 
 For more information on each of the steps, see the README.md files of each sub-directory.
