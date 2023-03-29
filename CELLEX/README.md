@@ -5,7 +5,7 @@ Using conda environments is recommended for the following steps; make sure conda
 ``` bash
 # Create and activate conda env
 conda env create --name seurat2h5 --file=seurat2h5.yml
-conda activate cellex
+conda activate seurat2h5
 
 # Load R
 module load R/4.1.2-foss-2021b
