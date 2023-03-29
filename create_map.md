@@ -31,9 +31,9 @@ bcftools query -f '%CHROM %POS %ID %REF %ALT\n' GCF_000001405.25.gz | head -3
 
 The chromosomes are in the wrong format.
 ``` text
-NC_000001.10 10001
-NC_000001.10 10002
-NC_000001.10 10003
+NC_000001.10 10001 rs1570391677 T A,C
+NC_000001.10 10002 rs1570391692 A C
+NC_000001.10 10003 rs1570391694 A C
 ```
 We need to convert these... Next, download the [GRCh37 assembly report](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.25_GRCh37.p13/GCF_000001405.25_GRCh37.p13_assembly_report.txt) 
 to manipulate and use as a reference (See [biostars](https://www.biostars.org/p/410789/) for code).
