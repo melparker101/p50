@@ -10,4 +10,4 @@ Use R to visualise the results.
 
 ---
 
-For more information on each of the steps, see the README.md files of each sub-directory.
+For more information on each of these steps, see the README.md files of each sub-directory.
