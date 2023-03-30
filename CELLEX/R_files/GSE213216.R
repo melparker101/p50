@@ -12,6 +12,7 @@
 # Load libraries
 library(Seurat)
 library(SeuratDisk)
+library(SeuratData)
 
 # Dataset accession
 dataset_acc <- "GSE213216"
@@ -72,3 +73,7 @@ normal_ovary@meta.data[i] <- lapply(normal_ovary@meta.data[i], as.character)
 seurat_obj <- normal_ovary
 SaveH5Seurat(seurat_obj, filename = seurat_out)
 Convert(seurat_out, dest = "h5ad")
+
+# THIS IS NOT SAVING RAW COUNTS PROPERLY
+# TRY TRANSPSING?
+# OTHERWISE SAVE COUNTS SEPARATELY AS H5 FILE AND META AS A DF
