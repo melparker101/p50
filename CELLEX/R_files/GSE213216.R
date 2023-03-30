@@ -1,6 +1,8 @@
 ##############################################################
 # Preprocessing GSE213216 scRNA-seq dataset
 # melodyjparker14@gmail.com - March 2023
+# Use a decent amount of cores
+# $PWD = p50
 # This code:
 # - Reads in the GSE213216 dataset as a Seurat object 
 # - Filters to only include cells from unaffected ovaries
@@ -9,6 +11,7 @@
 
 # Load libraries
 library(Seurat)
+library(SeuratDisk)
 
 # Dataset accession
 dataset_acc <- "GSE213216"
@@ -23,7 +26,7 @@ seurat_in <- paste0(data_path,"_aux.seurat.shared.rds")
 seurat_out <- paste0(data_path,"counts_","GSE213216",".h5Seurat")
 
 # Load in Seurat object
-aux <- readRDS(file = "_aux.seurat.shared.rds")
+aux <- readRDS(file = seurat_in)
 
 # Extract metadata
 metadata <- aux[[]]
