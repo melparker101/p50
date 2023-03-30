@@ -64,6 +64,10 @@ dim(ovary_raw)
 # 30354 51927. 51,927 cells
 # ~50,000 cells is what we were expecting from reading the literature
 
+# Change metadata to characters so that it doesn't convert to h5ad as integers
+i <- sapply(normal_ovary@meta.data, is.factor)
+normal_ovary@meta.data[i] <- lapply(normal_ovary@meta.data[i], as.character)
+
 # Save as a h5ad
 seurat_obj <- normal_ovary
 SaveH5Seurat(seurat_obj, filename = seurat_out)
