@@ -14,7 +14,7 @@ library(data.table)
 library(dplyr)
 
 # Data path
-data_path= "counts/GSE202601/"
+data_path <- "counts/GSE202601/"
 
 # Input files
 mat_file <- paste0(data_path,"GSE202601_human_ovary_snRNA-seq_count.rds")
