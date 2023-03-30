@@ -72,4 +72,8 @@ The map file should look like this (chr, pos, rsid, allele1, allele2):
 1 10002 rs1570391692 A C
 1 10003 rs1570391694 A C
 ```
-The file has 1,118,410,664 lines!
+The file has 1,118,410,664 lines! Filter the allele columns to only keep lines where they both contain one character only.
+
+``` bash
+awk 'length($4)==1 && length($5)==1' GRCh37_GCF_000001405.25_map.txt > map.txt
+```
