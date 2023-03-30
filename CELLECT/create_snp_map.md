@@ -72,3 +72,4 @@ The map file should look like this (chr, pos, rsid, allele1, allele2):
 1 10002 rs1570391692 A C
 1 10003 rs1570391694 A C
 ```
+The file has 1,118,410,664 lines!
