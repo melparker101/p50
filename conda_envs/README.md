@@ -28,7 +28,7 @@ conda env create -f ldsc/environment_munge_ldsc.yml # creates 'munge_ldsc' envir
 ```
 
 ### - CELLECT
-A snakemake environment is required to run CELLECT. See [CELLECT](https://github.com/perslab/CELLECT) for more information.
+A snakemake environment is required to run [CELLECT](https://github.com/perslab/CELLECT).
 ``` bash
 conda install -c bioconda -c conda-forge snakemake">=5.27.4"
 ```
