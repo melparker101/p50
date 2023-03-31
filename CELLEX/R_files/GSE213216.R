@@ -1,7 +1,7 @@
 ##############################################################
 # Preprocessing GSE213216 scRNA-seq dataset
 # melodyjparker14@gmail.com - March 2023
-# Use a decent amount of cores
+# Use at least three cores, preferably more
 # $PWD = p50
 # This code:
 # - Reads in the GSE213216 dataset as a Seurat object 
@@ -24,53 +24,72 @@ data_path <- paste0("counts/",dataset_acc,"/")
 seurat_in <- paste0(data_path,"_aux.seurat.shared.rds")
 
 # Output files
-seurat_out <- paste0(data_path,"counts_","GSE213216",".h5Seurat")
+seurat_out <- paste0(data_path,"counts_",dataset_acc,"_2.h5Seurat")
 
 # Load in Seurat object
 aux <- readRDS(file = seurat_in)
 
-# Extract metadata
-metadata <- aux[[]]
+# Have a look at the colnames of the metadata
+colnames(aux[[]])
 
-# View colnames of metadata
-colnames(metadata)
-# metadata[1:3,]
+# Create a new metadata column and delete the old column to replace . with _ for our columns of interest
+aux$major_class <- aux$Major.Class
+aux$Major.Class <- NULL
 
-# View cell types
-table(metadata$active.cluster)
+aux$active_cluster <- aux$active.cluster
+aux$active.cluster <- NULL
 
-# View Major class categories
-table(metadata$Major.Class)
+colnames(aux[[]])
 
-# Extract raw count data
-raw <- GetAssayData(object = aux, slot = "counts")
-raw[1:10,1:20]
-dim(raw)
-# 373,851 cells total, 30354 genes
+# View how many cells we have of each cell type
+table(aux$active_cluster)
 
-# Filter for normal ovary
-normal_ovary <- subset(aux, subset=Major.Class %in% "Unaffected ovary")
+# View how many cells we have from each sample type category
+table(aux$major_class)
 
-# Extract metadata from filtered the data
-ovary_meta <- normal_ovary[[]]
+# Filter for normal ovary samples
+ovary <- subset(aux, subset=major_class %in% "Unaffected ovary")
+
+dim(ovary)
+# 30354 51927
+# 51,927 cells is what we were expecting for unaffected ovary from the literature (Fig. 2)
 
 # Check that the metadata only contains data from unaffected ovary
-table(ovary_meta$Major.Class)
+unique(ovary$major_class)
 
-# Extract raw counts from filtered data
-ovary_raw <- GetAssayData(object = normal_ovary, slot = "counts")
+# Now filter for pre-menopausal patients
+# Take a look at the patients
+table(ovary$Patient.No.)
+# Patient IDs are 6, 14, 15, 18
 
-# Check the dimension
-dim(ovary_raw)
-# 30354 51927. 51,927 cells
-# ~50,000 cells is what we were expecting from reading the literature
+# From Supplementary Table two we can see that patients 14 and 15 are pre-menopausal
+# https://static-content.springer.com/esm/art%3A10.1038%2Fs41588-022-01254-1/MediaObjects/41588_2022_1254_MOESM4_ESM.xlsx
+ovary <- subset(ovary, subset=Patient.No. %in% c(14,15))
+
+# Check that it has filtered properly
+ovary <- unique(ovary$Patient.No.)
+# 14 15
+
+dim(ovary)
+# 30354 22219
+# We now have 22,219 cells
 
 # Change metadata to characters so that it doesn't convert to h5ad as integers
-i <- sapply(normal_ovary@meta.data, is.factor)
-normal_ovary@meta.data[i] <- lapply(normal_ovary@meta.data[i], as.character)
+i <- sapply(ovary@meta.data, is.factor)
+ovary@meta.data[i] <- lapply(ovary@meta.data[i], as.character)
+
+##########################################################
+
+# Extract raw counts from filtered data
+raw <- GetAssayData(object = ovary, slot = "counts")
+
+# Extract metadata from filtered the data
+metadata <- ovary[[]]
+
+# Create a new Seurat object using only the raw data - otherwise raw count data won't convert to anndata properly
+seurat_obj <- CreateSeuratObject(counts=raw, metadata=metadata)
 
 # Save as a h5ad
-seurat_obj <- normal_ovary
 SaveH5Seurat(seurat_obj, filename = seurat_out)
 Convert(seurat_out, dest = "h5ad")
 
