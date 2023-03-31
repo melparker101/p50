@@ -8,7 +8,7 @@ Using the counts and metadata as input, we use [CELLEX](https://github.com/persl
 ### 4. Run CELLECT
 Using munged summary stats and ESMU files as input, we use [CELLECT](https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial) to prioritise etilogical cell types. See [CELLECT](https://github.com/melparker101/p50/tree/main/CELLECT).
 ### 5. Visualisation
-Use R to visualise the results. See [p50/visualisation](https://github.com/melparker101/p50/tree/main/visualisation).
+Use R to visualise the results. See [visualisation](https://github.com/melparker101/p50/tree/main/visualisation).
 
 ---
 
