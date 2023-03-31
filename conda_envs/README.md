@@ -1,5 +1,4 @@
 # Creating Conda Environments
-After creating the conda environments, check that all of the important packages have properly installed. 
 
 ## 1. Download Anaconda or Miniconda
 - For the BMRC cluster, see the [staff resources](https://www.medsci.ox.ac.uk/for-staff/resources/bmrc/python-on-the-bmrc-cluster).
@@ -14,7 +13,10 @@ This environment includes packages required for running CELLEX and also includes
 conda env create --name cellex --file=cellex.yml
 conda activate cellex
 ```
-
+Check that cellex has installed. If not, install manually (See [CELLEX](https://github.com/perslab/CELLEX))
+```
+pip install cellex
+```
 ### - Sumstats Munging
 Create a munge_ldsc environment which uses python2 using [environment.yml](https://github.com/pascaltimshel/ldsc/blob/d869cfd1e9fe1abc03b65c00b8a672bd530d0617/environment.yml)
 ``` bash
