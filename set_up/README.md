@@ -5,7 +5,7 @@ Download the required packages and create the recommended conda environments.
 - For the BMRC cluster, see the [staff resources](https://www.medsci.ox.ac.uk/for-staff/resources/bmrc/python-on-the-bmrc-cluster).
 - See the [conda user guide](https://conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
-## 2. Create the conda environments
+## 2. Create conda environments
 ### - CELLEX
 
 Install [CELLEX](https://github.com/perslab/CELLEX) and [scanpy](https://scanpy.readthedocs.io/en/stable/installation.html).
