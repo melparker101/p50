@@ -7,7 +7,7 @@
 # - Reads in the GSE213216 dataset as a Seurat object 
 # - Filters to only include cells from unaffected ovaries
 # - Converts/saves the filtered Seurat object to a h5ad file
-###############################################################
+##############################################################
 
 # Load libraries
 library(Seurat)
@@ -78,7 +78,7 @@ dim(ovary)
 i <- sapply(ovary@meta.data, is.factor)
 ovary@meta.data[i] <- lapply(ovary@meta.data[i], as.character)
 
-##########################################################
+##############################################################
 
 # Extract raw counts from filtered data
 raw <- GetAssayData(object = ovary, slot = "counts")
