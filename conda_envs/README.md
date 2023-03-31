@@ -21,7 +21,7 @@ conda env create --name cellex --file=cellex.yml
 conda activate cellex
 ```
 
-### - Sumstats Munging
+### - Sumstats munging
 Create a munge_ldsc environment which uses python2 using [environment.yml](https://github.com/pascaltimshel/ldsc/blob/d869cfd1e9fe1abc03b65c00b8a672bd530d0617/environment.yml)
 ``` bash
 conda env create -f ldsc/environment_munge_ldsc.yml # creates 'munge_ldsc' environment 
