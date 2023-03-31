@@ -1,5 +1,5 @@
 # Set Up
-Download the required packages and/or create the recommended conda environments.
+Download the required packages and create the recommended conda environments.
 
 ## 1. Download Anaconda or Miniconda
 - For the BMRC cluster, see the [staff resources](https://www.medsci.ox.ac.uk/for-staff/resources/bmrc/python-on-the-bmrc-cluster).
