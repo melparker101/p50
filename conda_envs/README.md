@@ -1,11 +1,11 @@
 # Creating Conda Environments
 After creating the conda environments, check that all of the important packages have properly installed. 
 
-### 1. Download Anaconda or Miniconda
+## 1. Download Anaconda or Miniconda
 - For the BMRC cluster, see the [staff resources](https://www.medsci.ox.ac.uk/for-staff/resources/bmrc/python-on-the-bmrc-cluster).
 - Otherwise, see the [conda user guide](https://conda.io/projects/conda/en/latest/user-guide/install/index.html)
 
-### 2. Create the conda environments
+## 2. Create the conda environments
 - CELLEX
 Use the **cellex.yml** yaml file provided here to create the cellex conda environment. 
 This environment includes packages required for running CELLEX and also includes scanpy which is used for data formatting in python.
