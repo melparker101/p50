@@ -24,7 +24,7 @@ data_path <- paste0("counts/",dataset_acc,"/")
 seurat_in <- paste0(data_path,"_aux.seurat.shared.rds")
 
 # Output files
-seurat_out <- paste0(data_path,"counts_",dataset_acc,"_2.h5Seurat")
+seurat_out <- paste0(data_path,"counts_",dataset_acc,".h5Seurat")
 
 # Load in Seurat object
 aux <- readRDS(file = seurat_in)
@@ -87,12 +87,10 @@ raw <- GetAssayData(object = ovary, slot = "counts")
 metadata <- ovary[[]]
 
 # Create a new Seurat object using only the raw data - otherwise raw count data won't convert to anndata properly
-seurat_obj <- CreateSeuratObject(counts=raw, metadata=metadata)
+seurat_obj <- CreateSeuratObject(counts=raw, metadata=meta.data)
 
 # Save as a h5ad
 SaveH5Seurat(seurat_obj, filename = seurat_out)
 Convert(seurat_out, dest = "h5ad")
 
-# THIS IS NOT SAVING RAW COUNTS PROPERLY
-# TRY TRANSPSING?
-# OTHERWISE SAVE COUNTS SEPARATELY AS H5 FILE AND META AS A DF
+# Done
