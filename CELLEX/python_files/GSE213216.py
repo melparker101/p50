@@ -28,19 +28,25 @@ prefixData_ens = dataset_acc + '_ens'
 adata = sc.read_h5ad(dirIn + input_file)
 
 # Extract metadata
-metadata = adata.obs["active.cluster"]
+metadata = adata.obs["active_cluster"]
 metadata = pd.DataFrame(metadata)
 
-# Extract raw count data
-raw = adata.raw.to_adata()
-# raw = raw.transpose()
-mat = raw.to_df()
-mat
+# Change . to _ in colnames
+# metadata.columns = metadata.columns.str.replace("[.]", "_")
 
-# NOT NORMALIESD
+# Have a look at how many cells we have of each cell type
+metadata.active_cluster.value_counts()
 
-# Check how many cells there are of each cell type
-print(metadata.groupby('active.cluster').active.cluster.count())
+# Have a look at how many cells we have from each patient
+patient_no = adata.obs['Patient.No.']
+patient_no.value_counts()
+
+# The adata object only contains raw counts (not normalised), so we can directly extract
+adata = adata.transpose()
+mat = adata.to_df()
+
+# Check if the raw counts have been converted and extracted correctly - they need to be whole numbers
+mat.iloc[30:50,15:20]
 
 ### Run CELLEX ###
 # Compute ESO object
