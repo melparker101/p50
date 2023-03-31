@@ -9,7 +9,7 @@ module load R-bundle-Bioconductor/3.14-foss-2021b-R-4.1.2
 ```
 
 2. Use python to run CELLEX
-Make sure the correct packages are installed or use the conda environment (see [set_up]https://github.com/melparker101/p50/blob/main/set_up).
+Make sure the correct packages are installed or use the conda environment (see [set_up](https://github.com/melparker101/p50/blob/main/set_up).
 
 Then use the corresponding R file to prepare the count and metadata required as input for CELLEX. 
 This must be done manually because the datasets are all in different formats and also need dataset-specific filtering. One of the datasets did not need this step.
