@@ -1,6 +1,6 @@
 # Running CELLEX on ovary datasets
 
-### 1. Use the R scripts to format and filter the data, if necessary
+### 1. Use the R code to format and filter the data, if necessary
 The following versions of R and Bioconductor were used:
 ``` bash
 # Load R
@@ -19,7 +19,7 @@ Use the corresponding python scripts to load in the h5ad files, extract the coun
 ``` bash
 conda activate cellex
 
-# Run code from appropriate python file
+sh <file_name.py>
 
 conda deactivate
 ```
