@@ -9,7 +9,7 @@ Download the required packages and create the recommended conda environments.
 ### - CELLEX
 
 Install [CELLEX](https://github.com/perslab/CELLEX) and [scanpy](https://scanpy.readthedocs.io/en/stable/installation.html).
-```
+```bash
 pip install cellex
 pip install scanpy
 ```
