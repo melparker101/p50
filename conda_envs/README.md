@@ -1,4 +1,5 @@
-# Creating Conda Environments
+# Set Up
+Download the required packages and/or create the recommended conda environments.
 
 ## 1. Download Anaconda or Miniconda
 - For the BMRC cluster, see the [staff resources](https://www.medsci.ox.ac.uk/for-staff/resources/bmrc/python-on-the-bmrc-cluster).
@@ -6,18 +7,20 @@
 
 ## 2. Create the conda environments
 ### - CELLEX
-Use the **cellex.yml** yaml file provided here to create the cellex conda environment. 
-This environment includes packages required for running CELLEX and also includes scanpy which is used for data formatting in python.
+
+Install [CELLEX](https://github.com/perslab/CELLEX) and [scanpy](https://scanpy.readthedocs.io/en/stable/installation.html).
+```
+pip install cellex
+pip install scanpy
+```
+If this doesn't work, create the following cellex environment using [cellex.yml](https://github.com/melparker101/p50/blob/main/conda_envs/cellex.yml).
+CELLEX ran successfully using in this environment with the python scripts in this repository.
 ``` bash
 # Create and activate conda env
 conda env create --name cellex --file=cellex.yml
 conda activate cellex
 ```
-Check that cellex and scanpy have installed. If not, install manually (See [CELLEX](https://github.com/perslab/CELLEX))
-```
-pip install cellex
-pip install scanpy
-```
+
 ### - Sumstats Munging
 Create a munge_ldsc environment which uses python2 using [environment.yml](https://github.com/pascaltimshel/ldsc/blob/d869cfd1e9fe1abc03b65c00b8a672bd530d0617/environment.yml)
 ``` bash
