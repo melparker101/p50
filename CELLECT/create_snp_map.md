@@ -78,6 +78,7 @@ The file has 1,118,410,664 lines! Filter the allele columns to only keep lines w
 awk 'length($4)==1 && length($5)==1' GRCh37_GCF_000001405.25_map.txt > map_filtered.txt
 ```
 
+```bash
 # awk version of table() from R
 awk -F" " '{arr[$4]++}END{for (a in arr) print a, arr[a]}' test2.txt
 
@@ -95,16 +96,18 @@ we are now left with chromosomes 1-22, X, Y and MT
 # Do the same for LAuras sumstats
 awk -F: '{arr[$1]++}END{for (a in arr) print a, arr[a]}' female_infertility_analysis1_UKBB_Finngen_EstBB_GandH_noMACfilter_March20231.out > table_laura.txt
 
-Remove patches (any chrom starting with H), mitochondrial and the Y chomosome.
+# Remove patches (any chrom starting with H), mitochondrial and the Y chomosome.
 sed -e '/H/d' -e '/MT/d' -e '/Y/d' map_sv_filtered.txt > map_filtered2.txt
 
-check this
+# check this
 awk -F" " '{arr[$1]++}END{for (a in arr) print a, arr[a]}' map_filtered2.txt > table_f2.txt
 wc -l map_filtered2.txt
 
 # Do the same for samvidas
 awk -F: '{arr[$1]++}END{for (a in arr) print a, arr[a]}' FSH_F_EUR_filtered.txt > table_samvida.txt
 cat table_samvida.txt
-we have chr1-23
+# we have chr1-23
 
-remove doubles and M and Y
+# remove doubles and M and Y
+
+```
