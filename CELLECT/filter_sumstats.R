@@ -80,6 +80,12 @@ test <- as.data.frame(test %>%
 test %>% 
   mutate(MarkerName = paste(CHROM, GENPOS, purrr::pmap_dbl(list(Allele1, Allele2), sort_alleles) , sep = ":"), .before = ID)
 
+test %>% 
+  mutate(MarkerName = paste(CHROM, GENPOS, map2_chr(Allele1, Allele2, sort_alleles), sort_alleles), sep = ":"), .before = ID)
+
+test %>% 
+  mutate(MarkerName = map2_chr(Allele1, Allele2, sort_alleles), sep = ":"), .before = ID)
+
 test <- head(FSH_F_EUR)
 
 FSH_F_EUR %>% mutate(MarkerName=paste(CHROM,GENPOS,sep=":",sort_alleles(Allele1,Allele2)), .before = ID)
