@@ -70,6 +70,16 @@ sort_alleles <- function(a1, a2) {
 
 test %>% mutate(MarkerName=paste(CHROM,GENPOS,sort_alleles(Allele1,Allele2), sep=":"), .before = ID)
 
+# it will also have the side effect of grouping and outputting a tibble, instead of a data.frame
+# https://stackoverflow.com/questions/21818181/applying-a-function-to-every-row-of-a-table-using-dplyr
+test <- as.data.frame(test %>%
+  rowwise() %>%
+  mutate(MarkerName = paste(CHROM, GENPOS, sort_alleles(Allele1, Allele2), sep = ":"), .before = ID))
+
+#########################
+test %>% 
+  mutate(MarkerName = paste(CHROM, GENPOS, purrr::pmap_dbl(list(Allele1, Allele2), sort_alleles) , sep = ":"), .before = ID)
+
 test <- head(FSH_F_EUR)
 
 FSH_F_EUR %>% mutate(MarkerName=paste(CHROM,GENPOS,sep=":",sort_alleles(Allele1,Allele2)), .before = ID)
