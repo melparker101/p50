@@ -2,7 +2,7 @@
 
 # ----------------------------------------------------------
 # Add rsid to summary stats using an SNP map file, joining on the first column in each file: MarkerName
-# melodyjparker14@gmail.com - Mar 23
+# melodyjparker14@gmail.com - Apr 23
 # ----------------------------------------------------------
 
 #SBATCH -A lindgren.prj
@@ -29,6 +29,7 @@ echo "##########################################################"
 
 
 awk 'NR==1 {print "rsid",$0; next} NR==FNR {a[$1]=$0; next} $1 in a {print $2,a[$1]}' test_ss.txt ../dbSNP/MarkerName_map_GRCh37.txt > female_infertility_UKBB.txt
+# Use GRCh37_GCF_000001405.25_map.txt to get more rsids
 
 
 echo "###########################################################"
