@@ -2,6 +2,7 @@
 
 # ----------------------------------------------------------
 # Manipulate map file ready for use on summary stats
+# This has been tested and works
 # melodyjparker14@gmail.com - Apr 23
 # ----------------------------------------------------------
 
