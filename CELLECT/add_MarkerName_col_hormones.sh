@@ -31,8 +31,6 @@ echo "##########################################################"
 
 cd //well/lindgren/users/mzf347/p50/sumstats
 
-# Make a directory for the output files
-mkdir MAF_filtered
 
 # Sumstats colnames: ID CHROM GENPOS MAF Allele1 Allele2 Freq1 FreqSE BETA SE PVALUE Direction HetPVal
 
