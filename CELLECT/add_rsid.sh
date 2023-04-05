@@ -44,9 +44,7 @@ if [ ! -f "$IN"/index.txt ]; then
   for f in "$IN"/*; do basename ${f} >> "$IN"/index.txt; done
 fi
 
-if [ ! -p "$OUT" ]; then
-  mkdir "$OUT"
-fi
+mkdir -p "$OUT"
 
 # Set sumstats file name for each slurm array task
 SUMSTATS_FILE=$(sed "${SLURM_ARRAY_TASK_ID}"'q;d' "$IN"/index.txt)
