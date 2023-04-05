@@ -44,6 +44,7 @@ if [ ! -f "$IN"/index.txt ]; then
   for f in "$IN"/*; do basename ${f} >> "$IN"/index.txt; done
 fi
 
+# Make out dir if it doesn't exist
 mkdir -p "$OUT"
 
 # Set sumstats file name for each slurm array task
