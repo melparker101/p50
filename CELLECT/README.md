@@ -5,3 +5,5 @@
 ``` bash
 git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 ```
+
+1. Create a map file
