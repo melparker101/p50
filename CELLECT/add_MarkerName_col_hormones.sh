@@ -9,7 +9,7 @@
 #SBATCH -A lindgren.prj
 #SBATCH -p short
 #SBATCH -c 10
-#SBATCH -J .............
+#SBATCH -J add_MN_col_hormones
 #SBATCH -o logs/output.out
 #SBATCH -e logs/error.err
 
@@ -28,9 +28,20 @@ echo "Username: "`whoami`
 echo "Started at: "`date` 
 echo "##########################################################"
 
+
 cd //well/lindgren/users/mzf347/p50/sumstats
 
+# Make a directory for the output files
 mkdir MAF_filtered
+
+# Sumstats colnames: ID CHROM GENPOS MAF Allele1 Allele2 Freq1 FreqSE BETA SE PVALUE Direction HetPVal
+
+# Time the command
+# Loop through files
+# First half of awk command sorts alleles into alphabetical order and labels them a1 and a2
+# Second half of awk command adds column name and then marker name concatenated strings (chr:pos:a1_a2) for the other lines
+
+# Add MarkerName column and save to new file
 time for f in *.txt; do awk '{if ($5 < $6) {a1=$5; a2=$6} else {a1=$6; a2=$5}; if(NR==1) {print "MarkerName",$0} else {print $2":"$3":"a1"_"a2,$0}}' $f > MAF_filtered/MN_$f; done
 
 # When tested in interactive node this took 2m7.971s
