@@ -37,7 +37,7 @@ mkdir MAF_filtered
 # Sumstats colnames: ID CHROM GENPOS MAF Allele1 Allele2 Freq1 FreqSE BETA SE PVALUE Direction HetPVal
 
 # Time the command
-# Loop through files
+# Loop through hormone sumstats files
 # First half of awk command sorts alleles into alphabetical order and labels them a1 and a2
 # Second half of awk command adds column name and then marker name concatenated strings (chr:pos:a1_a2) for the other lines
 
