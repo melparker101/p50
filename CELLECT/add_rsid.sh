@@ -30,7 +30,7 @@ echo "##########################################################"
 
 
 # Set working directory
-cd = //well/lindgren/users/mzf347/p50
+# cd = //well/lindgren/users/mzf347/p50
 
 # Set variables
 IN=sumstats/MAF_filtered
