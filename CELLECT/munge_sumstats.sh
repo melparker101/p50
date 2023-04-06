@@ -6,7 +6,7 @@
 # //well/lindgren/users/mzf347/p50
 # p50 contains: 
 # - the CELLECT directory cloned from their github
-# - a sumstats folder containing a premunge subfolder containing the input sumstats files and an index file "sample size"
+# - a sumstats folder containing a premunge subfolder containing the input sumstats files and an index file "sample_size.txt"
 # melodyjparker14@gmail.com - Apr 23
 # ----------------------------------------------------------
 
