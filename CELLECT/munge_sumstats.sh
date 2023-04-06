@@ -2,9 +2,8 @@
 
 # ----------------------------------------------------------
 # Script to munge sumstats
-# Run inside CELLECT DIRECTORY
-# //well/lindgren/users/mzf347/p50/CELLECT
-# Try from p50 and state cellex path
+# Run inside p50
+# //well/lindgren/users/mzf347/p50
 # melodyjparker14@gmail.com - Apr 23
 # ----------------------------------------------------------
 
@@ -37,25 +36,24 @@ source ~/.bashrc
 conda activate munge_ldsc
 
 # Define paths
-IN=//well/lindgren/users/mzf347/p50/sumstats/premunge
-OUT=//well/lindgren/users/mzf347/p50/sumstats/munged
+SUMSTATS=//well/lindgren/users/mzf347/p50/sumstats/
 CELLECT=//well/lindgren/users/mzf347/p50/CELLECT
 
 # Use sample_size.txt as an index file. col1 = text files, col2 = max sample sizes
 # -v is to pass an external shell variables to an awk; NR is for line number; {print $j} is to print column j
-SUMSTATS_FILE=$(awk -v i="${SLURM_ARRAY_TASK_ID}" 'NR==i {print $1}' $IN/sample_size.txt)
-SAMPLE_SIZE=$(awk -v i="${SLURM_ARRAY_TASK_ID}" 'NR==i {print $2}' "$IN"/sample_size.txt)
+SUMSTATS_FILE=$(awk -v i="${SLURM_ARRAY_TASK_ID}" 'NR==i {print $1}' "$SUMSTATS"/sample_size.txt)
+SAMPLE_SIZE=$(awk -v i="${SLURM_ARRAY_TASK_ID}" 'NR==i {print $2}' "$SUMSTATS"/sample_size.txt)
 
 # Make outdir
-mkdir -p "$OUT"
+mkdir -p "$SUMSTATS"/munged
 
 # Run munge script
 python "$CELLECT"/ldsc/mtag_munge.py \
---sumstats "$IN"/"$SUMSTATS_FILE" \
+--sumstats "$SUMSTATS"/premunge/premunge_"$SUMSTATS_FILE".txt \
 --merge-alleles "$CELLECT"/data/ldsc/w_hm3.snplist \
 --n-value "$SAMPLE_SIZE" \
 --ignore MarkerName \
---out "$OUT"/munged_FSH_F_EUR
+--out "$SUMSTATS"/munged/munged_"$SUMSTATS_FILE"
 
 echo "###########################################################"
 echo "Array Task ID: $SLURM_ARRAY_TASK_ID"
