@@ -11,4 +11,4 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 3. Filter for MAF >1% in R
 4. Add rsid column to all sumstats using map file
 
-N = (BETA^2 * MAF * (1 - MAF)) / (4 * SE^2 * (P - PVALUE)^2)
+- sort out the sample size table - add into a separate script and make sure the table is written into premunge
