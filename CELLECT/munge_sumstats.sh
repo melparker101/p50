@@ -25,6 +25,7 @@
 
 echo "########################################################"
 echo "Slurm Job ID: $SLURM_JOB_ID" 
+echo "Task ID: $SLURM_ARRAY_TASK_ID"
 echo "Run on host: "`hostname` 
 echo "Operating system: "`uname -s` 
 echo "Username: "`whoami` 
@@ -55,7 +56,7 @@ python ldsc/mtag_munge.py \
 --out ../sumstats/munged_FSH_F_EUR
 
 echo "###########################################################"
-echo "Array Task ID: ${SLURM_ARRAY_TASK_ID}"
+echo "Array Task ID: $SLURM_ARRAY_TASK_ID"
 echo "Finished at: "`date`
 echo "###########################################################"
 exit 0
