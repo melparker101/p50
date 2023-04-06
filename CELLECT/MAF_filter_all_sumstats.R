@@ -75,5 +75,5 @@ for(i in 1:length(sumstats_list)) {print(get(sumstats_list[i]))}
 for(name in c(sumstats_list)){
 	sumstats <- get(name)
 	out <- paste0("MAF_filtered/MAFfiltered_",name,".txt")
-	fwrite(sumstats,out)
+	fwrite(sumstats,out,sep='\t')
 }
