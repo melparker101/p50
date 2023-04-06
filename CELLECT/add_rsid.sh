@@ -51,7 +51,7 @@ mkdir -p "$OUT"
 SUMSTATS_FILE=$(sed "${SLURM_ARRAY_TASK_ID}"'q;d' "$IN"/index.txt)
 
 # Add rsid column and save in new folder
-awk 'NR==1 {print "rsid",$0; next} NR==FNR {a[$1]=$0; next} $1 in a {print $2,a[$1]}' \
+awk 'NR==1 {print "RSID",$0; next} NR==FNR {a[$1]=$0; next} $1 in a {print $2,a[$1]}' \
     "$IN"/"$SUMSTATS_FILE" "$MAP"/MarkerName_map_GRCh37.txt > \
     "$OUT"/premunge_"${SUMSTATS_FILE##*MAFfiltered_}"
 
