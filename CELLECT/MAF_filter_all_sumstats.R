@@ -69,6 +69,11 @@ Infertility1_F_Finngen <- Infertility1_F_Finngen %>% filter(MAF>0.01)
 # Add infertility to sumstats list
 sumstats_list <- append(sumstats_list,"Infertility1_F_Finngen")
 
+# Change column names of infertility sumstats in preparation for munging
+setnames(Infertility1_F_Finngen, "P-value", "PVALUE")
+setnames(Infertility1_F_Finngen, "StdErr", "SE")
+
+# Check data before writing to file
 for(i in 1:length(sumstats_list)) {print(get(sumstats_list[i]))}
 
 # Write sumstats to file
