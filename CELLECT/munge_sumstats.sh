@@ -39,21 +39,23 @@ conda activate munge_ldsc
 # Define paths
 IN=//well/lindgren/users/mzf347/p50/sumstats/premunge
 OUT=//well/lindgren/users/mzf347/p50/sumstats/munged
+CELLECT=//well/lindgren/users/mzf347/p50/CELLECT
 
 # Use sample_size.txt as an index file. col1 = text files, col2 = max sample sizes
-SUMSTATS_FILE=$(awk 'NR=="${SLURM_ARRAY_TASK_ID}" {print $1}' sample_size.txt)
-SAMPLE_SIZE=$(awk 'NR=="${SLURM_ARRAY_TASK_ID}" {print $2}' sample_size.txt)
+# -v is to pass an external shell variables to an awk; NR is for line number; {print $j} is to print column j
+SUMSTATS_FILE=$(awk -v i="${SLURM_ARRAY_TASK_ID}" 'NR==i {print $1}' $IN/sample_size.txt)
+SAMPLE_SIZE=$(awk -v i="${SLURM_ARRAY_TASK_ID}" 'NR==i {print $2}' "$IN"/sample_size.txt)
 
 # Make outdir
 mkdir -p "$OUT"
 
 # Run munge script
-python ldsc/mtag_munge.py \
+python "$CELLECT"/ldsc/mtag_munge.py \
 --sumstats "$IN"/"$SUMSTATS_FILE" \
---merge-alleles data/ldsc/w_hm3.snplist \
+--merge-alleles "$CELLECT"/data/ldsc/w_hm3.snplist \
 --n-value "$SAMPLE_SIZE" \
 --ignore MarkerName \
---out ../sumstats/munged_FSH_F_EUR
+--out "$OUT"/munged_FSH_F_EUR
 
 echo "###########################################################"
 echo "Array Task ID: $SLURM_ARRAY_TASK_ID"
