@@ -10,3 +10,5 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 2. Add MarkerName column to hormones sumstats files (infertility already contains this)
 3. Filter for MAF >1% in R
 4. Add rsid column to all sumstats using map file
+
+N = (BETA^2 * MAF * (1 - MAF)) / (4 * SE^2 * (P - PVALUE)^2)
