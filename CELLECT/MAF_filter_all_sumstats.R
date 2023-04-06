@@ -41,12 +41,11 @@ for(i in seq_along(filelist)){
 rm(sumstats)
 
 # Make a sample size table manually for hormones
-col1 <- paste0("premunge_",sumstats_list,".txt")
+col1 <- paste0(sumstats_list)
 col2 <- c(19117, 16610, 54522, 5169, 197234, 381985)
 df <- data.frame(col1, col2)
 colnames(df) <- c("sumstats","sample_size")
 fwrite(df,"sample_size.txt",sep="\t",col.names=FALSE)
-# fwrite(df,"premunge/sample_size.txt",sep="\t",col.names=FALSE)
 
 # Check all of the data tables we have loaded in
 for(i in 1:length(sumstats_list)) {print(head(get(sumstats_list[i])))}
