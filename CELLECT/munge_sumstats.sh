@@ -4,6 +4,9 @@
 # Script to munge sumstats
 # Run inside p50
 # //well/lindgren/users/mzf347/p50
+# p50 contains: 
+# - the CELLECT directory cloned from their github
+# - a sumstats folder containing a premunge subfolder containing the input sumstats files and an index file "sample size"
 # melodyjparker14@gmail.com - Apr 23
 # ----------------------------------------------------------
 
@@ -36,8 +39,8 @@ source ~/.bashrc
 conda activate munge_ldsc
 
 # Define paths
-SUMSTATS=//well/lindgren/users/mzf347/p50/sumstats/
-CELLECT=//well/lindgren/users/mzf347/p50/CELLECT
+SUMSTATS=sumstats  # //well/lindgren/users/mzf347/p50/sumstats/
+CELLECT=CELLECT  # //well/lindgren/users/mzf347/p50/CELLECT
 
 # Use sample_size.txt as an index file. col1 = text files, col2 = max sample sizes
 # -v is to pass an external shell variables to an awk; NR is for line number; {print $j} is to print column j
