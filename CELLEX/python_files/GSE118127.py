@@ -8,23 +8,28 @@ import scanpy as sc
 import pandas as pd
 import cellex
 
+dataset_acc = 'GSE118127'
+
 # Define data paths
-dirIn = 'counts/GSE118127/'
+dirIn = 'counts/' + dataset_acc + '/'  # 'counts/GSE118127/'
 dirOut = 'esmu'
 
 # Input files
 input_file = 'local.h5ad'
 
 # Output files
-prefixData_sym = 'GSE118127_sym'
-prefixData_ens = 'GSE118127_ens'
+prefixData_sym = dataset_acc + '_sym'  # 'GSE118127_sym'
+prefixData_ens = dataset_acc + '_ens'  # 'GSE118127_ens'
 
 # Read in h5ad file to an annData object
 adata = sc.read_h5ad(dirIn + input_file)
 
+# Change any spaces in cell type names to underscores
+adata.obs["cell_type"] = adata.obs["cell_type"].str.replace("[ ]","_")
+
 # Extract metadata
 metadata = adata.obs["cell_type"]
-metadata = pd.DataFrame(metadata)
+# metadata = pd.DataFrame(metadata)  # Not necessary
 
 # Extract raw count data
 raw = adata.raw.to_adata()
