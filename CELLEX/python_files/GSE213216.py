@@ -27,6 +27,9 @@ prefixData_ens = dataset_acc + '_ens'
 # Read in h5ad file to an annData object
 adata = sc.read_h5ad(dirIn + input_file)
 
+# Change any spaces in cell type names to underscores
+adata.obs["active_cluster"] = adata.obs["active_cluster"].str.replace("[ ]","_")
+
 # Extract metadata
 metadata = adata.obs["active_cluster"]
 metadata = pd.DataFrame(metadata)
