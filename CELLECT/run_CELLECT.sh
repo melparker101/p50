@@ -7,7 +7,7 @@
 
 #SBATCH -A lindgren.prj
 #SBATCH -p short
-#SBATCH -c 10
+#SBATCH -c 5
 #SBATCH -J run_CELLECT
 #SBATCH -o logs/output.out
 #SBATCH -e logs/error.err
@@ -28,6 +28,9 @@ echo "Username: "`whoami`
 echo "Started at: "`date` 
 echo "##########################################################"
 
+source ~/.bashrc
+conda activate snakemake
+
 IN=config
 
 # Make an index file for the config files if it doesn't exist
@@ -37,4 +40,15 @@ fi
 
 CONFIG_FILE=$(sed "${SLURM_ARRAY_TASK_ID}"'q;d' "$IN"/index.txt)
 
+# Run CELLECT-LDSC
 snakemake --use-conda -j -s cellect-ldsc.snakefile --configfile "$IN"/"$CONFIG_FILE"
+
+# Run CELLECT-GENES
+# snakemake --use-conda -j -s cellect-genes.snakefile --configfile "$IN"/"$CONFIG_FILE"
+
+conda deactivate
+
+echo "###########################################################"
+echo "Slurm array task $SLURM_ARRAY_TASK_ID finished at: "`date`
+echo "###########################################################"
+exit 0
