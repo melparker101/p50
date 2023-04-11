@@ -9,8 +9,8 @@
 #SBATCH -p short
 #SBATCH -c 5
 #SBATCH -J run_CELLECT
-#SBATCH -o logs/output.out
-#SBATCH -e logs/error.err
+#SBATCH -o logs/CELLECT.%A_%a.out
+#SBATCH -e logs/CELLECT.%A_%a.err
 #SBATCH -a 1-6
 
 #  Parallel environment settings 
