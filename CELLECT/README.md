@@ -11,4 +11,13 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 3. Filter for MAF >1% in R
 4. Add rsid column to all sumstats using map file
 
-- sort out the sample size table - add into a separate script and make sure the table is written into premunge
+- write a script which changes yml files...
+- maybe use multiple count datasets and sumstats in one file
+- get sample size for infertility
+- create 
+
+``` bash
+# pwd=CELLECT
+conda activate <env_with_snakemake>
+snakemake --use-conda -j -s cellect-ldsc.snakefile --configfile config.yml
+```
