@@ -96,7 +96,7 @@ for (dataset in datasets){
     pdf(file=output_file, width=30)
     {par(lwd = 2)
     barplot(matrix, space=c(0,8), width = 1, border=T, beside = TRUE, col = terrain.colors(n), xlim = c(6, y_lim +150), ylim = c(0, y_lim), legend = TRUE, args.legend = list(ncol = 4, bty = "n", xjust=1, x = "top"))
-    abline(h=b_sig,lty = 2)
+    # abline(h=b_sig,lty = 2)
     title(ylab = '-log(p value)', line=2.2, font.lab=1)
     title(main = title, adj = 0.5)
     abline(h=0)
