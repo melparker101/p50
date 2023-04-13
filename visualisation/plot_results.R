@@ -56,7 +56,7 @@ for (dataset in datasets){
 # dataset <- datasets[1]
 
   # Extract last three characters of dataset
-  ds <- str_sub(datasets[1],-3,-1)
+  ds <- str_sub(dataset,-3,-1)
 
   cellect_out_dir <- paste0('CELLECT_OUT_',ds)
 
