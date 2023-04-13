@@ -53,8 +53,6 @@ resultsCol <- function(x) {
 
 for (dataset in datasets){
 
-# dataset <- datasets[1]
-
   # Extract last three characters of dataset
   ds <- str_sub(dataset,-3,-1)
 
