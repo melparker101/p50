@@ -69,7 +69,7 @@ for (dataset in datasets){
     prioritization <- resultsCol(phenotype)
     # Add phenotype to joint results table
     if (exists('joint_results')){
-      joint_results <- full_join(df1, prioritization[,c(3,7)], by = "annotation")
+      joint_results <- full_join(joint_results, prioritization[,c(3,7)], by = "annotation")
     } else {
       joint_results <- prioritization[,c(3,7)]    
     }
