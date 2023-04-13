@@ -40,7 +40,7 @@ conda activate munge_ldsc
 
 # Define paths
 SUMSTATS=sumstats  # //well/lindgren/users/mzf347/p50/sumstats/
-CELLECT=CELLECT  # //well/lindgren/users/mzf347/p50/CELLECT
+CELLECT='../CELLECT'  # //well/lindgren/users/mzf347/CELLECT
 IN=premunge
 OUT=munged_for_magma
 
