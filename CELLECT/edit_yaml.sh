@@ -5,12 +5,15 @@
 # It copies and edits the template config file 'config_template.yml'
 ########################################################################
 
-mkdir -p config
+# Out directory
+CONFIG=config_127
+
+mkdir -p "$CONFIG"
 
 for phenotype in $(cut -f1 sumstats/sample_size.txt)
 do
   sumstats_file=munged_"$phenotype".sumstats.gz
-  config_out=config/config_"$phenotype".yml
+  config_out="$CONFIG"/config_"$phenotype".yml
   
   # Add backslashes before special characters ready for double quoted sed
   # sumstats_file=${sumstats_file////\\/}
