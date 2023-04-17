@@ -4,8 +4,26 @@ library(SeuratDisk)
 GSE118127  GSE202601  GSE213216
 
 # Convert("counts/GSE118127/local.h5ad", dest = "h5seurat", overwrite = FALSE)
-Convert("counts/GSE118127/local.h5ad", dest = "h5seurat", overwrite = TRUE)
-GSE118127 <- LoadH5Seurat("counts/GSE118127/local.h5seurat", verbose = T, misc=F)
+Convert("counts/GSE118127/local.gzip.h5ad", dest = "h5seurat", overwrite = FALSE)
+
+GSE118127 <- LoadH5Seurat("counts/GSE118127/local.gzip.h5seurat", verbose = T, misc=F)
+
+GSE118127.loom <- as.loom("counts/GSE118127/local.h5ad.loom", filename = "../output/pbmc3k.loom", verbose = FALSE)
+
+
+l6.immune <- Connect(filename = "../data/l6_r1_immune_cells.loom", mode = "r")
+l6.immune
+l6.seurat <- as.Seurat(l6.immune)
+l6.immune$close_all()
+
+GSE118127 <- Connect(filename = "counts/GSE118127/local.h5ad.loom", mode = "r")
+GSE118127
+# GSE118127.seurat <- as.Seurat(GSE118127)
+GSE118127.seurat <- as.Seurat(GSE118127, features = "feature_name",cells = "barcode")
+GSE118127$close_all()
+GSE118127.seurat
+
+# now use markergene funcions
 
 LoadH5Seurat("temp.h5seurat", verbose = T)
 
