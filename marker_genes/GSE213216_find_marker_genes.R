@@ -3,7 +3,6 @@
 
 library(Seurat)
 library(SeuratDisk)
-# library(SeuratObject)
 library(dplyr)
 
 # rm(list = ls())
