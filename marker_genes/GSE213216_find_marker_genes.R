@@ -122,7 +122,7 @@ top5_comb_out <- paste0(cluster_dir,"/top5_comb_markers_",clust_no,".txt")
 write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
 
 # Find markers for each cluster and write to separate tables 
-cell_type_list <- levels(seurat_ob)
+cell_type_list <- sort(as.numeric(levels(seurat_ob)))
 for (cell_type in cell_type_list){
   name <- paste(cell_type,"markers",sep="_")
   name <- gsub(" ", "_", name)
