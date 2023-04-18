@@ -28,7 +28,7 @@ levels(GSE118127.seurat)
 # Create output directory
 dir.create(out_dir)
 
-# Find markers and wrtite tables for each cluster
+# Find markers and write tables for each cluster
 cell_type_list <- levels(GSE118127.seurat)
 for (cell_type in cell_type_list){
   name <- paste(cell_type,"markers",sep="_")
