@@ -38,15 +38,15 @@ VlnPlot(object = seurat_ob, features = c("nFeature_RNA"), group.by = c('active_c
 ### 1. Use active clusters (9 clusters)
 # Cluster names are character
 # Number of clusters = 9
-clust_no <- "9C"
-
-# Create new directory for results of 9 clusters
-cluster_dir <- paste(out_dir,clust_no,sep="/")
-dir.create(cluster_dir)
 
 # Set indentity classes as the active clusters
 Idents(object = seurat_ob) <- "active_cluster"
 levels(seurat_ob)
+
+# Create new directory for results of this cluster set
+clust_no <- paste0(length(levels(seurat_ob)),"C")
+cluster_dir <- paste(out_dir,clust_no,sep="/")
+dir.create(cluster_dir)
 
 # Find markers for every cluster compared to all remaining cells, report only the positive ones
 combined_markers <- FindAllMarkers(object = seurat_ob, 
@@ -92,16 +92,15 @@ for (cell_type in cell_type_list){
 
 ### 2. Use seurat_clusters (70 clusters after doublet removal)
 # Cluster names are character, but are numbers
-# Number of clusters = 70
-clust_no <- "70C"
-
-# Create new directory for results of 9 clusters
-cluster_dir <- paste(out_dir,clust_no,sep="/")
-dir.create(cluster_dir)
 
 # Set indentity classes as pre-calculated seurat clusters
 Idents(object = seurat_ob) <- "seurat_clusters"
 levels(seurat_ob)
+
+# Create new directory for this set of clusters
+clust_no <- paste0(length(levels(seurat_ob)),"C")  # 70C
+cluster_dir <- paste(out_dir,clust_no,sep="/")
+dir.create(cluster_dir)
 
 # Find all markers
 combined_markers <- FindAllMarkers(object = seurat_ob, 
@@ -132,7 +131,7 @@ write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
 # Only use function on clusters with 3 or more cells in (function won't work otherwise and will break the loop)
 cell_type_list <- sort(as.numeric(levels(seurat_ob)))
 for (cell_type in cell_type_list){
-  if (as.numeric(table(seurat_ob$seurat_clusters)[as.character(cell_type)]) > 3){
+  if (as.numeric(table(seurat_ob$seurat_clusters)[as.character(cell_type)]) >= 3){
     name <- paste(cell_type,"markers",sep="_")
     value <- FindMarkers(seurat_ob, ident.1 = cell_type)
     assign(name, value)
