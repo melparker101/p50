@@ -1,5 +1,5 @@
 # Find marker genes for dataset GSE213216
-# Using a wilcox test
+# Using a Wilcoxon Rank Sum test
 
 library(Seurat)
 library(SeuratDisk)
@@ -64,7 +64,7 @@ top5_comb <- combined_markers %>%
         top_n(n = 5,
               wt = avg_log2FC)
               
-# Visualize top 5 markers per cluster
+# View top 5 markers per cluster
 View(top5_comb)
 
 # Write as table
@@ -116,7 +116,7 @@ top5_comb <- combined_markers %>%
         top_n(n = 5,
               wt = avg_log2FC)
               
-# Visualize top 5 markers per cluster
+# View top 5 markers per cluster
 View(top5_comb)
 
 # Write as table
