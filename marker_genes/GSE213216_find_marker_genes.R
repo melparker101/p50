@@ -68,8 +68,6 @@ top5_comb <- combined_markers %>%
         group_by(cluster) %>%
         top_n(n = 5,
               wt = avg_log2FC)
-              
-# View top 5 markers per cluster
 View(top5_comb)
 
 # Write as table
