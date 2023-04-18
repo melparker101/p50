@@ -37,6 +37,7 @@ VlnPlot(object = seurat_ob, features = c("nFeature_RNA"), group.by = c('active_c
 ##### Find Markers #####
 
 ### 1. Use active clusters (9 clusters)
+# Cluster names are character
 # Number of clusters = 9
 clust_no <- "9C"
 
@@ -91,6 +92,7 @@ for (cell_type in cell_type_list){
 }
 
 ### 2. Use seurat_clusters (70 clusters after doublet removal)
+# Cluster names are character, but are numbers
 # Number of clusters = 70
 clust_no <- "70C"
 
