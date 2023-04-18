@@ -1,6 +1,5 @@
 # We have 19 clusters for GSE118127
 # Find markers for these and write output as tables
-
 library(Seurat)
 library(SeuratDisk)
 library(SeuratObject)
