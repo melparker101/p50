@@ -30,6 +30,10 @@ table(seurat_ob[['DF.classifications']])
 seurat_ob <- subset(seurat_ob, subset=DF.classifications %in% "Singlet")
 dim(seurat_ob)
 
+# View the total RNA count per cell and group by clusters
+VlnPlot(object = seurat_ob, features = c("nFeature_RNA"), group.by = c('seurat_clusters'))
+VlnPlot(object = seurat_ob, features = c("nFeature_RNA"), group.by = c('active_cluster'))
+
 ##### Find Markers #####
 
 ### 1. Use active clusters (9 clusters)
@@ -123,16 +127,15 @@ View(top5_comb)
 top5_comb_out <- paste0(cluster_dir,"/top5_comb_markers_",clust_no,".txt")
 write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
 
-# Find markers for each cluster and write to separate tables 
+# Find markers for each cluster and write to separate tables
+# Only use function on clusters with 3 or more cells in (function won't work otherwise and will break the loop)
 cell_type_list <- sort(as.numeric(levels(seurat_ob)))
 for (cell_type in cell_type_list){
-  name <- paste(cell_type,"markers",sep="_")
-  name <- gsub(" ", "_", name)
-  name <- gsub(")", "", name)
-  name <- gsub("-", "_", name)
-  name <- gsub("/", "_", name)
-  value <- FindMarkers(seurat_ob, ident.1 = cell_type)
-  assign(name, value)
-  out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
-  write.table(value,out,sep="\t",quote = FALSE)
+  if (as.numeric(table(seurat_ob$seurat_clusters)[as.character(cell_type)]) > 3){
+    name <- paste(cell_type,"markers",sep="_")
+    value <- FindMarkers(seurat_ob, ident.1 = cell_type)
+    assign(name, value)
+    out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
+    write.table(value,out,sep="\t",quote = FALSE)
+  }
 }
