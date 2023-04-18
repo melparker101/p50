@@ -33,6 +33,7 @@ dim(seurat_ob)
 ##### Find Markers #####
 
 ### 1. Use active clusters (9 clusters)
+# Number of clusters = 9
 clust_no <- "9C"
 
 # Create new directory for results of 9 clusters
@@ -86,6 +87,7 @@ for (cell_type in cell_type_list){
 }
 
 ### 2. Use seurat_clusters (70 clusters after doublet removal)
+# Number of clusters = 70
 clust_no <- "70C"
 
 # Create new directory for results of 9 clusters
