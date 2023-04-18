@@ -1,4 +1,4 @@
-### There are three Seurat functions we can use to find markers with (text below is from [Biostars](https://www.biostars.org/p/409790/) and [hbctraining](https://hbctraining.github.io/scRNA-seq/lessons/sc_exercises_integ_marker_identification.html))
+### There are three Seurat functions we can use to find markers with (text below is from [Biostars](https://www.biostars.org/p/409790/); also see [hbctraining](https://hbctraining.github.io/scRNA-seq/lessons/sc_exercises_integ_marker_identification.html))
 
 1. **FindMarkers** will find markers between two different identity groups - you have to specify both identity groups. This is useful for comparing the differences between two specific groups.
 
