@@ -137,7 +137,7 @@ for (cell_type in cell_type_list){
 }
 
 # Plot clusters
-plotClusters(seruat_ob,use_col,cluster_dir)
+plotClusters(seurat_ob,use_col,cluster_dir)
 
 ### 2. Use cell_description (19 clusters)
 use_col <- "cell_description"
