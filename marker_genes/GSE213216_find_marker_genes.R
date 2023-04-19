@@ -167,7 +167,7 @@ for (cell_type in cell_type_list){
 }
 
 # Plot clusters
-plotClusters(seruat_ob,use_col,cluster_dir)
+plotClusters(seurat_ob,use_col,cluster_dir)
 
 ### 2. Use seurat_clusters (70 clusters after doublet removal)
 # Cluster names are character, but are numbers
@@ -220,4 +220,4 @@ for (cell_type in cell_type_list){
 }
 
 # Plot clusters
-plotClusters(seruat_ob,use_col,cluster_dir)
+plotClusters(seurat_ob,use_col,cluster_dir)
