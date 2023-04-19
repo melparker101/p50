@@ -136,7 +136,7 @@ for (cell_type in cell_type_list){
   write.table(value,out,sep="\t",quote = FALSE)
 }
 
-##### Plot clusters
+# Plot clusters
 plotClusters(seruat_ob,use_col,cluster_dir)
 
 ### 2. Use cell_description (19 clusters)
