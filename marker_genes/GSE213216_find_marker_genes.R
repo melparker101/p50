@@ -11,7 +11,9 @@
 ################################
 library(Seurat)
 library(SeuratDisk)
+library(ggplot2)
 library(dplyr)
+library(pals)
 
 ################################
 # Functions
@@ -118,7 +120,8 @@ VlnPlot(object = seurat_ob, features = c("nFeature_RNA"), group.by = c('active_c
 # Number of clusters = 9
 
 # Set indentity classes as the active clusters
-Idents(object = seurat_ob) <- "active_cluster"
+use_col <- "active_cluster"
+Idents(object = seurat_ob) <- use_col
 levels(seurat_ob)
 
 # Create new directory for results of this cluster set
