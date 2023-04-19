@@ -1,0 +1,231 @@
+##############################################################################
+## Find marker genes for dataset GSE202601
+## Using a Wilcoxon Rank Sum test
+## melodyjparker@gmail.com - Apr 23
+##############################################################################
+
+# Use the original rds file
+# Once filtered, we apparently do not need to renormalise 
+# https://github.com/satijalab/seurat/issues/678
+
+################################
+# Load libraries
+################################
+library(Seurat)
+library(SeuratDisk)
+library(ggplot2)
+library(dplyr)
+library(pals)
+library(data.table)
+
+################################
+# Functions
+################################
+# Function for plotting clusters
+plotClusters <- function(object,clusters,out){
+  n <- length(levels(object))
+  clust_no <- paste0(n,"C")
+  cluster.cols = as.vector(polychrome(n))
+  plot = DimPlot(object = seurat_ob, 
+               pt.size = 0.1, 
+               raster=FALSE, 
+               group.by = clusters,
+               cols = cluster.cols,
+               label = T)
+  ggsave(paste0(out,"/",clusters,"_clusters_",clust_no,".pdf"), width = 10, height = 10)
+}
+
+################################
+# Set up 
+################################
+
+# Dataset
+dataset <- "GSE202601"
+
+# Data path
+data_path <- paste0("counts/",dataset,"/")
+
+# Input files
+mat_file <- paste0(data_path,"GSE202601_human_ovary_snRNA-seq_count.rds")
+meta_file <- paste0(data_path,"GSE202601_human_ovary_snRNA-seq_metadata.txt")
+
+# Load in data
+mat <- readRDS(file = mat_file)
+meta <- as.data.frame(fread(meta_file, header=T))
+
+# Use the original code from the dataset to process and cluster
+# https://github.com/ChenJin2020/The-regulatory-landscapes-of-human-ovarian-ageing/blob/main/Data_Processing.R
+
+library(Seurat)
+library(dplyr)
+library(harmony)
+
+colnames(meta) <- meta$cell_id
+meta <- meta[,2,drop=FALSE]
+
+seurat_ob <- CreateSeuratObject(counts = mat, project = "ovary", min.cells = 3, min.features = 200, meta.data = meta)
+
+seurat_ob[["percent.mt"]] <- PercentageFeatureSet(seurat_ob, pattern = "^MT-")
+seurat_ob <- subset(seurat_ob, subset = nFeature_RNA > 200 & nFeature_RNA < 6000 & percent.mt < 15)
+
+seurat_ob <- NormalizeData(seurat_ob, normalization.method = "LogNormalize", scale.factor = 10000)
+
+seurat_ob <- FindVariableFeatures(seurat_ob, selection.method = "vst", nfeatures = 2100)
+all.genes <- rownames(seurat_ob)
+seurat_ob <- ScaleData(seurat_ob, features = all.genes)
+seurat_ob <- RunPCA(seurat_ob, features = VariableFeatures(object = seurat_ob))
+
+
+################################
+# Filtering
+################################
+
+# Filter out old donors
+meta = meta[meta$group == "young",]
+
+# Check the ages of the remaining donors
+table(meta$age)
+
+# See 'Metadata format' in https://github.com/perslab/CELLEX
+meta <- meta[,c(1,5)]
+colnames(meta) <- c("cell_id","abbr")
+
+# Make a table to map cell type abbreviations to full names
+abbr <- names(table(meta$abbr))
+# "BEC"  "EpiC" "GC"   "IC"   "LEC"  "SC"   "SMC"  "TC"
+cell_type <- c("blood_vessel_endothelial_cells", "epithelial_cells", "granulosa_cells", "immune_cells", "lymphatic_endothelial_cells", "stromal_cells", "smooth_muscle_cells","theca_cells")
+map <- data.frame(abbr, cell_type)
+
+# Replace cell type abbreviations with their full names
+meta <- inner_join(meta, map, by=c("abbr"))[,c(1,3)]
+
+# Check dimensions
+dim(mat)
+dim(meta)
+
+# We have 42568 cells for mat and 23534 cells for meta
+
+# Filter mat to only keep the cells from young donors
+ids_use <- meta$cell_id
+mat <- mat[,ids_use]
+dim(mat)
+
+################################
+# Find markers
+################################
+
+### 1. Use active clusters (9 clusters)
+# Cluster names are character
+# Number of clusters = 9
+
+# Set indentity classes as the active clusters
+use_col <- "active_cluster"
+Idents(object = seurat_ob) <- use_col
+levels(seurat_ob)
+
+# Create new directory for results of this cluster set
+clust_no <- paste0(length(levels(seurat_ob)),"C")
+cluster_dir <- paste(out_dir,clust_no,sep="/")
+dir.create(cluster_dir)
+
+# Find markers for every cluster compared to all remaining cells, report only the positive ones
+combined_markers <- FindAllMarkers(object = seurat_ob, 
+                          only.pos = TRUE,
+                          logfc.threshold = 0.25)  
+View(combined_markers)
+
+# Order the rows by clusters, then by p-adjusted values
+combined_markers <- combined_markers %>% arrange(as.character(cluster), as.numeric(as.character(p_val_adj)))
+combined_markers <- combined_markers %>% relocate(gene) %>% relocate(cluster)
+View(combined_markers)
+
+# Write as table
+combined_out <- paste0(cluster_dir,"/combined_markers_" , clust_no,".txt")
+write.table(combined_markers,combined_out,sep="\t",quote = FALSE)
+
+# Find top 5 markers per cluster
+top5_comb <- combined_markers %>%
+        group_by(cluster) %>%
+        top_n(n = 5,
+              wt = avg_log2FC)
+View(top5_comb)
+
+# Write as table
+top5_comb_out <- paste0(cluster_dir,"/top5_comb_markers_",clust_no,".txt")
+write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
+
+# Find markers for each cluster and write to separate tables 
+cell_type_list <- levels(seurat_ob)
+for (cell_type in cell_type_list){
+  name <- paste(cell_type,"markers",sep="_")
+  name <- gsub(" ", "_", name)
+  name <- gsub(")", "", name)
+  name <- gsub("-", "_", name)
+  name <- gsub("/", "_", name)
+  value <- FindMarkers(seurat_ob, ident.1 = cell_type)
+  assign(name, value)
+  out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
+  write.table(value,out,sep="\t",quote = FALSE)
+}
+
+# Plot clusters
+plotClusters(seurat_ob,use_col,cluster_dir)
+
+### 2. Use seurat_clusters (70 clusters after doublet removal)
+# Cluster names are character, but are numbers
+
+# Set indentity classes as the active clusters
+use_col <- "seurat_clusters"
+Idents(object = seurat_ob) <- use_col
+levels(seurat_ob)
+
+# Create new directory for results of this cluster set
+clust_no <- paste0(length(levels(seurat_ob)),"C")
+cluster_dir <- paste(out_dir,clust_no,sep="/")
+dir.create(cluster_dir)
+
+# Create new directory for this set of clusters
+clust_no <- paste0(length(levels(seurat_ob)),"C")  # 70C
+cluster_dir <- paste(out_dir,clust_no,sep="/")
+dir.create(cluster_dir)
+
+# Find all markers
+combined_markers <- FindAllMarkers(object = seurat_ob, 
+                          only.pos = TRUE,
+                          logfc.threshold = 0.25)
+
+# Order the rows by clusters, then by p-adjusted values
+combined_markers <- combined_markers %>% arrange(as.numeric(as.character(cluster)), as.numeric(as.character(p_val_adj)))
+combined_markers <- combined_markers %>% relocate(gene) %>% relocate(cluster)
+View(combined_markers)
+                          
+# Write as table
+combined_out <- paste0(cluster_dir,"/combined_markers_" , clust_no,".txt")
+write.table(combined_markers,combined_out,sep="\t",quote = FALSE)
+
+# Find top 5 markers per cluster
+top5_comb <- combined_markers %>%
+        group_by(cluster) %>%
+        top_n(n = 5,
+              wt = avg_log2FC)
+View(top5_comb)
+
+# Write as table
+top5_comb_out <- paste0(cluster_dir,"/top5_comb_markers_",clust_no,".txt")
+write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
+
+# Find markers for each cluster and write to separate tables
+# Only use function on clusters with 3 or more cells in (function won't work otherwise and will break the loop)
+cell_type_list <- sort(as.numeric(levels(seurat_ob)))
+for (cell_type in cell_type_list){
+  if (as.numeric(table(seurat_ob$seurat_clusters)[as.character(cell_type)]) >= 3){
+    name <- paste(cell_type,"markers",sep="_")
+    value <- FindMarkers(seurat_ob, ident.1 = cell_type)
+    assign(name, value)
+    out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
+    write.table(value,out,sep="\t",quote = FALSE)
+  }
+}
+
+# Plot clusters
+plotClusters(seurat_ob,use_col,cluster_dir)
