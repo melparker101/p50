@@ -19,6 +19,7 @@ library(SeuratDisk)
 library(SeuratObject)
 library(dplyr)
 library(pals)
+library(ggplot2)
 
 # Function for plotting clusters
 plotClusters <- function(object,clusters,out){
