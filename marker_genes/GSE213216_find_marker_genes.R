@@ -1,39 +1,117 @@
-# Find marker genes for dataset GSE213216
-# Using a Wilcoxon Rank Sum test
+##############################################################################
+## Find marker genes for dataset GSE213216
+## Using a Wilcoxon Rank Sum test
+## melodyjparker@gmail.com - Apr 23
+##############################################################################
 
+# Use the original _aux.seurat.shared.rds because it contains the normalised counts
+
+################################
+# Load libraries
+################################
 library(Seurat)
 library(SeuratDisk)
 library(dplyr)
 
+################################
+# Functions
+################################
+# Function for plotting clusters
+plotClusters <- function(object,clusters,out){
+  n <- length(levels(object))
+  clust_no <- paste0(n,"C")
+  cluster.cols = as.vector(polychrome(n))
+  plot = DimPlot(object = seurat_ob, 
+               pt.size = 0.1, 
+               raster=FALSE, 
+               group.by = clusters,
+               cols = cluster.cols,
+               label = T)
+  ggsave(paste0(out,"/",clusters,"_clusters_",clust_no,".pdf"), width = 10, height = 10)
+}
+
+################################
+# Set up 
+################################
 # rm(list = ls())
 
+# Dataset accession
 dataset <- "GSE213216"
 
-in_file <- "counts/GSE213216/counts_GSE213216.h5Seurat"
+# Input files
+seurat_in <- paste0("counts/",dataset,"/_aux.seurat.shared.rds")
+
+# Out dir
 out_dir <- paste0("cluster_markers/", dataset)
+
+# Load in Seurat object
+seurat_ob <- readRDS(file = seurat_in)
 
 # Create output directory
 dir.create(out_dir)
 
-# Read in Seurat object (this is already filtered for the samples we want to use)
-seurat_ob <- LoadH5Seurat(in_file)
-seurat_ob
+################################
+# Filtering
+################################
+# Have a look at the colnames of the metadata
+colnames(seurat_ob[[]])
+
+# Create a new metadata column and delete the old column to replace . with _ for our columns of interest
+seurat_ob$major_class <- seurat_ob$Major.Class
+seurat_ob$Major.Class <- NULL
+
+seurat_ob$active_cluster <- seurat_ob$active.cluster
+seurat_ob$active.cluster <- NULL
+
+colnames(seurat_ob[[]])
+
+# Filter for normal ovary samples
+seurat_ob <- subset(seurat_ob, subset=major_class %in% "Unaffected ovary")
+
+dim(seurat_ob)
+# 30354 51927
+# 51,927 cells is what we were expecting for unaffected ovary from the literature (Fig. 2)
+
+# Check that the metadata only contains data from unaffected ovary
+unique(seurat_ob$major_class)
+
+# Now filter for pre-menopausal patients
+# Take a look at the patients
+table(seurat_ob$Patient.No.)
+# Patient IDs are 6, 14, 15, 18
+
+# From Supplementary Table two we can see that patients 14 and 15 are pre-menopausal
+# https://static-content.springer.com/esm/art%3A10.1038%2Fs41588-022-01254-1/MediaObjects/41588_2022_1254_MOESM4_ESM.xlsx
+seurat_ob <- subset(seurat_ob, subset=Patient.No. %in% c(14,15))
+
+# Check that it has filtered properly
+unique(seurat_ob$Patient.No.)
+# 14 15
+
+dim(seurat_ob)
+# 30354 22219
+# We now have 22,219 cells
+
+
+#########
 
 # View metadata
-seurat_ob[[c('seurat_clusters','active_cluster','DF.classifications')]][1:20,]
+seurat_ob[[c('seurat_clusters','active_cluster')]][1:20,]
 table(seurat_ob[['seurat_clusters']])
 table(seurat_ob[['active_cluster']])
 
 # Remove doublets
-table(seurat_ob[['DF.classifications']])
-seurat_ob <- subset(seurat_ob, subset=DF.classifications %in% "Singlet")
-dim(seurat_ob)
+# table(seurat_ob[['DF.classifications']])
+# seurat_ob <- subset(seurat_ob, subset=DF.classifications %in% "Singlet")
+# dim(seurat_ob)
 
 # View the total RNA count per cell and group by clusters
 VlnPlot(object = seurat_ob, features = c("nFeature_RNA"), group.by = c('seurat_clusters'))
 VlnPlot(object = seurat_ob, features = c("nFeature_RNA"), group.by = c('active_cluster'))
 
-##### Find Markers #####
+################################
+# Find markers
+################################
 
 ### 1. Use active clusters (9 clusters)
 # Cluster names are character
@@ -88,6 +166,9 @@ for (cell_type in cell_type_list){
   write.table(value,out,sep="\t",quote = FALSE)
 }
 
+# Plot clusters
+plotClusters(seruat_ob,use_col,cluster_dir)
+
 ### 2. Use seurat_clusters (70 clusters after doublet removal)
 # Cluster names are character, but are numbers
 
@@ -137,3 +218,6 @@ for (cell_type in cell_type_list){
     write.table(value,out,sep="\t",quote = FALSE)
   }
 }
+
+# Plot clusters
+plotClusters(seruat_ob,use_col,cluster_dir)
