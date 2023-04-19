@@ -174,9 +174,15 @@ plotClusters(seurat_ob,use_col,cluster_dir)
 ### 2. Use seurat_clusters (70 clusters after doublet removal)
 # Cluster names are character, but are numbers
 
-# Set indentity classes as pre-calculated seurat clusters
-Idents(object = seurat_ob) <- "seurat_clusters"
+# Set indentity classes as the active clusters
+use_col <- "seurat_clusters"
+Idents(object = seurat_ob) <- use_col
 levels(seurat_ob)
+
+# Create new directory for results of this cluster set
+clust_no <- paste0(length(levels(seurat_ob)),"C")
+cluster_dir <- paste(out_dir,clust_no,sep="/")
+dir.create(cluster_dir)
 
 # Create new directory for this set of clusters
 clust_no <- paste0(length(levels(seurat_ob)),"C")  # 70C
