@@ -67,7 +67,7 @@ table(ovary$Patient.No.)
 ovary <- subset(ovary, subset=Patient.No. %in% c(14,15))
 
 # Check that it has filtered properly
-ovary <- unique(ovary$Patient.No.)
+unique(ovary$Patient.No.)
 # 14 15
 
 dim(ovary)
