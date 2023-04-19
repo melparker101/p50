@@ -11,10 +11,28 @@
 # Directly download the RDS 
 # https://cellxgene.cziscience.com/collections/2902f08c-f83c-470e-a541-e463e25e5058
 
+# The object should be filtered already. Their filtering code:
+# https://github.com/johnmous/singleCell/blob/master/workflow.Rmd
+
 library(Seurat)
 library(SeuratDisk)
 library(SeuratObject)
 library(dplyr)
+library(pals)
+
+# Function for plotting clusters
+plotClusters <- function(object,clusters,out){
+  n <- length(levels(object))
+  clust_no <- paste0(n,"C")
+  cluster.cols = as.vector(polychrome(n))
+  plot = DimPlot(object = seurat_ob, 
+               pt.size = 0.1, 
+               raster=FALSE, 
+               group.by = clusters,
+               cols = cluster.cols,
+               label = T)
+  ggsave(paste0(out,"/",clusters,"_clusters_",clust_no,".pdf"), width = 10, height = 10)
+}
 
 # rm(list = ls())
 
@@ -46,6 +64,13 @@ head(seurat_ob[['RNA']][[]])
 
 # The findAllMarkers uses the "data" slot, so change the rownames of this
 rownames(seurat_ob@assays$RNA@data) <- seurat_ob[['RNA']][['feature_name']][,1]
+
+# Check that the seurat object has been filtered 
+VlnPlot(object = seurat_ob,
+        features = c("nGene", "nUMI", "percent.mito"))
+
+# Check that the data is normalised
+GetAssayData(object = seurat_ob)[1:10,1:15]
 
 ##########################
 ###### Find markers ######
@@ -111,6 +136,9 @@ for (cell_type in cell_type_list){
   write.table(value,out,sep="\t",quote = FALSE)
 }
 
+##### Plot clusters
+plotClusters(seruat_ob,use_col,cluster_dir)
+
 ### 2. Use cell_description (19 clusters)
 use_col <- "cell_description"
 
@@ -163,3 +191,5 @@ for (cell_type in cell_type_list){
   write.table(value,out,sep="\t",quote = FALSE)
 }
 
+# Plot clusters
+plotClusters(seurat_ob,use_col,cluster_dir)
