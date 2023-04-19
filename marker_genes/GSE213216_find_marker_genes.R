@@ -94,7 +94,6 @@ dim(seurat_ob)
 # 30354 22219
 # We now have 22,219 cells
 
-
 #########
 
 # View metadata
