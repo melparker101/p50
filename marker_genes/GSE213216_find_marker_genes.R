@@ -22,6 +22,7 @@ library(pals)
 plotClusters <- function(object,clusters,out){
   n <- length(levels(object))
   clust_no <- paste0(n,"C")
+  # cluster.cols = as.vector(as.vector(tol.rainbow(n)))
   cluster.cols = as.vector(polychrome(n))
   plot = DimPlot(object = seurat_ob, 
                pt.size = 0.1, 
@@ -48,6 +49,7 @@ out_dir <- paste0("cluster_markers/", dataset)
 
 # Load in Seurat object
 seurat_ob <- readRDS(file = seurat_in)
+seurat_ob
 
 # Create output directory
 dir.create(out_dir)
@@ -94,7 +96,48 @@ dim(seurat_ob)
 # 30354 22219
 # We now have 22,219 cells
 
-#########
+
+#########################################################
+
+# Renormalise
+# Set raw counts to default
+DefaultAssay(seurat_ob) <- "RNA"
+# Remove
+seurat_ob[['SCT']]<-NULL
+seurat_ob
+
+# https://satijalab.org/seurat/archive/v3.2/integration.html
+# https://satijalab.org/seurat/articles/sctransform_v2_vignette.html
+
+
+GetAssayData(seurat_ob)[1:20,1:20]
+
+
+
+
+
+# Create a new Seurat object using only the raw data - otherwise raw count data won't convert to anndata properly
+raw <- GetAssayData(object = seurat_ob, slot = "counts")
+metadata <- seurat_ob[[]]
+seurat_obj <- CreateSeuratObject(counts=raw, meta.data=metadata)
+
+seurat_obj <- SCTransform(seurat_obj, vars.to.regress = "percent.mito", verbose = FALSE)
+
+
+  n <- length(levels(seurat_obj))
+  clust_no <- paste0(n,"C")
+  # cluster.cols = as.vector(as.vector(tol.rainbow(n)))
+  cluster.cols = as.vector(polychrome(n))
+  plot = DimPlot(object = seurat_obj, 
+               pt.size = 0.1, 
+               raster=FALSE, 
+               group.by = "active_cluster",
+               cols = cluster.cols,
+               label = T)
+plot
+
+
+######################################################
 
 # View metadata
 seurat_ob[[c('seurat_clusters','active_cluster')]][1:20,]
