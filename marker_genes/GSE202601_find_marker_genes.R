@@ -10,6 +10,7 @@
 # Also check out their github for their preprocessing code
 # https://github.com/satijalab/seurat/issues/678
 # https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
+# Use this tutorial for findAllMarkers(): https://hbctraining.github.io/scRNA-seq/lessons/sc_exercises_integ_marker_identification.html
 
 ################################
 # Load libraries
@@ -98,8 +99,6 @@ dim(meta)
 # https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
 # https://github.com/ChenJin2020/The-regulatory-landscapes-of-human-ovarian-ageing/blob/main/Data_Processing.R
 
-# library(harmony)
-
 # Redo this part
 rownames(meta) <- meta$cell_id
 meta <- meta[,2,drop=FALSE]
@@ -166,7 +165,7 @@ View(combined_markers)
 combined_out <- paste0(cluster_dir,"/combined_markers_" , clust_no,".txt")
 write.table(combined_markers,combined_out,sep="\t",quote = FALSE)
 
-# Find top 5 markers per cluster
+# Find top 5 markers per cluster by log2 fold change
 top5_comb <- combined_markers %>%
         group_by(cluster) %>%
         top_n(n = 5,
