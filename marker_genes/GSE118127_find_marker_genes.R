@@ -107,7 +107,7 @@ View(combined_markers)
 combined_out <- paste0(cluster_dir,"/combined_markers_" , clust_no,".txt")
 write.table(combined_markers,combined_out,sep="\t",quote = FALSE)
 
-# Find top 5 markers per cluster
+# Find top 5 markers per cluster by 2-fold change
 top5_comb <- combined_markers %>%
         group_by(cluster) %>%
         top_n(n = 5,
@@ -167,7 +167,7 @@ View(combined_markers)
 combined_out <- paste0(cluster_dir,"/combined_markers_" , clust_no,".txt")
 write.table(combined_markers,combined_out,sep="\t",quote = FALSE)
 
-# Find top 5 markers per cluster
+# Find top 5 markers per cluster by 2-fold change
 top5_comb <- combined_markers %>%
         group_by(cluster) %>%
         top_n(n = 5,
