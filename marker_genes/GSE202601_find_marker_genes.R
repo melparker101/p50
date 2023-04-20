@@ -138,7 +138,6 @@ seurat_ob <- NormalizeData(seurat_ob, normalization.method = "LogNormalize", sca
 ################################
 
 ### 1. Use active clusters (8 clusters)
-# Number of clusters = 8
 
 # Set indentity classes as the active clusters
 use_col <- "cell_type"
