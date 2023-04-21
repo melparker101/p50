@@ -73,6 +73,10 @@ VlnPlot(object = seurat_ob,
 # Check that the data is normalised
 GetAssayData(object = seurat_ob)[1:10,1:15]
 
+# Check dimensions
+dim(GetAssayData(object = seurat_ob))
+# 32922 genes
+
 ##########################
 ###### Find markers ######
 ##########################
@@ -99,7 +103,7 @@ View(combined_markers)
 # https://github.com/satijalab/seurat/issues/205
 
 # Order the rows by clusters, then by p-adjusted values
-combined_markers <- combined_markers %>% arrange(as.character(cluster), as.numeric(as.character(p_val_adj)))
+combined_markers <- combined_markers %>% arrange(as.character(cluster), as.numeric(as.character(p_val)))
 combined_markers <- combined_markers %>% relocate(gene) %>% relocate(cluster)
 View(combined_markers)
 
@@ -186,7 +190,7 @@ for (cell_type in cell_type_list){
   name <- gsub(")", "", name)
   name <- gsub("-", "_", name)
   name <- gsub("/", "_", name)
-  value <- FindMarkers(seurat_ob, ident.1 = cell_type)
+  value <- FindMarkers(seurat_ob, ident.1 = cell_type, only.pos = TRUE)
   assign(name, value)
   out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
   write.table(value,out,sep="\t",quote = FALSE)
