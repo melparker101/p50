@@ -11,7 +11,7 @@
 # Directly download the RDS 
 # https://cellxgene.cziscience.com/collections/2902f08c-f83c-470e-a541-e463e25e5058
 
-# The object should be filtered already. Their filtering code:
+# The object should be filtered and preprocessed already. Their filtering code:
 # https://github.com/johnmous/singleCell/blob/master/workflow.Rmd
 
 library(Seurat)
