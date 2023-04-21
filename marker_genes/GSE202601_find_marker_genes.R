@@ -1,9 +1,9 @@
 ##############################################################################
-## Find marker genes for dataset GSE202601
+## Find marker genes for dataset GSE202601 (8 clusters)
 ## Using a Wilcoxon Rank Sum test
 ## melodyjparker@gmail.com - Apr 23
 ##############################################################################
-
+#
 # Use the original rds file and metadata
 # The rsd contains the raw counts, so this needs preprocessing/basic filtering
 # https://www.biorxiv.org/content/biorxiv/early/2022/05/19/2022.05.18.492547.full.pdf
