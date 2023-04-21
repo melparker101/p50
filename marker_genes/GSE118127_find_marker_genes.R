@@ -1,5 +1,5 @@
 ##############################################################################
-## Find marker genes for dataset GSE118127
+## Find marker genes for dataset GSE118127 (9 clusters and 19 clusters)
 ## Using a Wilcoxon Rank Sum test
 ## melodyjparker@gmail.com - Apr 23
 ##############################################################################
