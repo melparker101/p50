@@ -135,7 +135,7 @@ for (cell_type in cell_type_list){
   name <- gsub(")", "", name)
   name <- gsub("-", "_", name)
   name <- gsub("/", "_", name)
-  value <- FindMarkers(seurat_ob, ident.1 = cell_type)
+  value <- FindMarkers(seurat_ob, ident.1 = cell_type, only.pos = TRUE)
   assign(name, value)
   out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
   write.table(value,out,sep="\t",quote = FALSE)
