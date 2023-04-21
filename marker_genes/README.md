@@ -10,3 +10,4 @@
 https://lawrenson-lab.github.io/AtlasEndometriosis/figure2.html
 
 ### Order by pvalue and get top 10% of genes
+- only.pos Only return positive markers (FALSE by default)
