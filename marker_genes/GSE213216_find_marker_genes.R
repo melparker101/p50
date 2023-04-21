@@ -5,6 +5,8 @@
 ##############################################################################
 
 # Use the original _aux.seurat.shared.rds because it contains the normalised counts
+# They used SCTransform to normalise the data
+# Check if this is still normally distributed for our filtered subset
 
 ################################
 # Load libraries
@@ -95,6 +97,28 @@ unique(seurat_ob$Patient.No.)
 dim(seurat_ob)
 # 30354 22219
 # We now have 22,219 cells
+
+################################
+# Check if subset is normally distributed
+################################
+
+# Plot a histogram
+
+# Fake data (two normal distributions)
+set.seed(20)
+dat1 = data.frame(x=rnorm(1000, 100, 10), group="A")
+dat2 = data.frame(x=rnorm(2000, 120, 20), group="B")
+dat = rbind(dat1, dat2)
+
+ggplot(dat, aes(x, fill=group, colour=group)) +
+  geom_histogram(breaks=seq(0,200,5), alpha=0.6, 
+                 position="identity", lwd=0.2) +
+  ggtitle("Unormalized")
+
+ggplot(dat, aes(x, fill=group, colour=group)) +
+  geom_histogram(aes(y=..density..), breaks=seq(0,200,5), alpha=0.6, 
+                 position="identity", lwd=0.2) +
+  ggtitle("Normalized")
 
 
 #########################################################
