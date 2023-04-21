@@ -101,7 +101,7 @@ dim(seurat_ob)
 ################################
 # Check if subset is normally distributed
 ################################
-
+# https://stackoverflow.com/questions/29287614/r-normalize-then-plot-two-histograms-together-in-r
 # Plot a histogram
 
 # Fake data (two normal distributions)
