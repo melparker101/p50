@@ -184,7 +184,3 @@ for (cell_type in cell_type_list){
   out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
   write.table(value,out,sep="\t",quote = FALSE)
 }
-
-# Plot clusters
-# Don't plot if no PCA has been performed
-# plotClusters(seurat_ob,use_col,cluster_dir)
