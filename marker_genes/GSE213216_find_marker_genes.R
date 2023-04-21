@@ -1,5 +1,5 @@
 ##############################################################################
-## Find marker genes for dataset GSE213216
+## Find marker genes for dataset GSE213216 (9 clusters)
 ## Using a Wilcoxon Rank Sum test
 ## melodyjparker@gmail.com - Apr 23
 ##############################################################################
@@ -229,69 +229,10 @@ for (cell_type in cell_type_list){
   name <- gsub(")", "", name)
   name <- gsub("-", "_", name)
   name <- gsub("/", "_", name)
-  value <- FindMarkers(seurat_ob, ident.1 = cell_type)
+  value <- FindMarkers(seurat_ob, ident.1 = cell_type, only.pos = TRUE)
   assign(name, value)
   out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
   write.table(value,out,sep="\t",quote = FALSE)
-}
-
-# Plot clusters
-plotClusters(seurat_ob,use_col,cluster_dir)
-
-### 2. Use seurat_clusters (70 clusters after doublet removal)
-# Cluster names are character, but are numbers
-
-# Set indentity classes as the active clusters
-use_col <- "seurat_clusters"
-Idents(object = seurat_ob) <- use_col
-levels(seurat_ob)
-
-# Create new directory for results of this cluster set
-clust_no <- paste0(length(levels(seurat_ob)),"C")
-cluster_dir <- paste(out_dir,clust_no,sep="/")
-dir.create(cluster_dir)
-
-# Create new directory for this set of clusters
-clust_no <- paste0(length(levels(seurat_ob)),"C")  # 70C
-cluster_dir <- paste(out_dir,clust_no,sep="/")
-dir.create(cluster_dir)
-
-# Find all markers
-combined_markers <- FindAllMarkers(object = seurat_ob, 
-                          only.pos = TRUE,
-                          logfc.threshold = 0.25)
-
-# Order the rows by clusters, then by p-adjusted values
-combined_markers <- combined_markers %>% arrange(as.numeric(as.character(cluster)), as.numeric(as.character(p_val_adj)))
-combined_markers <- combined_markers %>% relocate(gene) %>% relocate(cluster)
-View(combined_markers)
-                          
-# Write as table
-combined_out <- paste0(cluster_dir,"/combined_markers_" , clust_no,".txt")
-write.table(combined_markers,combined_out,sep="\t",quote = FALSE)
-
-# Find top 5 markers per cluster
-top5_comb <- combined_markers %>%
-        group_by(cluster) %>%
-        top_n(n = 5,
-              wt = avg_log2FC)
-View(top5_comb)
-
-# Write as table
-top5_comb_out <- paste0(cluster_dir,"/top5_comb_markers_",clust_no,".txt")
-write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
-
-# Find markers for each cluster and write to separate tables
-# Only use function on clusters with 3 or more cells in (function won't work otherwise and will break the loop)
-cell_type_list <- sort(as.numeric(levels(seurat_ob)))
-for (cell_type in cell_type_list){
-  if (as.numeric(table(seurat_ob$seurat_clusters)[as.character(cell_type)]) >= 3){
-    name <- paste(cell_type,"markers",sep="_")
-    value <- FindMarkers(seurat_ob, ident.1 = cell_type)
-    assign(name, value)
-    out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
-    write.table(value,out,sep="\t",quote = FALSE)
-  }
 }
 
 # Plot clusters
