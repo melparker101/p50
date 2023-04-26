@@ -160,6 +160,7 @@ write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
 # Find markers for each cluster and write to separate tables 
 cell_type_list <- levels(seurat_ob)
 for (cell_type in cell_type_list){
+  # Extract cell type names
   name <- paste(cell_type,"markers",sep="_")
   # Find markers
   value <- FindMarkers(seurat_ob, ident.1 = cell_type, only.pos = TRUE)
