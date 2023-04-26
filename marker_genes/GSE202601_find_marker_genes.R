@@ -79,7 +79,9 @@ mat <- mat[,ids_use]
 dim(mat)
 dim(meta)
 
-####################################
+################################
+# Set up
+################################
 
 # Use the original code from the dataset to process and cluster and also use the Seurat tutorial
 # https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
