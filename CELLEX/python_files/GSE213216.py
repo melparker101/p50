@@ -6,6 +6,7 @@
 #######################################################
 
 # change active cluster to cell_type in R
+# There was some sort of issue with cellex for mesenchymal cells outputting NAN- remove these
 
 import scanpy as sc
 import pandas as pd
@@ -32,6 +33,12 @@ adata.obs["active_cluster"] = adata.obs["active_cluster"].str.replace("[ ]","_")
 adata.obs["active_cluster"] = adata.obs["active_cluster"].str.replace("[/]","or")
 # adata.obs["active_cluster"] = adata.obs["active_cluster"].str.replace("Smooth_muscle_cells","SmoothMuscle_cells")
 
+# Look at cell types
+adata.obs.active_cluster.value_counts()
+
+# Remove mesenchymal cells
+adata = adata[~adata.obs['active_cluster'].isin(['Mesenchymal_cells'])]
+
 # Extract metadata
 metadata = adata.obs["active_cluster"]
 metadata = pd.DataFrame(metadata)
@@ -47,8 +54,9 @@ patient_no = adata.obs['Patient.No.']
 patient_no.value_counts()
 
 # The adata object only contains raw counts (not normalised), so we can directly extract
-adata = adata.transpose()
+# adata = adata.transpose()
 mat = adata.to_df()
+mat = mat.T
 
 # Check if the raw counts have been converted and extracted correctly - they need to be whole numbers
 mat.iloc[30:50,15:20]
@@ -62,7 +70,7 @@ eso.compute(verbose=True)
 
 # Save and inspect results
 # Save expression specificity mu and sd matrix for gene symbols
-eso.save_as_csv(file_prefix=prefixData_sym, path=dirOut, verbose=True)
+# eso.save_as_csv(file_prefix=prefixData_sym, path=dirOut, verbose=True)
 eso.results["esmu"].head()
 
 # Map symbols to ensembl ids
