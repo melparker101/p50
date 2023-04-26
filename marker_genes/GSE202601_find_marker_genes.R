@@ -152,7 +152,7 @@ combined_markers <- FindAllMarkers(object = seurat_ob,
 View(combined_markers)
 
 # Order the rows by clusters, then by p-adjusted values
-combined_markers <- combined_markers %>% arrange(as.character(cluster), as.numeric(as.character(p_val_adj)))
+combined_markers <- combined_markers %>% arrange(as.character(cluster), as.numeric(as.character(p_val)))
 combined_markers <- combined_markers %>% relocate(gene) %>% relocate(cluster)
 View(combined_markers)
 
@@ -175,8 +175,12 @@ write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
 cell_type_list <- levels(seurat_ob)
 for (cell_type in cell_type_list){
   name <- paste(cell_type,"markers",sep="_")
+  # Find markers
   value <- FindMarkers(seurat_ob, ident.1 = cell_type, only.pos = TRUE)
+  # Reformat marker results table - order by pval and change col order
+  value <- value %>% arrange(as.numeric(as.character(p_val)))
   assign(name, value)
+  # Write to file
   out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
   write.table(value,out,sep="\t",quote = FALSE)
 }
