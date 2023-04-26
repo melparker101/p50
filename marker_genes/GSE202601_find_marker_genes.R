@@ -126,6 +126,9 @@ mat[1:20,1:20]
 # Normalise
 seurat_ob <- NormalizeData(seurat_ob, normalization.method = "LogNormalize", scale.factor = 10000)
 
+# View normalised counts
+GetAssayData(seurat_ob)[1:20,1:20]
+
 ################################
 # Find markers
 ################################
