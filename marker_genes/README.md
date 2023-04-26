@@ -14,6 +14,8 @@ https://lawrenson-lab.github.io/AtlasEndometriosis/figure2.html
 
 https://satijalab.org/seurat/reference/findmarkers 
 
+### Use this tutorial for findAllMarkers(): https://hbctraining.github.io/scRNA-seq/lessons/sc_exercises_integ_marker_identification.html
+
 # Info on datasets
 ### GSE118127
 The object is filtered and preprocessed already. The data was normalised using the "LogNormalize" method, with some C++ code: https://github.com/johnmous/singleCell/blob/master/workflow.Rmd. 
