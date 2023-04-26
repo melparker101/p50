@@ -38,23 +38,35 @@ plotClusters <- function(object,clusters,out){
 ################################
 # Set up 
 ################################
+
 # rm(list = ls())
 
 # Dataset accession
 dataset <- "GSE213216"
 
-# Input files
-seurat_in <- paste0("counts/",dataset,"/_aux.seurat.shared.rds")
-
 # Out dir
 out_dir <- paste0("cluster_markers/", dataset)
+
+# Create output directory
+dir.create(out_dir)
+
+### 1. Set up for SCTransform normalisation ###
+###############################################
+
+# Input file - processed, unfiltered dataset
+seurat_in <- paste0("counts/",dataset,"/_aux.seurat.shared.rds")
 
 # Load in Seurat object
 seurat_ob <- readRDS(file = seurat_in)
 seurat_ob
 
-# Create output directory
-dir.create(out_dir)
+### 1. Set up for log normalisation ###
+###############################################
+
+# Input file - raw, filtered dataset (created for input to CELLEX)
+seurat_in <- paste0("counts/", dataset, "/counts_GSE213216.h5Seurat")
+
+# seurat_ob <- 
 
 ################################
 # Filtering
