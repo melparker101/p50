@@ -112,7 +112,7 @@ View(combined_markers)
 # pval = 0 just means the p-value is too small for R to display
 # https://github.com/satijalab/seurat/issues/205
 
-# Order the rows by clusters, then by p-adjusted values
+# Order the rows by clusters, then by p-values
 combined_markers <- combined_markers %>% arrange(as.character(cluster), as.numeric(as.character(p_val)))
 combined_markers <- combined_markers %>% relocate(gene) %>% relocate(cluster)
 View(combined_markers)
