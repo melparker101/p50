@@ -74,3 +74,5 @@ eso.save_as_csv(file_prefix=prefixData_ens, path=dirOut, verbose=True)
 
 # Delete object to release memory
 del eso
+
+# End
