@@ -137,7 +137,7 @@ combined_markers <- FindAllMarkers(object = seurat_ob,
                           logfc.threshold = 0.25)  
 View(combined_markers)
 
-# Order the rows by clusters, then by p-adjusted values
+# Order the rows by clusters, then by p-values
 combined_markers <- combined_markers %>% arrange(as.character(cluster), as.numeric(as.character(p_val)))
 combined_markers <- combined_markers %>% relocate(gene) %>% relocate(cluster)
 View(combined_markers)
