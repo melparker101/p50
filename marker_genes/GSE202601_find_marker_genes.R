@@ -102,7 +102,7 @@ dim(meta)
 # https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
 # https://github.com/ChenJin2020/The-regulatory-landscapes-of-human-ovarian-ageing/blob/main/Data_Processing.R
 
-# Redo this part
+# Format metadata
 rownames(meta) <- meta$cell_id
 meta <- meta[,2,drop=FALSE]
 
