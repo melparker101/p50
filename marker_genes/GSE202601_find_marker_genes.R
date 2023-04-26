@@ -3,14 +3,15 @@
 ## Using a Wilcoxon Rank Sum test
 ## melodyjparker@gmail.com - Apr 23
 ##############################################################################
-#
+
 # Use the original rds file and metadata
-# The rsd contains the raw counts, so this needs preprocessing/basic filtering
-# https://www.biorxiv.org/content/biorxiv/early/2022/05/19/2022.05.18.492547.full.pdf
-# Also check out their github for their preprocessing code
+# The RDS contains the raw counts, so this needs preprocessing/basic filtering
+
 # https://github.com/satijalab/seurat/issues/678
 # https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
-# Use this tutorial for findAllMarkers(): https://hbctraining.github.io/scRNA-seq/lessons/sc_exercises_integ_marker_identification.html
+
+# Their data processing code:
+# https://github.com/ChenJin2020/The-regulatory-landscapes-of-human-ovarian-ageing/blob/main/Data_Processing.R
 
 ################################
 # Load libraries
@@ -42,6 +43,8 @@ plotClusters <- function(object,clusters,out){
 ################################
 # Set up 
 ################################
+
+# rm(list = ls())
 
 # Dataset
 dataset <- "GSE202601"
@@ -123,16 +126,6 @@ mat[1:20,1:20]
 # Normalise
 seurat_ob <- NormalizeData(seurat_ob, normalization.method = "LogNormalize", scale.factor = 10000)
 
-# Find variable features
-# seurat_ob <- FindVariableFeatures(seurat_ob, selection.method = "vst", nfeatures = 2100)
-
-# Scale the data
-# all.genes <- rownames(seurat_ob)
-# seurat_ob <- ScaleData(seurat_ob, features = all.genes)
-
-# Run a PCA
-# seurat_ob <- RunPCA(seurat_ob, features = VariableFeatures(object = seurat_ob))
-
 ################################
 # Find markers
 ################################
@@ -172,7 +165,7 @@ top5_comb <- combined_markers %>%
 View(top5_comb)
 
 # Write as table
-top5_comb_out <- paste0(cluster_dir,"/top5_comb_markers_",clust_no,".txt")
+top5_comb_out <- paste0(cluster_dir,"/top5_avglog2FC_comb_markers_",clust_no,".txt")
 write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
 
 # Find markers for each cluster and write to separate tables 
@@ -184,3 +177,7 @@ for (cell_type in cell_type_list){
   out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
   write.table(value,out,sep="\t",quote = FALSE)
 }
+
+################################
+# End
+################################
