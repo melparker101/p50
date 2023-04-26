@@ -121,7 +121,7 @@ top5_comb <- combined_markers %>%
 View(top5_comb)
 
 # Write as table
-top5_comb_out <- paste0(cluster_dir,"/top5_comb_markers_",clust_no,".txt")
+top5_comb_out <- paste0(cluster_dir,"/top5_avglog2FC_comb_markers_",clust_no,".txt")
 write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
 
 # Check that there are no clusters with less than 3 cells
@@ -130,13 +130,18 @@ table(seurat_ob$cell_type)
 # Find markers for each cluster and write to separate tables 
 cell_type_list <- levels(seurat_ob)
 for (cell_type in cell_type_list){
+  # Extract and edit cell type names
   name <- paste(cell_type,"markers",sep="_")
   name <- gsub(" ", "_", name)
   name <- gsub(")", "", name)
   name <- gsub("-", "_", name)
   name <- gsub("/", "_", name)
+  # Find markers
   value <- FindMarkers(seurat_ob, ident.1 = cell_type, only.pos = TRUE)
+  # Reformat marker results table - order by pval and change col order
+  value <- value %>% arrange(as.numeric(as.character(p_val)))
   assign(name, value)
+  # Write to file
   out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
   write.table(value,out,sep="\t",quote = FALSE)
 }
@@ -163,7 +168,7 @@ combined_markers <- FindAllMarkers(object = seurat_ob,
 View(combined_markers)
 
 # Order the rows by clusters, then by p-adjusted values
-combined_markers <- combined_markers %>% arrange(as.character(cluster), as.numeric(as.character(p_val_adj)))
+combined_markers <- combined_markers %>% arrange(as.character(cluster), as.numeric(as.character(p_val)))
 combined_markers <- combined_markers %>% relocate(gene) %>% relocate(cluster)
 View(combined_markers)
 
@@ -179,19 +184,23 @@ top5_comb <- combined_markers %>%
 View(top5_comb)
 
 # Write as table
-top5_comb_out <- paste0(cluster_dir,"/top5_comb_markers_",clust_no,".txt")
+top5_comb_out <- paste0(cluster_dir,"/top5_avglog2FC_comb_markers_",clust_no,".txt")
 write.table(top5_comb,top5_comb_out,sep="\t",quote = FALSE)
 
 # Find markers for each cluster and write to separate tables 
 cell_type_list <- levels(seurat_ob)
 for (cell_type in cell_type_list){
+  # Extract and edit cell type names
   name <- paste(cell_type,"markers",sep="_")
   name <- gsub(" ", "_", name)
   name <- gsub(")", "", name)
   name <- gsub("-", "_", name)
   name <- gsub("/", "_", name)
   value <- FindMarkers(seurat_ob, ident.1 = cell_type, only.pos = TRUE)
+  # Reformat marker results table - order by pval and change col order
+  value <- value %>% arrange(as.numeric(as.character(p_val)))
   assign(name, value)
+  # Write to file
   out <- paste0(cluster_dir,"/",name,"_",clust_no,".txt")
   write.table(value,out,sep="\t",quote = FALSE)
 }
