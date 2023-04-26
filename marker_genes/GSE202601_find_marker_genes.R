@@ -133,7 +133,8 @@ GetAssayData(seurat_ob)[1:20,1:20]
 # Find markers
 ################################
 
-### 1. Use active clusters (8 clusters)
+### 1. Use active clusters (8 clusters) ###
+###########################################
 
 # Set indentity classes as the active clusters
 use_col <- "cell_type"
