@@ -91,6 +91,7 @@ dim(GetAssayData(object = seurat_ob))
 
 ### 1. Use cell_description (9 clusters) ###
 ############################################
+
 use_col <- "cell_type"
 
 # Set identity classes to the cell description
@@ -160,6 +161,7 @@ for (cell_type in cell_type_list){
 
 ### 2. Use cell_description (19 clusters) ###
 #############################################
+
 use_col <- "cell_description"
 
 # Set identity classes to the cell description
