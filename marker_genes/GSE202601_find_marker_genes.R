@@ -24,23 +24,6 @@ library(pals)
 library(data.table)
 
 ################################
-# Functions
-################################
-# Function for plotting clusters
-plotClusters <- function(object,clusters,out){
-  n <- length(levels(object))
-  clust_no <- paste0(n,"C")
-  cluster.cols = as.vector(polychrome(n))
-  plot = DimPlot(object = seurat_ob, 
-               pt.size = 0.1, 
-               raster=FALSE, 
-               group.by = clusters,
-               cols = cluster.cols,
-               label = T)
-  ggsave(paste0(out,"/",clusters,"_clusters_",clust_no,".pdf"), width = 10, height = 10)
-}
-
-################################
 # Set up 
 ################################
 
