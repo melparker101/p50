@@ -4,15 +4,15 @@
 ## melodyjparker@gmail.com - Apr 23
 ##############################################################################
 
-##########################
-######### Set up #########
-##########################
-
 # Directly download the RDS 
 # https://cellxgene.cziscience.com/collections/2902f08c-f83c-470e-a541-e463e25e5058
 
 # The object should be filtered and preprocessed already. Their filtering code:
 # https://github.com/johnmous/singleCell/blob/master/workflow.Rmd
+
+################################
+# Load libraries
+################################
 
 library(Seurat)
 library(SeuratDisk)
@@ -20,6 +20,10 @@ library(SeuratObject)
 library(dplyr)
 library(pals)
 library(ggplot2)
+
+################################
+# Define functions
+################################
 
 # Function for plotting clusters
 plotClusters <- function(object,clusters,out){
@@ -34,6 +38,10 @@ plotClusters <- function(object,clusters,out){
                label = T)
   ggsave(paste0(out,"/",clusters,"_clusters_",clust_no,".pdf"), width = 10, height = 10)
 }
+
+################################
+# Set up
+################################
 
 # rm(list = ls())
 
@@ -77,11 +85,12 @@ GetAssayData(object = seurat_ob)[1:10,1:15]
 dim(GetAssayData(object = seurat_ob))
 # 32922 genes
 
-##########################
-###### Find markers ######
-##########################
+################################
+# Find markers
+################################
 
-### 1. Use cell_description (9 clusters)
+### 1. Use cell_description (9 clusters) ###
+############################################
 use_col <- "cell_type"
 
 # Set identity classes to the cell description
@@ -147,9 +156,10 @@ for (cell_type in cell_type_list){
 }
 
 # Plot clusters
-plotClusters(seurat_ob,use_col,cluster_dir)
+# plotClusters(seurat_ob,use_col,cluster_dir)
 
-### 2. Use cell_description (19 clusters)
+### 2. Use cell_description (19 clusters) ###
+#############################################
 use_col <- "cell_description"
 
 # Set identity classes to the cell description
@@ -206,4 +216,8 @@ for (cell_type in cell_type_list){
 }
 
 # Plot clusters
-plotClusters(seurat_ob,use_col,cluster_dir)
+# plotClusters(seurat_ob,use_col,cluster_dir)
+
+################################
+# End
+################################
