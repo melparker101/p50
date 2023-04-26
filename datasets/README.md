@@ -13,5 +13,5 @@
 - GSE118127
 - GSE213216
 
-The .md files contain general information about each dataset used.
+The GSE .md files in this sub directory contain general information about each dataset used.
 
