@@ -6,10 +6,15 @@
 git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 ```
 ---
+1. Add N column to sumstats (use add_N_to_sumstats.sh, then add_N_to_sumstats.R)
+2. 
+
+
 1. Create a map file (dbSNP/MarkerName_map_GRCh37.txt)
 2. Add MarkerName column to hormones sumstats files (infertility already contains this)
 3. Filter for MAF >1% in R
 4. Add rsid column to all sumstats using map file
+5. Munge using ldsc munge script
 
 - write a script which changes yml files...
 - maybe use multiple count datasets and sumstats in one file
