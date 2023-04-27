@@ -24,7 +24,7 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 ``` bash
 # pwd=CELLECT
 conda activate <env_with_snakemake>
-snakemake --use-conda -j -s cellect-ldsc.snakefile --configfile config.yml
+snakemake --use-conda -j -s cellect-<method>.snakefile --configfile config.yml
 ```
 
 ### Things to note
