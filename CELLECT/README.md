@@ -21,3 +21,8 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 conda activate <env_with_snakemake>
 snakemake --use-conda -j -s cellect-ldsc.snakefile --configfile config.yml
 ```
+
+### Things to note
+1. Run CELLECT-magma and CELLECT-ldsc on rescomp the first time as it creates conda environments (internet connection is required for necessary package installation). After this, send slurm scripts off.
+2. For CELLECT-ldsc, make sure the ldsc folder is properly downloaded - 'git clone' does not download this directory. Read the CELLECT github for more info.
+3. For CELLECT-magma, use the 'keep p-val' option for munging - the summary stats must have a p-val column
