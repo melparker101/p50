@@ -12,8 +12,8 @@ library(data.table)
 ##############################
 # Define file names
 ##############################
-in_file <- "data/sumstats/not_using/Infertility1_F_EUR_directions.txt"
-out_file <- "data/sumstats/not_using/Infertility1_F_EUR.txt"
+in_file <- "data/sumstats/other/Infertility1_F_EUR_directions.txt"
+out_file <- "data/sumstats/other/Infertility1_F_EUR.txt"
 
 ##############################
 # Functions
