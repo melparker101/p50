@@ -1,7 +1,7 @@
 ########################################
+# Make a text file with a marker column and a seperate direction column for each study
 # melodyjparker14@gmail.com - Apr 23
 ########################################
-# Make a text file with a marker column and a seperate direction column for each study
 # Run from p50 for now
 # Use awk to edit as it is efficient
 
