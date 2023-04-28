@@ -1,8 +1,8 @@
 ####################################
 # melodyjparker14@gmail.com
 ####################################
-
 # Run from p50 for now
+# Use awk to edit as it is very efficient
 
 # Path for sumstats files
 IN=data/sumstats/original
