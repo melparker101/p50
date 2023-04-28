@@ -1,5 +1,6 @@
 ########################################
 # Make a text file with a marker column and a seperate direction column for each study
+# 1 = SNP present in study, 0 = SNP not present in study
 # melodyjparker14@gmail.com - Apr 23
 ########################################
 # Run from p50 for now
@@ -15,6 +16,9 @@ awk '{print $1, $11}' "$IN"/female_infertility_analysis1_UKBB_Finngen_EstBB_noMA
 # Split up the characters of the 'Direction' column and name columns by study name
 # Overwrite file
 awk 'NR==1 {print $1, "FinnGen", "UKBB", "EstBB"; next} NR==FNR {printf "%s ", $1; gsub(/.{1}/,"& ",$2); print $2}' "$OUT"/Infertility1_F_EUR_directions.txt > tmp && mv tmp "$OUT"/Infertility1_F_EUR_directions.txt
+
+# Change ? to 0 and +/- to 1
+awk '{gsub(/\?/,"0"); gsub(/[+-]/,"1"); print}' "$OUT"/Infertility1_F_EUR_directions.txt > tmp && mv tmp "$OUT"/Infertility1_F_EUR_directions.txt
 
 ########################################
 # End 
