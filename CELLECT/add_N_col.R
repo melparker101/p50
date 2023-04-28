@@ -65,3 +65,7 @@ plot(df$N,df$N2, main="Comparison of N-eff when calculated in two different ways
    xlab="N ", ylab="N2 ", pch=19)
 
 fwrite(infert3,outfile,sep=" ")
+
+##############################
+# End
+##############################
