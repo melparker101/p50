@@ -63,6 +63,7 @@ df <- df %>%
   
 plot(df$N,df$N2, main="Comparison of N-eff when calculated in two different ways",
    xlab="N ", ylab="N2 ", pch=19)
+abline(a=0, b=1)
 
 # There is not much difference between the output of the two N-eff methods for our data
 
