@@ -64,7 +64,10 @@ df <- df %>%
 plot(df$N,df$N2, main="Comparison of N-eff when calculated in two different ways",
    xlab="N ", ylab="N2 ", pch=19)
 
-fwrite(infert3,outfile,sep=" ")
+# There is not much difference between the output of the two N-eff methods for our data
+
+# Write to file (only with the N column, not N2)
+fwrite(infert2,outfile,sep=" ")
 
 ##############################
 # End
