@@ -1,0 +1,4 @@
+cohort	sample_size
+UKBB	369915
+EstBB	4427
+Pott	7643

@@ -1,4 +1,4 @@
-cohort  sample_size
-UKBB    188196
-EstBB   3306
-ALSPAC  2380
+cohort	sample_size
+UKBB	188196
+EstBB	3306
+ALSPAC	2380

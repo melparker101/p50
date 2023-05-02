@@ -1,0 +1,4 @@
+cohort	sample_size
+UKBB	10155
+EstBB	3353
+ALSPAC	3102
