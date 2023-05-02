@@ -17,7 +17,7 @@ done
 # Subset the infertility sumstats data to only include the 'MarkerName' and 'Direction' columns
 awk '{print $1, $11}' "$IN"/female_infertility_analysis1_UKBB_Finngen_EstBB_noMACfilter_March20231.out > "$OUT"/Infertility1_F_EUR_directions.txt
 
-# Define sets of shell variables for each summary stats file
+# Define a set of shell variables for each summary stats file
 LH_F_EUR_cohort1="UKBB"
 LH_F_EUR_cohort2="EstBB"
 LH_F_EUR_cohort3="ALSPAC"
