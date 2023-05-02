@@ -9,17 +9,15 @@
 IN=data/sumstats/original
 OUT=data/sumstats/other
 
-# Subset the sumstats data to only include the 'ID' and 'Direction' columns
+# Subset the hormones sumstats data to only include the 'ID' and 'Direction' columns
 for f in "$IN"/*EUR_filtered.txt
   do awk '{print $1, $12}' "$f" > "$OUT/$(basename -- "${f%_filtered.txt}")_directions.txt"
 done
 
-# Subset the sumstats data to only include the 'MarkerName' and 'Direction' columns
+# Subset the infertility sumstats data to only include the 'MarkerName' and 'Direction' columns
 awk '{print $1, $11}' "$IN"/female_infertility_analysis1_UKBB_Finngen_EstBB_noMACfilter_March20231.out > "$OUT"/Infertility1_F_EUR_directions.txt
 
-# Define hormone sets of shell variables
-# Add in infertility hormones afterwards
-
+# Define sets of shell variables for each summary stats file
 LH_F_EUR_cohort1="UKBB"
 LH_F_EUR_cohort2="EstBB"
 LH_F_EUR_cohort3="ALSPAC"
@@ -55,6 +53,7 @@ Infertility1_F_EUR_cohort2="UKBB"
 Infertility1_F_EUR_cohort3="EstBB"
 Infertility1_F_EUR_filename="Infertility1_F_EUR_directions.txt"
 
+# Loop through and edit each summary stats directions file
 for phenotype in LH_F_EUR FSH_F_EUR Testosterone_F_EUR Progesterone_F_EUR Oestradiol_F_EUR Testosterone_sex_comb_EUR Infertility1_F_EUR
 do
     # Set shell variables
