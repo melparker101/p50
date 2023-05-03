@@ -59,10 +59,35 @@ do
 done
 
 ###########################################
+# Calculate Neff for infertility sumstats
+###########################################
+# Infertility1 case/control variables:
+# Define FinnGen variables
+FinnGen_N_Cases=14759
+FinnGen_N_Controls=111583
+FinnGen_N_eff=$(calcNeff $FinnGen_N_Cases $FinnGen_N_Controls)  # 26069.77
+
+# Define UKBB variables
+UKBB_N_Cases=3447
+UKBB_N_Controls=245591
+UKBB_N_eff=$(calcNeff $UKBB_N_Cases $UKBB_N_Controls)  # 6798.578
+
+# Define EstBB variables
+EstBB_N_Cases=12027
+EstBB_N_Controls=111395
+EstBB_N_eff=$(calcNeff $EstBB_N_Cases $EstBB_N_Controls)  # 21710.03
+
+# Create an Neff sample size file for infertility
+echo "cohort sample_size" > $COHORTS/Infertility1_F_EUR.txt
+echo "FinnGen" $FinnGen_N_eff >> $COHORTS/Infertility1_F_EUR.txt
+echo "UKBB" $UKBB_N_eff >> $COHORTS/Infertility1_F_EUR.txt
+echo "EstBB" $EstBB_N_eff >> $COHORTS/Infertility1_F_EUR.txt
+
+###########################################
 # Add N column to sumstats
 ###########################################
 # Add N column on for hormones and save to new file
-for phenotype in LH_F_EUR FSH_F_EUR Testosterone_F_EUR Progesterone_F_EUR Oestradiol_F_EUR Testosterone_sex_comb_EUR # Infertility1_F_EUR
+for phenotype in LH_F_EUR FSH_F_EUR Testosterone_F_EUR Progesterone_F_EUR Oestradiol_F_EUR Testosterone_sex_comb_EUR Infertility1_F_EUR
 do
     COHORT1=$(awk 'NR==2 {print $1}' "$COHORTS"/${phenotype}.txt)
     COHORT2=$(awk 'NR==3 {print $1}' "$COHORTS"/${phenotype}.txt)
@@ -84,26 +109,6 @@ do
                 > "$OUT"/Ncol_${phenotype}.txt
 done
 
-# Add N column on for infertility and save to new file
-
-# Infertility1 case/control variables:
-# Define FinnGen variables
-FinnGen_N_Cases=14759
-FinnGen_N_Controls=111583
-FinnGen_N_eff=$(calcNeff $FinnGen_N_Cases $FinnGen_N_Controls)  # 26069.77
-
-# Define UKBB variables
-UKBB_N_Cases=3447
-UKBB_N_Controls=245591
-UKBB_N_eff=$(calcNeff $UKBB_N_Cases $UKBB_N_Controls)  # 6798.578
-
-# Define EstBB variables
-EstBB_N_Cases=12027
-EstBB_N_Controls=111395
-EstBB_N_eff=$(calcNeff $EstBB_N_Cases $EstBB_N_Controls)  # 21710.03
-
-
-awk -v c1="$COHORT1" -v c2="$COHORT2" -v c3="$COHORT3" \
-        'NR==1 {print $1, c1, c2, c3; next} NR==FNR {printf "%s ", $1; gsub(/.{1}/,"& ",$2); print $2}' "$OUT"/"$FILENAME" \
-        
-awk 'NR==2 {print $2}' cohorts/FSH_F_EUR.txt
+###########################################
+# End
+###########################################
