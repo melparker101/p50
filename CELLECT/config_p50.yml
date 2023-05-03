@@ -14,7 +14,7 @@
 
 # Folder where all the outputs are saved (LD scores, prioritization results files, etc.)
 # CELLECT-LDSC and CELLECT-MAGMA will write the analysis results into <BASE_OUTPUT_DIR>/CELLECT-LDSC and <BASE_OUTPUT_DIR>/CELLECT-MAGMA subdirectories respectively. The directory and its subdirectories will be created if they do not exist.
-BASE_OUTPUT_DIR: p50/CELLECT_OUT_p50>
+BASE_OUTPUT_DIR: p50/CELLECT_OUT_p50
 
 
 ### SPECIFICITY_INPUT: list of dictionaries
