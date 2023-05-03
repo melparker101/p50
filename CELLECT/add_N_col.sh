@@ -1,6 +1,6 @@
 ###########################################
 # Add N column to summary stats
-# melodyjparker14@gmail.com - Apr 23
+# melodyjparker14@gmail.com - May 23
 # This script creates a "directions" file per sumstats which tells us which studies each SNP is present in.
 # 1 = SNP present in study, 0 = SNP not present in study
 # It then creates an N column
