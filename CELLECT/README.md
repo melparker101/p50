@@ -14,12 +14,6 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 6. Edit the yaml file. I did this manually ([config_p50.yml](https://github.com/melparker101/p50/blob/main/CELLECT/config_p50.yml))
 7. Run CELLECT ([run_CELLECT.sh](https://github.com/melparker101/p50/blob/main/CELLECT/run_CELLECT.sh))
 
-``` bash
-# pwd=CELLECT
-conda activate <env_with_snakemake>
-snakemake --use-conda -j -s cellect-<method>.snakefile --configfile config.yml
-```
-
 ### Things to note
 1. Run CELLECT-magma and CELLECT-ldsc on rescomp the first time as it creates conda environments (internet connection is required for necessary package installation). After this, send slurm scripts off.
 2. CELLECT creates these conda environments in a directory called '.snakemake'.
