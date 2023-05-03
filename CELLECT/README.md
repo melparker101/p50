@@ -15,7 +15,7 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 7. Run CELLECT ([run_CELLECT.sh](https://github.com/melparker101/p50/blob/main/CELLECT/run_CELLECT.sh))
 
 Output:
-
+``` text
 p50/CELLECT_OUT_p50
 |-- CELLECT-GENES
 |   |-- logs
@@ -48,7 +48,7 @@ p50/CELLECT_OUT_p50
     |   |-- Testosterone_F_EUR
     |   `-- Testosterone_sex_comb_EUR
     `-- results
-
+```
 
 ### Things to note
 1. Run CELLECT-magma and CELLECT-ldsc on rescomp the first time as it creates conda environments (internet connection is required for necessary package installation). After this, send slurm scripts off.
