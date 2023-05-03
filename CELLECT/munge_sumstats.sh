@@ -43,7 +43,7 @@ OUT=data/sumstats/munged
 
 # Make an index file for munging
 if [ ! -f "$IN"/munge_index.txt ]; then
-  for f in "$IN"/premunge*; do basename ${f} >> "$IN"/munge_index.txt; done
+  for f in "$IN"/premunge*; do basename ${f##*premunge_} >> "$IN"/munge_index.txt; done
 fi
 
 SUMSTATS_FILE=$(sed "${SLURM_ARRAY_TASK_ID}"'q;d' "$IN"/munge_index.txt)
@@ -57,7 +57,7 @@ python "$CELLECT"/ldsc/mtag_munge.py \
 --merge-alleles "$CELLECT"/data/ldsc/w_hm3.snplist \
 --keep-pval \
 --ignore MarkerName \
---out "$OUT"/munged_"${SUMSTATS_FILE##*premunge_}"
+--out "$OUT"/munged_"${SUMSTATS_FILE%.txt}"
 
 # Deactivate conda environment
 conda deactivate
