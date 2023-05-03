@@ -26,4 +26,4 @@ snakemake --use-conda -j -s cellect-<method>.snakefile --configfile config.yml
 4. For CELLECT-magma, use the 'keep p-val' option for munging - the summary stats must have a p-val column
 5. An issue I came across was that CELLEX outputted a column of NAN for a certain cell type. This caused issues downstream when trying to run CELLECT. I am not sure what the solution is (temporary fix was to filter out that cell type from the data before running CELLEX, though we are losing information on that cell type)
 6. When running CELLECT-magma, I was given an error message "ModuleNotFoundError: No module named 'statsmodels'; import statsmodels.api as sm". Although CELLECT is meant to install all packages automatically on the first run (apart from snakemake), I had to install this manually (conda install statsmodels) in the snakemake conda environment before attempting to run CELLECT-magma again - this fixed the issue.
-7. For CELLECT genes, use this temporary bug fix: https://github.com/perslab/CELLECT/issues/81
+7. For CELLECT-genes, use this temporary bug fix: https://github.com/perslab/CELLECT/issues/81
