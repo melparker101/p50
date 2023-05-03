@@ -3,6 +3,8 @@
 # melodyjparker14@gmail.com - Apr 23
 # This script creates a "directions" file per sumstats which tells us which studies each SNP is present in.
 # 1 = SNP present in study, 0 = SNP not present in study
+# It then creates an N column
+# It assumes there exists text files with cohort sample sizes for each hormone phenotype
 ###########################################
 
 ###########################################
@@ -62,7 +64,7 @@ done
 # Calculate Neff for infertility sumstats
 ###########################################
 # Infertility1 case/control variables:
-# Define FinnGen variables
+# Define FinnGen variables manually
 FinnGen_N_Cases=14759
 FinnGen_N_Controls=111583
 FinnGen_N_eff=$(calcNeff $FinnGen_N_Cases $FinnGen_N_Controls)  # 26069.77
@@ -86,6 +88,9 @@ echo "EstBB" $EstBB_N_eff >> $COHORTS/Infertility1_F_EUR.txt
 ###########################################
 # Add N column to sumstats
 ###########################################
+# Create a sym link to link the infertility file to the same file name format as the hormones sumstats
+ln -s $(readlink -fe "$IN"/female_infertility_analysis1_UKBB_Finngen_EstBB_noMACfilter_March20231.out) "$IN"/Infertility1_F_EUR_filtered.txt
+
 # Add N column to sumstats and save to new file
 for phenotype in LH_F_EUR FSH_F_EUR Testosterone_F_EUR Progesterone_F_EUR Oestradiol_F_EUR Testosterone_sex_comb_EUR Infertility1_F_EUR
 do
