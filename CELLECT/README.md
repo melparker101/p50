@@ -15,7 +15,7 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 6. Edit the yaml file. I did this manually ([config_p50.yml](https://github.com/melparker101/p50/blob/main/CELLECT/config_p50.yml))
 7. Run CELLECT ([run_CELLECT.sh](https://github.com/melparker101/p50/blob/main/CELLECT/run_CELLECT.sh))
 
-### Output:
+### Output directory tree
 ``` text
 p50/CELLECT_OUT_p50
 |-- CELLECT-GENES
