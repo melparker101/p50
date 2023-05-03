@@ -7,44 +7,42 @@
 
 #SBATCH -A lindgren.prj
 #SBATCH -p short
-#SBATCH -c 5
+#SBATCH -c 12
 #SBATCH -J run_CELLECT
-#SBATCH -o logs/CELLECT.%A_%a.out
-#SBATCH -e logs/CELLECT.%A_%a.err
-#SBATCH -a 1-6
+#SBATCH -o logs/CELLECT.out
+#SBATCH -e logs/CELLECT.err
 
-#  Parallel environment settings 
-#  For more information on these please see the documentation 
-#  Allowed parameters: 
-#   -c, --cpus-per-task 
-#   -N, --nodes 
-#   -n, --ntasks 
+#  Parallel environment settings
+#  For more information on these please see the documentation
+#  Allowed parameters:
+#   -c, --cpus-per-task
+#   -N, --nodes
+#   -n, --ntasks
 
 echo "########################################################"
-echo "Slurm Job ID: $SLURM_JOB_ID" 
-echo "Run on host: "`hostname` 
-echo "Operating system: "`uname -s` 
-echo "Username: "`whoami` 
-echo "Started at: "`date` 
+echo "Slurm Job ID: $SLURM_JOB_ID"
+echo "Run on host: "`hostname`
+echo "Operating system: "`uname -s`
+echo "Username: "`whoami`
+echo "Started at: "`date`
 echo "##########################################################"
 
 source ~/.bashrc
 conda activate snakemake
 
-IN=config
+echo $CONDA_DEFAULT_ENV
 
-# Make an index file for the config files if it doesn't exist
-if [ ! -f "$IN"/index.txt ]; then
-  for f in "$IN"/*; do basename ${f} >> "$IN"/index.txt; done
-fi
-
-CONFIG_FILE=$(sed "${SLURM_ARRAY_TASK_ID}"'q;d' "$IN"/index.txt)
+IN=p50
+CONFIG_FILE=config_p50.yml
 
 # Run CELLECT-LDSC
 snakemake --use-conda -j -s cellect-ldsc.snakefile --configfile "$IN"/"$CONFIG_FILE"
 
+# Run CELLECT-MAGMA
+snakemake --use-conda -j -s cellect-magma.snakefile --configfile "$IN"/"$CONFIG_FILE"
+
 # Run CELLECT-GENES
-# snakemake --use-conda -j -s cellect-genes.snakefile --configfile "$IN"/"$CONFIG_FILE"
+snakemake --use-conda -j -s cellect-genes.snakefile --configfile "$IN"/"$CONFIG_FILE"
 
 conda deactivate
 
