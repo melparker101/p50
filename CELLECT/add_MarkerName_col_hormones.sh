@@ -29,22 +29,26 @@ echo "Started at: "`date`
 echo "##########################################################"
 
 
-cd //well/lindgren/users/mzf347/p50/sumstats
+IN="data/sumstats/other/"
 
-
-# Sumstats colnames: ID CHROM GENPOS MAF Allele1 Allele2 Freq1 FreqSE BETA SE PVALUE Direction HetPVal
+# Hormomes sumstats colnames: ID CHROM GENPOS MAF Allele1 Allele2 Freq1 FreqSE BETA SE PVALUE Direction HetPVal
 
 # Time the command
-# Loop through hormone sumstats files
+# Loop through sumstats files
 # First half of awk command sorts alleles into alphabetical order and labels them a1 and a2
 # Second half of awk command adds column name and then marker name concatenated strings (chr:pos:a1_a2) for the other lines
 
-# Add MarkerName column and save to new file
-time for f in *.txt; 
-        do awk '{if ($5 < $6) {a1=$5; a2=$6} else {a1=$6; a2=$5}; if(NR==1) {print "MarkerName",$0} else {print $2":"$3":"a1"_"a2,$0}}' $f > MN_$f; 
-     done
+# Loop through sumstats files
+time for f in "$IN"/Ncol*.txt; do
+    if [ $(basename $f) = "Ncol_Infertility1_F_EUR.txt" ]; then
+        cp "$IN"/Ncol_Infertility1_F_EUR.txt "$IN"/MN_Ncol_Infertility1_F_EUR.txt
+        continue  # Skip adding marker name col for the infertility file - it already has one
+    fi
+    # Add MarkerName column to sumstats and save to new file
+    awk '{if ($5 < $6) {a1=$5; a2=$6} else {a1=$6; a2=$5}; if(NR==1) {print "MarkerName",$0} else {print $2":"$3":"a1"_"a2,$0}}' $f > "$IN"/MN_$(basename $f); 
+done
 
-# When tested in interactive node this took 2m7.971s
+# When tested in interactive node this took 1m47.966s
 
 
 echo "###########################################################"
