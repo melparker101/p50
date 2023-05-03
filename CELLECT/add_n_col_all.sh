@@ -12,6 +12,8 @@ calcNeff() {
   echo "$N_eff"
 }
 
+#########################################
+
 # Infertility1 case/control variables:
 
 # Define FinnGen variables
@@ -41,12 +43,12 @@ awk -v c1="$COHORT1" -v c2="$COHORT2" -v c3="$COHORT3" \
         
 awk 'NR==2 {print $2}' cohorts/FSH_F_EUR.txt
 
-
-############################
+#########################################
 
 # Path for sumstats files
 IN=data/sumstats/original
 OUT=data/sumstats/other
+COHORTS="data/sumstats/cohorts"
 
 # Subset the hormones sumstats data to only include the 'ID' and 'Direction' columns
 for f in "$IN"/*EUR_filtered.txt
@@ -55,8 +57,6 @@ done
 
 # Subset the infertility sumstats data to only include the 'MarkerName' and 'Direction' columns
 awk '{print $1, $11}' "$IN"/female_infertility_analysis1_UKBB_Finngen_EstBB_noMACfilter_March20231.out > "$OUT"/Infertility1_F_EUR_directions.txt
-
-COHORTS="data/sumstats/cohorts"
 
 # Define a set of shell variables for each summary stats file
 LH_F_EUR_cohort1=$(awk 'NR==2 {print $1}' "$COHORTS"/FSH_F_EUR.txt)  # "UKBB"
@@ -109,23 +109,44 @@ do
     SAMPLE_SIZE3=$(awk 'NR==4 {print $2}' "$COHORTS"/${phenotype}.txt)
     FILENAME=${phenotype}_directions.txt
     
-    echo "$OUT"/Ncol_${phenotype}.txt
+    # awk -v n1="$SAMPLE_SIZE1" -v n2="$SAMPLE_SIZE2" -v n3="$SAMPLE_SIZE3" '{ print $1*n1 + $2*n2 + $3*n3 }' "$OUT"/${phenotype}_directions.txt > "$OUT"/Ncol_${phenotype}.txt
+    echo ${phenotype}
+    echo "Sample size 1:${SAMPLE_SIZE1}" 
+    echo "Sample size 2:${SAMPLE_SIZE2}"
+    echo "Sample size 3:${SAMPLE_SIZE3}"
+  
+    paste "$IN"/${phenotype}_filtered.txt <(awk -v n1="$SAMPLE_SIZE1" -v n2="$SAMPLE_SIZE2" -v n3="$SAMPLE_SIZE3" 'NR==1 {print "N"; next} NR>1 { print $2*n1 + $3*n2 + $4*n3 }' "$OUT"/${phenotype}_directions.txt) > "$OUT"/Ncol_${phenotype}.txt
+    echo ""
+done
+
+for phenotype in LH_F_EUR FSH_F_EUR Testosterone_F_EUR Progesterone_F_EUR Oestradiol_F_EUR Testosterone_sex_comb_EUR # Infertility1_F_EUR
+do
+    echo "$IN"/${phenotype}_filtered.txt
 done
 
     echo "${COHORT1} ${COHORT2} ${COHORT3}"
-    echo "${SAMPLE_SIZE1}"
+    echo "${SAMPLE_SIZE1} ${SAMPLE_SIZE2} ${SAMPLE_SIZE3}"
     echo "${SAMPLE_SIZE2}"
     echo "${SAMPLE_SIZE3}"
+    
+    awk -v n1="$SAMPLE_SIZE1" -v n2="$SAMPLE_SIZE2" -v n3="$SAMPLE_SIZE3" '{ print $1*n1 + $2*n2 + $3*n3 }' "$OUT"/${phenotype}_directions.txt > "$OUT"/Ncol_${phenotype}.txt
+
 
 
 awk -v c1="$COHORT1" -v c2="$COHORT2" -v c3="$COHORT3" '{ print $1*c1 + $2*c2 + $3*c3 }' directions.txt > output.txt
 
+awk -v c1="$COHORT1" -v c2="$COHORT2" -v c3="$COHORT3" '{ print $1*c1 + $2*c2 + $3*c3 }' "$OUT"/${phenotype}_directions.txt > "$OUT"/Ncol_${phenotype}.txt
+
+
+for phenotype in LH_F_EUR FSH_F_EUR Testosterone_F_EUR Progesterone_F_EUR Oestradiol_F_EUR Testosterone_sex_comb_EUR # Infertility1_F_EUR
+do   
+    echo "$OUT"/${phenotype}_directions.txt
+    echo "$OUT"/Ncol_${phenotype}.txt
+done
+
 
 # try this with a test
 head $OUT/Progesterone_F_EUR_directions.txt > test_directions.txt
-
-
-
 
 
 # add a column
