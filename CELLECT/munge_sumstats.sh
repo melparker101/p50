@@ -59,6 +59,9 @@ python "$CELLECT"/ldsc/mtag_munge.py \
 --ignore MarkerName \
 --out "$OUT"/munged_"${SUMSTATS_FILE##*premunge_}"
 
+# Deactivate conda environment
+conda deactivate
+
 echo "###########################################################"
 echo "Array Task ID: $SLURM_ARRAY_TASK_ID"
 echo "Finished at: "`date`
