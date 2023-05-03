@@ -1,7 +1,6 @@
 # Running CELLECT on ovary datasets
-1. Munge sumstats
-2. Clone the CELLECT github repository
-- Clone the CELLECT git
+
+Clone the CELLECT github repository
 ``` bash
 git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 ```
