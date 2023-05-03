@@ -15,24 +15,25 @@ library(dplyr)
 ############################## 
 # 2 - Source files
 ##############################
+path <- "data/sumstats/other/"
+
 # Infertility summary stats
-filename <- 'female_infertility_analysis1_UKBB_Finngen_EstBB_GandH_noMACfilter_March20231.out'
+infert_filename <- "Ncol_Infertility1_F_EUR.txt"
 
 # Hormones summary stats
-# filelist <- list.files(pattern='.txt)
-filelist <- list.files(pattern='MN_')
+filelist <- list.files(path,pattern='MN_')
 			  
 ##############################
 # 3 - Start main code
 ##############################
 # Read in infertility sumstats
-Infertility1_F_Finngen <- fread(filename)
+Infertility1_F_EUR <- fread(paste0(path,infert_filename))
 
 # Read in hormone sumstats
 sumstats_list = c()
 for(i in seq_along(filelist)){
-  sumstats <- fread(filelist[i])
-  name <- stri_replace_all_regex(filelist[i], pattern=c('MN_', '_filtered.txt'), replacement=c('',''), vectorize=FALSE)
+  sumstats <- fread(paste0(path,filelist[i]))
+  name <- stri_replace_all_regex(filelist[i], pattern=c('MN_Ncol_', '.txt'), replacement=c('',''), vectorize=FALSE)
   assign(name, sumstats)
   sumstats_list <- append(sumstats_list,name) 
 }
@@ -41,14 +42,22 @@ for(i in seq_along(filelist)){
 rm(sumstats)
 
 # Make a sample size table manually for hormones
-col1 <- paste0(sumstats_list)
-col2 <- c(19117, 16610, 54522, 5169, 197234, 381985)
-df <- data.frame(col1, col2)
-colnames(df) <- c("sumstats","sample_size")
-fwrite(df,"sample_size.txt",sep="\t",col.names=FALSE)
+# col1 <- paste0(sumstats_list)
+# col2 <- c(19117, 16610, 54522, 5169, 197234, 381985)
+# df <- data.frame(col1, col2)
+# colnames(df) <- c("sumstats","sample_size")
+# fwrite(df,"sample_size.txt",sep="\t",col.names=FALSE)
 
 # Check all of the data tables we have loaded in
 for(i in 1:length(sumstats_list)) {print(head(get(sumstats_list[i])))}
+head(Infertility1_F_EUR)
+
+# Now filter infertility sumstats 
+# Add MAF column
+Infertility1_F_EUR[, MAF := pmin(Freq1, 1-Freq1)]
+
+# Add infertility to sumstats list
+sumstats_list <- append(sumstats_list,"Infertility1_F_EUR")
 
 # Loop through hormone sumstats to filter
 for (name in sumstats_list) {
@@ -66,19 +75,9 @@ for (name in sumstats_list) {
   assign(name, sumstats_filtered, envir = .GlobalEnv)
 }
 
-# Now filter infertility sumstats 
-# Add MAF column
-Infertility1_F_Finngen[, MAF := pmin(Freq1, 1-Freq1)]
-
-# Filter for MAF > 0.01
-Infertility1_F_Finngen <- Infertility1_F_Finngen %>% filter(MAF>0.01)
-
-# Add infertility to sumstats list
-sumstats_list <- append(sumstats_list,"Infertility1_F_Finngen")
-
 # Change column names of infertility sumstats in preparation for munging
-setnames(Infertility1_F_Finngen, "P-value", "PVALUE")
-setnames(Infertility1_F_Finngen, "StdErr", "SE")
+setnames(Infertility1_F_EUR, "P-value", "PVALUE")
+setnames(Infertility1_F_EUR, "StdErr", "SE")
 
 # Check data before writing to file
 for(i in 1:length(sumstats_list)) {print(get(sumstats_list[i]))}
@@ -86,6 +85,8 @@ for(i in 1:length(sumstats_list)) {print(get(sumstats_list[i]))}
 # Write sumstats to file
 for(name in c(sumstats_list)){
 	sumstats <- get(name)
-	out <- paste0("MAF_filtered/MAFfiltered_",name,".txt")
+	out <- paste0(path,"MAFfiltered_MN_Ncol_",name,".txt")
 	fwrite(sumstats,out,sep='\t')
 }
+
+# End
