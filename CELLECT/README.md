@@ -10,8 +10,8 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 2. Create a map file for chr:pos:a1_a2 to rsid (dbSNP/MarkerName_map_GRCh37.txt) ([create_snp_map.md](https://github.com/melparker101/p50/blob/main/CELLECT/create_snp_map.md) and [manipulate_map_file.sh](https://github.com/melparker101/p50/blob/main/CELLECT/manipulate_map_file.sh))
 2. Add MarkerName column to hormones sumstats files (infertility sumstats already contains this) ([add_MarkerName_col_hormones.sh](https://github.com/melparker101/p50/blob/main/CELLECT/add_MarkerName_col_hormones.sh))
 3. Filter for MAF >1% in R ([MAF_filter_all_sumstats.R](https://github.com/melparker101/p50/blob/main/CELLECT/MAF_filter_all_sumstats.R))
-4. Add rsid column to all sumstats using map file
-5. Munge using ldsc munge script
+4. Add rsid column to all sumstats using map file ([add_rsid.sh](https://github.com/melparker101/p50/blob/main/CELLECT/add_rsid.sh))
+5. Munge using ldsc munge script ([munge_sumstats.sh](https://github.com/melparker101/p50/blob/main/CELLECT/munge_sumstats.sh))
 
 ``` bash
 # pwd=CELLECT
