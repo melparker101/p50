@@ -53,7 +53,7 @@ mkdir -p "$OUT"
 
 # Run munge script
 python "$CELLECT"/ldsc/mtag_munge.py \
---sumstats "$IN"/premunge_"$SUMSTATS_FILE".txt \
+--sumstats "$IN"/premunge_"$SUMSTATS_FILE" \
 --merge-alleles "$CELLECT"/data/ldsc/w_hm3.snplist \
 --keep-pval \
 --ignore MarkerName \
