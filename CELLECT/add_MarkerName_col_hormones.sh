@@ -45,7 +45,9 @@ time for f in "$IN"/Ncol*.txt; do
         continue  # Skip adding marker name col for the infertility file - it already has one
     fi
     # Add MarkerName column to sumstats and save to new file
-    awk '{if ($5 < $6) {a1=$5; a2=$6} else {a1=$6; a2=$5}; if(NR==1) {print "MarkerName",$0} else {print $2":"$3":"a1"_"a2,$0}}' $f > "$IN"/MN_$(basename $f); 
+    awk '{if ($5 < $6) {a1=$5; a2=$6} else {a1=$6; a2=$5}; \
+            if(NR==1) {print "MarkerName\t"$0} else {print $2":"$3":"a1"_"a2"\t"$0}}' $f \
+                > "$IN"/MN_$(basename $f)
 done
 
 # When tested in interactive node this took 1m47.966s
