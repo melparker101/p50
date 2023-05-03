@@ -14,6 +14,42 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 6. Edit the yaml file. I did this manually ([config_p50.yml](https://github.com/melparker101/p50/blob/main/CELLECT/config_p50.yml))
 7. Run CELLECT ([run_CELLECT.sh](https://github.com/melparker101/p50/blob/main/CELLECT/run_CELLECT.sh))
 
+Output:
+
+p50/CELLECT_OUT_p50
+|-- CELLECT-GENES
+|   |-- logs
+|   |-- out
+|   `-- results
+|-- CELLECT-LDSC
+|   |-- logs
+|   |-- out
+|   |   `-- prioritization
+|   |-- precomputation
+|   |   |-- GSE118127
+|   |   |   `-- per_annotation
+|   |   |-- GSE202601
+|   |   |   `-- per_annotation
+|   |   |-- GSE213216
+|   |   |   `-- per_annotation
+|   |   |-- bed
+|   |   `-- control.all_genes_in_dataset
+|   `-- results
+`-- CELLECT-MAGMA
+    |-- logs
+    |-- out
+    |   `-- prioritization
+    |-- precomputation
+    |   |-- FSH_F_EUR
+    |   |-- Infertility1_F_EUR
+    |   |-- LH_F_EUR
+    |   |-- Oestradiol_F_EUR
+    |   |-- Progesterone_F_EUR
+    |   |-- Testosterone_F_EUR
+    |   `-- Testosterone_sex_comb_EUR
+    `-- results
+
+
 ### Things to note
 1. Run CELLECT-magma and CELLECT-ldsc on rescomp the first time as it creates conda environments (internet connection is required for necessary package installation). After this, send slurm scripts off.
 2. CELLECT creates these conda environments in a directory called '.snakemake'.
