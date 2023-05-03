@@ -12,6 +12,8 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 3. Filter for MAF >1% in R ([MAF_filter_all_sumstats.R](https://github.com/melparker101/p50/blob/main/CELLECT/MAF_filter_all_sumstats.R))
 4. Add rsid column to all sumstats using map file ([add_rsid.sh](https://github.com/melparker101/p50/blob/main/CELLECT/add_rsid.sh))
 5. Munge using ldsc munge script ([munge_sumstats.sh](https://github.com/melparker101/p50/blob/main/CELLECT/munge_sumstats.sh))
+6. Edit the yaml file. I did this manually ([config_p50.yml](https://github.com/melparker101/p50/blob/main/CELLECT/config_p50.yml))
+7. Run CELLECT ([run_CELLECT.sh](https://github.com/melparker101/p50/blob/main/CELLECT/run_CELLECT.sh))
 
 ``` bash
 # pwd=CELLECT
