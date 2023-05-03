@@ -37,7 +37,7 @@ source ~/.bashrc
 conda activate munge_ldsc
 
 # Define paths
-CELLECT='../CELLECT'  # //well/lindgren/users/mzf347/CELLECT
+CELLECT='..'  # //well/lindgren/users/mzf347/CELLECT
 IN=data/sumstats/other
 OUT=data/sumstats/munged
 
