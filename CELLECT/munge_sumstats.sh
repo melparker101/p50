@@ -3,10 +3,8 @@
 # ----------------------------------------------------------
 # Script to munge sumstats
 # Run inside p50
-# //well/lindgren/users/mzf347/p50
-# p50 contains: 
-# - the CELLECT directory cloned from their github
-# - a sumstats folder containing a premunge subfolder containing the input sumstats files and an index file "sample_size.txt"
+# //well/lindgren/users/mzf347/CELLECT/p50
+# The CELLECT directory is cloned from their github
 # melodyjparker14@gmail.com - Apr 23
 # ----------------------------------------------------------
 
@@ -16,7 +14,7 @@
 #SBATCH -J munge_sumstats
 #SBATCH -o logs/output.out
 #SBATCH -e logs/error.err
-#SBATCH -a 1-6
+#SBATCH -a 1-7
 
 #  Parallel environment settings 
 #  For more information on these please see the documentation 
@@ -39,27 +37,27 @@ source ~/.bashrc
 conda activate munge_ldsc
 
 # Define paths
-SUMSTATS=sumstats  # //well/lindgren/users/mzf347/p50/sumstats/
 CELLECT='../CELLECT'  # //well/lindgren/users/mzf347/CELLECT
-IN=premunge
-OUT=munged_for_magma
+IN=data/sumstats/other
+OUT=data/sumstats/munged
 
-# Use sample_size.txt as an index file. col1 = text files, col2 = max sample sizes
-# -v is to pass an external shell variables to an awk; NR is for line number; {print $j} is to print column j
-SUMSTATS_FILE=$(awk -v i="${SLURM_ARRAY_TASK_ID}" 'NR==i {print $1}' "$SUMSTATS"/sample_size.txt)
-SAMPLE_SIZE=$(awk -v i="${SLURM_ARRAY_TASK_ID}" 'NR==i {print $2}' "$SUMSTATS"/sample_size.txt)
+# Make an index file for munging
+if [ ! -f "$IN"/munge_index.txt ]; then
+  for f in "$IN"/premunge*; do basename ${f} >> "$IN"/munge_index.txt; done
+fi
+
+SUMSTATS_FILE=$(sed "${SLURM_ARRAY_TASK_ID}"'q;d' "$IN"/munge_index.txt)
 
 # Make outdir
-mkdir -p "$SUMSTATS"/"$OUT"
+mkdir -p "$OUT"
 
 # Run munge script
 python "$CELLECT"/ldsc/mtag_munge.py \
---sumstats "$SUMSTATS"/"$IN"/premunge_"$SUMSTATS_FILE".txt \
+--sumstats "$IN"/premunge_"$SUMSTATS_FILE".txt \
 --merge-alleles "$CELLECT"/data/ldsc/w_hm3.snplist \
---n-value "$SAMPLE_SIZE" \
 --keep-pval \
 --ignore MarkerName \
---out "$SUMSTATS"/"$OUT"/munged_"$SUMSTATS_FILE"
+--out "$OUT"/munged_"${SUMSTATS_FILE##*premunge_}"
 
 echo "###########################################################"
 echo "Array Task ID: $SLURM_ARRAY_TASK_ID"
