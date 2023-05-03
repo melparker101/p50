@@ -86,7 +86,7 @@ echo "EstBB" $EstBB_N_eff >> $COHORTS/Infertility1_F_EUR.txt
 ###########################################
 # Add N column to sumstats
 ###########################################
-# Add N column on for hormones and save to new file
+# Add N column to sumstats and save to new file
 for phenotype in LH_F_EUR FSH_F_EUR Testosterone_F_EUR Progesterone_F_EUR Oestradiol_F_EUR Testosterone_sex_comb_EUR Infertility1_F_EUR
 do
     COHORT1=$(awk 'NR==2 {print $1}' "$COHORTS"/${phenotype}.txt)
