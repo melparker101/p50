@@ -5,6 +5,7 @@ Clone the CELLECT github repository
 git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 ```
 ---
+### Pipeline
 1. Add N column to sumstats ([add_N_col.sh](https://github.com/melparker101/p50/blob/main/CELLECT/add_N_col.sh))
 2. Create a map file for chr:pos:a1_a2 to rsid (dbSNP/MarkerName_map_GRCh37.txt) ([create_snp_map.md](https://github.com/melparker101/p50/blob/main/CELLECT/create_snp_map.md) and [manipulate_map_file.sh](https://github.com/melparker101/p50/blob/main/CELLECT/manipulate_map_file.sh))
 2. Add MarkerName column to hormones sumstats files (infertility sumstats already contains this) ([add_MarkerName_col_hormones.sh](https://github.com/melparker101/p50/blob/main/CELLECT/add_MarkerName_col_hormones.sh))
@@ -14,7 +15,7 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 6. Edit the yaml file. I did this manually ([config_p50.yml](https://github.com/melparker101/p50/blob/main/CELLECT/config_p50.yml))
 7. Run CELLECT ([run_CELLECT.sh](https://github.com/melparker101/p50/blob/main/CELLECT/run_CELLECT.sh))
 
-Output:
+### Output:
 ``` text
 p50/CELLECT_OUT_p50
 |-- CELLECT-GENES
