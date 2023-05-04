@@ -18,7 +18,7 @@ library(SeuratData)
 dataset_acc <- "GSE213216"
 
 # Set path
-data_path <- paste0("counts/",dataset_acc,"/")
+data_path <- paste0("data/counts/",dataset_acc,"/")
 
 # Input files
 seurat_in <- paste0(data_path,"_aux.seurat.shared.rds")
