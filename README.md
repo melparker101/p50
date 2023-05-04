@@ -19,7 +19,7 @@ Use R to visualise the results. See [visualisation](https://github.com/melparker
 See [marker_genes](https://github.com/melparker101/p50/tree/main/marker_genes) scripts.
 
 ## Directory structure
-The basic directory stucture:
+The basic directory structure:
 ```
 tree p50
 |-- CELLECT_OUT_p50
