@@ -1,7 +1,7 @@
 # Set Up
 Download the required packages and create the recommended conda environments.
 
-## 1. Download Anaconda or Miniconda
+## 1. Load or download Anaconda or Miniconda
 - For the BMRC cluster, see the [staff resources](https://www.medsci.ox.ac.uk/for-staff/resources/bmrc/python-on-the-bmrc-cluster).
 - See the [conda user guide](https://conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
@@ -24,7 +24,7 @@ conda activate cellex
 ### - Sumstats munging
 Create a munge_ldsc environment which uses python2 using [environment.yml](https://github.com/pascaltimshel/ldsc/blob/d869cfd1e9fe1abc03b65c00b8a672bd530d0617/environment.yml).
 ``` bash
-conda env create -f ldsc/environment_munge_ldsc.yml # creates 'munge_ldsc' environment 
+conda env create -f ldsc/environment_munge_ldsc.yml  # creates 'munge_ldsc' environment 
 ```
 
 ### - CELLECT
