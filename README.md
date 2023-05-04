@@ -38,4 +38,9 @@ p50
 |-- logs
 `-- plots
 ```
-
+- **CELLECT-OUT-p50** - Created when CELLECT is run. Contains CELLECT output files.
+- **cluster_markers** - Store find_clusters output files here.
+- **data** - Store input data for CELLEX and CELLECT here.
+- **dbSNP** - Store the MarkerName to RSID map file here.
+- **logs** - For logs.
+- **plots** - Store plots generated from CELLECT results here. 
