@@ -40,7 +40,7 @@ We need scRNA-seq count data and the corresponding cell type annotations metadat
 2. **Set up environments**  
 Download required packages/create the recommended conda environments. More information is given in [set_up](https://github.com/melparker101/p50/tree/main/set_up).
 3. **Prepare ESMU files (run CELLEX)**  
-Using the counts and cell type annotations metadata as input, we use [prepare_esmu](https://github.com/perslab/prepare_esmu) to produce expression specificity files (ESMU). See [CELLEX](https://github.com/melparker101/p50/tree/main/CELLEX) for R and python code used to prepare data and run CELLEX.
+Using the counts and cell type annotations metadata as input, we use [CELLEX](https://github.com/perslab/CELLEX) to produce expression specificity files (ESMU). See [prepare_esmu](https://github.com/melparker101/p50/tree/main/prepare_esmu) for R and python code used to prepare data and run CELLEX.
 4. **Prepare sumstats file**  
 Use the pipeline provided ([prepare_sumstats](https://github.com/melparker101/p50/tree/main/prepare_sumstats)) to prepare GWAS summary statistics ready for input to CELLECT.  
 5. **Run CELLECT**  
