@@ -5,7 +5,7 @@ This repository contains code used for the p50 infertility project. There are tw
 
 ## Using CELLEX and CELLECT on single cell RNA-seq ovary datasets with infertility GWAS summary statistics
 ### 1. Download datasets
-We need scRNA-seq count data and the corresponding cell type annotations metadata. See [data](https://github.com/melparker101/p50/tree/main/datasets) for more information.
+We need scRNA-seq count data and the corresponding cell type annotations metadata. See [datasets](https://github.com/melparker101/p50/tree/main/datasets) for more information.
 ### 2. Set up environments
 Download required packages and create the recommended conda environments. More information is given in [set_up](https://github.com/melparker101/p50/tree/main/set_up).
 ### 3. Run CELLEX
