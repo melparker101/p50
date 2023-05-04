@@ -4,8 +4,8 @@ This repository contains code used for the p50 infertility project. There are tw
 - Finding marker genes for clusters from the ovary datasets.
 
 ## Using CELLEX and CELLECT on single cell RNA-seq ovary datasets with infertility GWAS summary statistics
-### 1. Download datasets
-We need scRNA-seq count data and the corresponding cell type annotations metadata. See [datasets](https://github.com/melparker101/p50/tree/main/datasets) for more information.
+### 1. Download data
+We need scRNA-seq count data and the corresponding cell type annotations metadata. We also need GWAS summary statistics (in-house). See [datasets](https://github.com/melparker101/p50/tree/main/datasets) for more information.
 ### 2. Set up environments
 Download required packages and create the recommended conda environments. More information is given in [set_up](https://github.com/melparker101/p50/tree/main/set_up).
 ### 3. Prepare ESMU files (run CELLEX)
