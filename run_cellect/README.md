@@ -26,7 +26,9 @@ p50/data/
 ```
 
 There are three versions of CELLECT:
-- CELLECT-ldsc
-- CELLECT-magma
-- CELLECT-genes
+- [CELLECT LDSC](https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial)
+- [CELLECT MAGMA](https://github.com/perslab/CELLECT/wiki/CELLECT-MAGMA-Tutorial)
+- [CELLECT GENES](https://github.com/perslab/CELLECT/wiki/CELLECT-GENES-Tutorial)
+
+
 
