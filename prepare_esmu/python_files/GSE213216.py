@@ -15,8 +15,8 @@ import cellex
 dataset_acc = 'GSE213216'
 
 # Define data paths
-dirIn = 'counts/' + dataset_acc + '/'
-dirOut = 'esmu'
+dirIn = 'data/counts/' + dataset_acc + '/'
+dirOut = 'data/esmu'
 
 # Input files
 input_file = 'counts_' + dataset_acc + '.h5ad'
