@@ -13,8 +13,11 @@ library(SeuratDisk)
 library(data.table)
 library(dplyr)
 
-# Data path
-data_path <- "data/counts/GSE202601/"
+# Dataset accession
+dataset_acc <- "GSE202601"
+
+# Set path
+data_path <- paste0("data/counts/",dataset_acc,"/")
 
 # Input files
 mat_file <- paste0(data_path,"GSE202601_human_ovary_snRNA-seq_count.rds")
