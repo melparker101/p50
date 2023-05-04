@@ -1,12 +1,31 @@
 # Running CELLECT on ovary datasets
+
+Clone the github repository. **Make sure --recurse-submodules argument is used to clone the ldsc directory**
+``` bash
+git clone --recurse-submodules https://github.com/perslab/CELLECT.git
+```
+Inside the CELLECT directory make a subdirectory **p50**; inside p50 create a subdirectory **data**. 
+This is the directory layout:
+```
+p50/data/
+|-- counts
+|   |-- GSE118127
+|   |-- GSE202601
+|   `-- GSE213216
+|-- esmu
+`-- sumstats
+    |-- cohorts
+    |-- munged
+    |-- original
+    `-- other
+```
+
 CELLECT takes two inputs:
 - Expression specificity CSV (ESMU). Use CELLEX to create this. Use ensembl ids.
 - GWAS summary statistics. Use this pipeline to prepare the sumstats.
 
-One the input data is prepared, clone the github repository.
-``` bash
-git clone --recurse-submodules https://github.com/perslab/CELLECT.git
-```
+
+
 ---
 ### Pipeline
 1. Add N column to sumstats ([add_N_col.sh](https://github.com/melparker101/p50/blob/main/CELLECT/add_N_col.sh))
