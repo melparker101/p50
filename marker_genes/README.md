@@ -1,5 +1,6 @@
+# Find cluster marker genes
+The following scripts find marker genes for the cell-type clusters of the single cell ovary datasets. Only clusters defined by the original study authors were used for each dataset.
 
-# Info on datasets
 ### GSE118127
 The object is filtered and preprocessed already. The data was normalised using the "LogNormalize" method, with some C++ code: https://github.com/johnmous/singleCell/blob/master/workflow.Rmd. 
 
