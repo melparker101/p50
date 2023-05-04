@@ -42,7 +42,7 @@ Download required packages/create the recommended conda environments. More infor
 3. **Prepare ESMU files (run CELLEX)**  
 Using the counts and cell type annotations metadata as input, we use [CELLEX](https://github.com/perslab/CELLEX) to produce expression specificity files (ESMU). See [prepare_esmu](https://github.com/melparker101/p50/tree/main/prepare_esmu) for R and python code used to prepare data and run CELLEX.
 4. **Prepare sumstats file**  
-Use the pipeline provided ([prepare_sumstats](https://github.com/melparker101/p50/tree/main/prepare_sumstats)) to prepare GWAS summary statistics ready for input to CELLECT.  
+Use the pipeline provided in [prepare_sumstats](https://github.com/melparker101/p50/tree/main/prepare_sumstats) to prepare the GWAS summary statistics for input to CELLECT.  
 5. **Run CELLECT**  
 Using munged summary stats and ESMU files as input, we use [CELLECT](https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial) to prioritise etilogical cell types. Use the **config_p50.yml** file provided. See [run_cellect](https://github.com/melparker101/p50/tree/main/run_cellect).  
 6. **Visualisation**  
