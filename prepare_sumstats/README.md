@@ -1,5 +1,5 @@
 # Prepare sumstats
-GWAS summary statistics need to be in a specific format to use as input for CELLECT. The following pipeline was used to manipulate the files.
+GWAS summary statistics need to be in a specific format to use as input for CELLECT. The following pipeline was used to manipulate the files. Awk was used for most of the text file editing because of its efficiency.
 
 ### Pipeline
 1. Add N column to sumstats ([add_N_col.sh](https://github.com/melparker101/p50/blob/main/prepare_sumstats/add_N_col.sh))
