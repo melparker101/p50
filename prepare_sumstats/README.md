@@ -9,7 +9,8 @@ GWAS summary statistics need to be in a specific format to use as input for CELL
 4. Add rsid column to all sumstats using map file ([add_rsid.sh](https://github.com/melparker101/p50/blob/main/CELLECT/add_rsid.sh))
 5. Munge using ldsc munge script ([munge_sumstats.sh](https://github.com/melparker101/p50/blob/main/CELLECT/munge_sumstats.sh))
 
-### Output directory tree for the sumstats directory
+### Directory structure 
+Structure of directories for sumstats after running the pipeline
 ``` text
 p50/data/sumstats/
 |-- cohorts
