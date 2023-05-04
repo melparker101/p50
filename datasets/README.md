@@ -15,4 +15,17 @@
 - GSE213216
 
 The GSE .md files in this sub directory contain general information about each dataset used.
+Download these files and organise as shown below.
 
+### Directory structure
+Layout of the data directory:
+```
+p50
+`-- data
+    |-- counts
+        |-- GSE118127
+        |-- GSE202601
+        `-- GSE213216
+    `-- sumstats
+        |-- original
+```
