@@ -18,4 +18,7 @@ p50/data/sumstats/
 |-- original
 `-- other
 ```
-The **munged** directory will contain the final sumstats files which will be used as input for CELLECT.
+**cohorts** - Contains text files with information on cohort sample sizes for each phenotype. Manually add these.
+**munged** - Contains the final sumstats files which will be used as input for CELLECT.
+**original** - Download the original sumstat files here.
+**other** - Other sumstats files are stored here (i.e. not the original or final versions).
