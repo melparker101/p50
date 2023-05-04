@@ -35,8 +35,8 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 6. When running CELLECT-magma, I was given an error message "ModuleNotFoundError: No module named 'statsmodels'; import statsmodels.api as sm". Although CELLECT is meant to install all packages automatically on the first run (apart from snakemake), I had to install this manually (**conda install statsmodels**) in the snakemake conda environment before attempting to run CELLECT-magma again - this fixed the issue.
 7. For CELLECT-genes, use this temporary bug fix: https://github.com/perslab/CELLECT/issues/81
 
-```
 ### CELLECT output directory structure
+```
 p50/CELLECT_OUT_p50
 |-- CELLECT-GENES
 |   |-- logs
