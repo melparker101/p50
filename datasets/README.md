@@ -11,7 +11,7 @@ Download these into p50/data/sumstats/original.
 - Testosterone_sex_comb_EUR_filtered.txt
 
 ### Ovary scRNA-seq datasets
-Download the relevant files to p50/data/counts/<geo_accession>
+Download the relevant files to p50/data/counts/<geo_accession>.
 - GSE202601
 - GSE118127
 - GSE213216
