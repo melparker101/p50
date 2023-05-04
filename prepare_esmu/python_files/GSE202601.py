@@ -6,8 +6,8 @@ import pandas as pd
 import cellex
 
 # Define data paths
-dirIn = 'counts/GSE202601/'
-dirOut='esmu'
+dirIn = 'data/counts/GSE202601/'
+dirOut='data/esmu'
 
 # Input files
 matrix_file = 'counts_GSE202601.h5ad'
