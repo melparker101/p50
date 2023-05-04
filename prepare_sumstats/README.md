@@ -10,7 +10,7 @@ GWAS summary statistics need to be in a specific format to use as input for CELL
 5. Munge using ldsc munge script ([munge_sumstats.sh](https://github.com/melparker101/p50/blob/main/prepare_sumstats/munge_sumstats.sh))
 
 ### Directory structure 
-Structure of directories for sumstats after running the pipeline
+Structure of directories for sumstats after going through the pipeline.
 ``` text
 p50/data/sumstats/
 |-- cohorts
