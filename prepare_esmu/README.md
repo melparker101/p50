@@ -1,4 +1,5 @@
-# Running CELLEX on ovary datasets
+# Prepare ESMU files
+Use [CELLEX](https://github.com/perslab/CELLEX) to generate expression specificity files. First, download and preprocess the count data using the R scripts. Second, use the python scripts to run CELLEX on the datasets.  
 
 ### 1. Use the R code to format and filter the data, if necessary
 The following versions of R and Bioconductor were used:
