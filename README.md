@@ -49,4 +49,4 @@ Using munged summary stats and ESMU files as input, we use [CELLECT](https://git
 Use R to visualise the results. See [visualisation](https://github.com/melparker101/p50/tree/main/visualisation).  
 
 ## Finding marker genes for clusters
-Find cluster gene markers for three single cell RNA-seq ovary datasets. See [marker_genes](https://github.com/melparker101/p50/tree/main/marker_genes) scripts.
+Find cluster gene markers for three single cell RNA-seq ovary datasets. See [cluster_marker_genes](https://github.com/melparker101/p50/tree/main/cluster_marker_genes) scripts.
