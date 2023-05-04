@@ -15,8 +15,6 @@ Using munged summary stats and ESMU files as input, we use [CELLECT](https://git
 ### 5. Visualisation
 Use R to visualise the results. See [visualisation](https://github.com/melparker101/p50/tree/main/visualisation).
 
----
-
 ## Finding marker genes for clusters
 See [marker_genes](https://github.com/melparker101/p50/tree/main/marker_genes) scripts.
 
