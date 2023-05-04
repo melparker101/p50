@@ -1,4 +1,4 @@
-# Data
+# Datasets
 
 ### GWAS Sumstats (build 37/hg19)
 Download these into p50/data/sumstats/original.
