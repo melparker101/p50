@@ -1,4 +1,9 @@
-# Using CELLEX and CELLECT on single cell RNA-seq ovary datasets with infertility GWAS summary statistics
+# p50
+This repository contains code used for the p50 infertility project. There are two separate tasks:
+- Running CELLECT on ovary datasets with infertility and hormone GWAS sumstats to prioritise etiologic cell types.
+- Finding marker genes for clusters from the ovary datasets.
+
+## Using CELLEX and CELLECT on single cell RNA-seq ovary datasets with infertility GWAS summary statistics
 ### 1. Download datasets
 We need scRNA-seq count data and the corresponding cell type annotations metadata. See [data](https://github.com/melparker101/p50/tree/main/datasets) for more information.
 ### 2. Set up environments
@@ -12,6 +17,6 @@ Use R to visualise the results. See [visualisation](https://github.com/melparker
 
 ---
 
-# Finding marker genes for clusters
+## Finding marker genes for clusters
 See [marker_genes](https://github.com/melparker101/p50/tree/main/marker_genes) scripts.
 
