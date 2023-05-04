@@ -11,7 +11,7 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 ```
 Once the CELLECT directory is cloned from their github, make a subdirectory **p50**.
 
-## Directory structure
+### Directory structure
 The basic directory structure for the p50 infertility project work:
 ```
 p50
@@ -38,8 +38,8 @@ p50
 - **logs** - For logs.
 - **plots** - Store plots generated from CELLECT results here. 
 
+### Pipeline
 Once the directory structure is set up, follow the pipeline below.
-
 1. **Download data**  
 We need scRNA-seq count data and the corresponding cell type annotations metadata. We also need GWAS summary statistics (in-house). See [datasets](https://github.com/melparker101/p50/tree/main/datasets) for more information.  
 2. **Set up environments**  
