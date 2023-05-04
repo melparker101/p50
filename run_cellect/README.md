@@ -23,7 +23,6 @@ There are three versions of CELLECT:
 - [CELLECT MAGMA](https://github.com/perslab/CELLECT/wiki/CELLECT-MAGMA-Tutorial)
 - [CELLECT GENES](https://github.com/perslab/CELLECT/wiki/CELLECT-GENES-Tutorial)
 
-```
 ### Things to note
 1. Run CELLECT-magma and CELLECT-ldsc on rescomp the first time as it creates conda environments (internet connection is required for necessary package installation). After this, send slurm scripts off.
 2. CELLECT creates these conda environments in a directory called '.snakemake'.
@@ -36,6 +35,7 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 6. When running CELLECT-magma, I was given an error message "ModuleNotFoundError: No module named 'statsmodels'; import statsmodels.api as sm". Although CELLECT is meant to install all packages automatically on the first run (apart from snakemake), I had to install this manually (**conda install statsmodels**) in the snakemake conda environment before attempting to run CELLECT-magma again - this fixed the issue.
 7. For CELLECT-genes, use this temporary bug fix: https://github.com/perslab/CELLECT/issues/81
 
+```
 ### CELLECT output directory structure
 p50/CELLECT_OUT_p50
 |-- CELLECT-GENES
