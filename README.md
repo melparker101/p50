@@ -20,3 +20,63 @@ Use R to visualise the results. See [visualisation](https://github.com/melparker
 ## Finding marker genes for clusters
 See [marker_genes](https://github.com/melparker101/p50/tree/main/marker_genes) scripts.
 
+## Directory structure
+```
+|-- CELLECT_OUT_p50
+|   |-- CELLECT-GENES
+|   |   |-- logs
+|   |   |-- out
+|   |   `-- results
+|   |-- CELLECT-LDSC
+|   |   |-- logs
+|   |   |-- out
+|   |   |   `-- prioritization
+|   |   |-- precomputation
+|   |   |   |-- GSE118127
+|   |   |   |   `-- per_annotation
+|   |   |   |-- GSE202601
+|   |   |   |   `-- per_annotation
+|   |   |   |-- GSE213216
+|   |   |   |   `-- per_annotation
+|   |   |   |-- bed
+|   |   |   `-- control.all_genes_in_dataset
+|   |   `-- results
+|   `-- CELLECT-MAGMA
+|       |-- logs
+|       |-- out
+|       |   `-- prioritization
+|       |-- precomputation
+|       |   |-- FSH_F_EUR
+|       |   |-- Infertility1_F_EUR
+|       |   |-- LH_F_EUR
+|       |   |-- Oestradiol_F_EUR
+|       |   |-- Progesterone_F_EUR
+|       |   |-- Testosterone_F_EUR
+|       |   `-- Testosterone_sex_comb_EUR
+|       `-- results
+|-- cluster_markers
+|   |-- GSE118127
+|   |   |-- 19C
+|   |   `-- 9C
+|   |-- GSE202601
+|   |   `-- 8C
+|   `-- GSE213216
+|       |-- 9C_SCT
+|       `-- 9C_log
+|-- data
+|   |-- counts
+|   |   |-- GSE118127
+|   |   |-- GSE202601
+|   |   `-- GSE213216
+|   |-- esmu
+|   `-- sumstats
+|       |-- cohorts
+|       |-- munged
+|       |-- original
+|       `-- other
+|-- dbSNP
+|   `-- logs
+|-- logs
+`-- plots
+```
+
