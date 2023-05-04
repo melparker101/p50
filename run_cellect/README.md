@@ -30,5 +30,39 @@ There are three versions of CELLECT:
 - [CELLECT MAGMA](https://github.com/perslab/CELLECT/wiki/CELLECT-MAGMA-Tutorial)
 - [CELLECT GENES](https://github.com/perslab/CELLECT/wiki/CELLECT-GENES-Tutorial)
 
+```
+p50/CELLECT_OUT_p50
+|-- CELLECT-GENES
+|   |-- logs
+|   |-- out
+|   `-- results
+|-- CELLECT-LDSC
+|   |-- logs
+|   |-- out
+|   |   `-- prioritization
+|   |-- precomputation
+|   |   |-- GSE118127
+|   |   |   `-- per_annotation
+|   |   |-- GSE202601
+|   |   |   `-- per_annotation
+|   |   |-- GSE213216
+|   |   |   `-- per_annotation
+|   |   |-- bed
+|   |   `-- control.all_genes_in_dataset
+|   `-- results
+`-- CELLECT-MAGMA
+    |-- logs
+    |-- out
+    |   `-- prioritization
+    |-- precomputation
+    |   |-- FSH_F_EUR
+    |   |-- Infertility1_F_EUR
+    |   |-- LH_F_EUR
+    |   |-- Oestradiol_F_EUR
+    |   |-- Progesterone_F_EUR
+    |   |-- Testosterone_F_EUR
+    |   `-- Testosterone_sex_comb_EUR
+    `-- results
+```
 
 
