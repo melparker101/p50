@@ -13,7 +13,7 @@ Install [CELLEX](https://github.com/perslab/CELLEX) and [scanpy](https://scanpy.
 pip install cellex
 pip install scanpy
 ```
-If this doesn't work, create the following cellex environment using [cellex.yml](https://github.com/melparker101/p50/blob/main/conda_envs/cellex.yml).
+If this doesn't work, create the following cellex environment using [cellex.yml](https://github.com/melparker101/p50/blob/main/set_up/cellex.yml).
 CELLEX ran successfully using in this environment with the python scripts in this repository.
 ``` bash
 # Create and activate conda env
