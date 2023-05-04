@@ -2,7 +2,7 @@
 The following scripts find marker genes for the cell-type clusters of the single cell ovary datasets. Only clusters defined by the original study authors were used for each dataset.
 
 ### GSE118127
-The object is filtered and preprocessed already. The data was normalised using the "LogNormalize" method, with some C++ code: https://github.com/johnmous/singleCell/blob/master/workflow.Rmd. 
+The object is filtered and preprocessed already. The data was normalised using the "LogNormalize" method, with some [C++ code](https://github.com/johnmous/singleCell/blob/master/workflow.Rmd).
 
 ### GSE202601
 We only want to use data from the young patients, so this dataset needs filtering. It is also provided as raw counts, so we need to normalise it after filtering. We can use the Seurat function NormalizeData() with the "LogNormalize" and scale.factor = 10000 settings. Their original preprocessing code: https://github.com/satijalab/seurat/issues/678.
