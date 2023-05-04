@@ -22,6 +22,7 @@ See [marker_genes](https://github.com/melparker101/p50/tree/main/marker_genes) s
 
 ## Directory structure
 ```
+tree p50
 |-- CELLECT_OUT_p50
 |   |-- CELLECT-GENES
 |   |   |-- logs
