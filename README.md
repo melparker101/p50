@@ -13,6 +13,5 @@ Use R to visualise the results. See [visualisation](https://github.com/melparker
 ---
 
 # Finding marker genes for clusters
-See marker_genes scripts
+See [marker_genes](https://github.com/melparker101/p50/tree/main/marker_genes) scripts.
 
-For more information on each of these steps, see the README.md files of each sub-directory.
