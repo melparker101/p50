@@ -1,4 +1,6 @@
 # Datasets
+The GSE .md files in this sub directory contain general information about each dataset used.
+Download these files and organise as shown below.
 
 ### GWAS Sumstats (build 37/hg19)
 Download these into p50/data/sumstats/original.
@@ -15,9 +17,6 @@ Download the relevant files to p50/data/counts/<geo_accession>.
 - GSE202601
 - GSE118127
 - GSE213216
-
-The GSE .md files in this sub directory contain general information about each dataset used.
-Download these files and organise as shown below.
 
 ### Directory structure
 Layout of the data directory:
