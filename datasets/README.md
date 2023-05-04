@@ -1,6 +1,7 @@
 # Data
 
-### GWAS Sumstats (build 37/hg19): 
+### GWAS Sumstats (build 37/hg19)
+Download these into p50/data/sumstats/original.
 - female_infertility_analysis1_UKBB_Finngen_EstBB_noMACfilter_March20231.out
 - FSH_F_EUR_filtered.txt
 - Oestradiol_F_EUR_filtered.txt
@@ -10,6 +11,7 @@
 - Testosterone_sex_comb_EUR_filtered.txt
 
 ### Ovary scRNA-seq datasets
+Download the relevant files to p50/data/counts/<geo_accession>
 - GSE202601
 - GSE118127
 - GSE213216
