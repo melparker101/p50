@@ -1,6 +1,9 @@
 # Running CELLECT on ovary datasets
+CELLECT takes two inputs:
+- Expression specificity CSV (ESMU). Use CELLEX to create this. Use ensembl ids.
+- GWAS summary statistics. Use this pipeline to prepare the sumstats.
 
-Clone the CELLECT github repository
+One the input data is prepared, clone the github repository.
 ``` bash
 git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 ```
@@ -14,6 +17,7 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 5. Munge using ldsc munge script ([munge_sumstats.sh](https://github.com/melparker101/p50/blob/main/CELLECT/munge_sumstats.sh))
 6. Edit the yaml file. I did this manually ([config_p50.yml](https://github.com/melparker101/p50/blob/main/CELLECT/config_p50.yml))
 7. Run CELLECT ([run_CELLECT.sh](https://github.com/melparker101/p50/blob/main/CELLECT/run_CELLECT.sh))
+
 
 ### Output directory tree
 ``` text
