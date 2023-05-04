@@ -9,14 +9,13 @@ We need scRNA-seq count data and the corresponding cell type annotations metadat
 ### 2. Set up environments
 Download required packages and create the recommended conda environments. More information is given in [set_up](https://github.com/melparker101/p50/tree/main/set_up).
 ### 3. Prepare ESMU files (run CELLEX)
-Using the counts and metadata as input, we use [CELLEX](https://github.com/perslab/CELLEX) to produce expression specificity files (ESMU). See [CELLEX](https://github.com/melparker101/p50/tree/main/CELLEX) for R and python code used to prepare data and run CELLEX.
+Using the counts and metadata as input, we use [prepare_esmu](https://github.com/perslab/prepare_esmu) to produce expression specificity files (ESMU). See [CELLEX](https://github.com/melparker101/p50/tree/main/CELLEX) for R and python code used to prepare data and run CELLEX.
 ### 4. Prepare sumstats file
 Use the pipeline provided ([prepare_sumstats](https://github.com/melparker101/p50/tree/main/prepare_sumstats)) to prepare GWAS summary statistics ready for input to CELLECT.
 ### 5. Run CELLECT
-Using munged summary stats and ESMU files as input, we use [CELLECT](https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial) to prioritise etilogical cell types. Use the **config_p50.yml** file provided. See [CELLECT](https://github.com/melparker101/p50/tree/main/CELLECT).
+Using munged summary stats and ESMU files as input, we use [CELLECT](https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial) to prioritise etilogical cell types. Use the **config_p50.yml** file provided. See [run_cellect](https://github.com/melparker101/p50/tree/main/run_cellect).
 ### 6. Visualisation
 Use R to visualise the results. See [visualisation](https://github.com/melparker101/p50/tree/main/visualisation).
-
 ## Finding marker genes for clusters
 See [marker_genes](https://github.com/melparker101/p50/tree/main/marker_genes) scripts.
 
