@@ -1,3 +1,4 @@
+##############################################
 # This code is for preparing the snRNA-seq dataset GSE202601
 # We need to filter out all of the older donors
 # Use conda env 'seurat2h5'
@@ -78,3 +79,5 @@ GetAssayData(object = seurat_obj, slot = "counts")[1:10,1:10]
 # Save counts as a h5ad file
 SaveH5Seurat(seurat_obj, filename = seurat_out)
 Convert(seurat_out, dest = "h5ad")
+
+# End
