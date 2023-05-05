@@ -27,5 +27,5 @@ p50
         |-- GSE202601
         `-- GSE213216
     `-- sumstats
-        |-- original
+        `-- original
 ```
