@@ -59,12 +59,23 @@ dataset2_acc <- "GSE213216"
 dataset1_file <- paste0("data/counts/",dataset1_acc,"/counts_GSE202601.h5Seurat")
 dataset2_file <- paste0("data/counts/",dataset2_acc,"/local.rds")
 
+metadata1_file <- paste0("data/counts/",dataset1_acc,"/metadata_GSE202601.csv")
+metadata1 <- read.csv(metadata1_file)
+
 # Load reference in Seurat object
 dataset1 <- LoadH5Seurat(dataset1_file)
-reference
+dataset1
 
-# Check dimensions
-dim(GetAssayData(object = reference))
+# Check that counts are raw
+GetAssayData(object = dataset1)[1:10,1:15]
+
+# Add annotations to dataset1 seurat object
+rownames(metadata1) <- metadata1$cell_id
+metadata1 <- metadata1[,2,drop=FALSE]
+dataset1 <- AddMetaData(dataset1, metadata1, col.name = NULL)
+head(dataset1[[]])
+
+dim(GetAssayData(object = dataset1))
 
 ############################
 # Run analysis pipeline for reference
@@ -120,7 +131,6 @@ DimHeatmap(reference, dims = 1, cells = 500, balanced = TRUE)
 ############################
 # Run analysis pipeline for other datasets
 ############################
-
 # Look at data
 dataset1
 GetAssayData(object = dataset1)[1:10,1:15]
@@ -133,5 +143,17 @@ dataset1 <- dataset1 %>%
     RunUMAP(dims = 1:30)
     
 DimPlot(dataset1, group.by = "cell_type", label = TRUE, repel = TRUE) + NoAxes()
+dataset1 <- FindNeighbors(dataset1, reduction = "pca", dims = 1:30)
+dataset1 <- FindClusters(dataset1, resolution = 0.5)
+
+# Visualization
+p1 <- DimPlot(dataset1, reduction = "umap")
+p2 <- DimPlot(dataset1, reduction = "umap", label = TRUE, repel = TRUE)
+p1 + p2
+
+# Granulosa genes
+FeaturePlot(dataset1, features = c("AMH", "HSD17B1", "SERPINE2", "GSTA1"), min.cutoff = "q9")
+
+dataset1  <- RunUMAP(dataset1, dims = 1:8)
 
 
