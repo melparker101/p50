@@ -47,7 +47,7 @@ plotClusters <- function(object,clusters,out){
 
 dataset <- "GSE118127"
 
-in_file <- "counts/GSE118127/local.rds"
+in_file <- paste0("data/counts/",dataset,"/local.rds")
 out_dir <- paste0("cluster_markers/", dataset)
 
 # Create output directory
