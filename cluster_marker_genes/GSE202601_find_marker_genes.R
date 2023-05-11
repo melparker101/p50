@@ -33,7 +33,7 @@ library(data.table)
 dataset <- "GSE202601"
 
 # Data path
-data_path <- paste0("counts/",dataset,"/")
+data_path <- paste0("data/counts/",dataset,"/")
 
 out_dir <- paste0("cluster_markers/", dataset)
 
