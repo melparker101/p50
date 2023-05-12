@@ -36,7 +36,7 @@ ref_acc <- "GSE118127"
 dataset1_acc <- "GSE202601"
 dataset2_acc <- "GSE213216"
 
-ref_file <- paste0("data/counts/",ref_dataset,"/local.rds")
+ref_file <- paste0("data/counts/",ref_acc,"/local.rds")
 # out_file <- paste0("annotating_clusters/", ref_dataset,)
 
 # Load reference in Seurat object
@@ -82,21 +82,21 @@ dim(GetAssayData(object = dataset1))
 ############################
 
 # Check that the data is normalised
-GetAssayData(object = reference)[1:10,1:15]
-GetAssayData(object = reference, slot = "counts")[1:10,1:15]
+# GetAssayData(object = reference)[1:10,1:15]
+# GetAssayData(object = reference, slot = "counts")[1:10,1:15]
 # The data is already normalised
 
 # Check if variable gene selection has been run
-head(HVFInfo(object = reference))
+# head(HVFInfo(object = reference))
 # Produces error - HGV needs running
 
 # Check if data has been scaled
-reference[["RNA"]]@scale.data[1:10,1:15]
+# reference[["RNA"]]@scale.data[1:10,1:15]
 # It hasn't been scaled
 
 # Dimensionality reduction
 # There is already a PCA saved
-DimPlot(reference, reduction = "pca")
+# DimPlot(reference, reduction = "pca")
 # We can rerun though
 
 reference <- seurat_ob
@@ -141,6 +141,10 @@ dataset1 <- dataset1 %>%
     ScaleData() %>%
     RunPCA(verbose = F) %>%
     RunUMAP(dims = 1:30)
+    # FindNeighbors(dataset1, reduction = "pca", dims = 1:30)
+    # FindClusters(dataset1, resolution = 0.5)
+    
+    ElbowPlot(dataset1, ndims = 20, reduction = "pca")
     
 DimPlot(dataset1, group.by = "cell_type", label = TRUE, repel = TRUE) + NoAxes()
 dataset1 <- FindNeighbors(dataset1, reduction = "pca", dims = 1:30)
