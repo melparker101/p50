@@ -9,6 +9,9 @@ QC:
 library(data.table)
 library(Seurat)
 library(magrittr)
+library(cowplot)
+library(harmony)
+library(SeuratData)
 
 path <- "data/counts/GSE189960"
 
@@ -51,6 +54,9 @@ merged_ob <- eval(parse(text = mergeSamples))
 
 table(Idents(merged_ob))
 
+# Add a sample column
+merged_ob[["Sample"]] <- Idents(object = merged_ob)
+
 # This plot will be different to the original plot in supplementary figure 1 because theirs is produced before filtering
 VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, split.by = "orig.ident")
 
@@ -60,20 +66,21 @@ VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), nco
 NormalizeData
 and ScaleData to normalize and scale the gene expression matrix. For the PCA analysis, the top 2000 variable genes were chosen by FindVariableFeatures
 
-merged_ob2 <- merged_ob
+# merged_ob2 <- merged_ob
 merged_ob <- merged_ob2
 
+<!-- 
 merged_ob <- NormalizeData(object = merged_ob)
 merged_ob <- FindVariableFeatures(object = merged_ob, nfeatures = 2000)
 merged_ob <- ScaleData(object = merged_ob)
 merged_ob <- RunPCA(object = merged_ob)
 merged_ob <- RunUMAP(object = merged_ob, reduction = "pca", dims= 1:20)
 merged_ob <- FindNeighbors(object = merged_ob,dims = 1:20)
-merged_ob <- FindClusters(object = merged_ob,resolution = 1.2)
+merged_ob <- FindClusters(object = merged_ob,resolution = 1.2) -->
 
 
-DimPlot(object = merged_ob, reduction = "pca")
-DimPlot(object = merged_ob, reduction = "umap")
+merged_ob_h <- merged_ob2
+merged_ob_h[["Sample"]] <- Idents(object = merged_ob_h)
 
 merged_ob <- merged_ob %>%
     NormalizeData() %>%
@@ -86,14 +93,47 @@ merged_ob <- merged_ob %>%
     # RunTSNE()
     # DimPlot(reduction = "tsne")
 
-GetAssayData(object = merged_ob)[1:10,1:10]
+# Visualise the UMAP
+p1 <- DimPlot(merged_ob, reduction = "umap", group.by = "Sample")
+p2 <- DimPlot(merged_ob, reduction = "umap", label = TRUE)
+plot_grid(p1, p2)
+# The batch effect is massive
+
+merged_ob_h <- merged_ob_h %>%
+    NormalizeData() %>%
+    FindVariableFeatures(nfeatures = 2000) %>%
+    ScaleData() %>%
+    RunPCA() %>%
+    RunHarmony(group.by.vars = "Sample") %>%
+    RunUMAP(reduction = "harmony", dims = 1:20) %>%
+    # RunUMAP(reduction = "pca", dims = 1:20) %>%
+    FindNeighbors(reduction = "harmony", dims = 1:20) %>%
+    # FindNeighbors(dims = 1:20) %>%
+    FindClusters(resolution = 1.2)
+    # RunTSNE()
+    # DimPlot(reduction = "tsne")
+
+table(Idents(object = merged_ob_h))
+merged_ob_h[["clusters"]] <- Idents(object = merged_ob_h)
+
+p1 <- DimPlot(merged_ob_h, reduction = "umap", group.by = "Sample")
+p2 <- DimPlot(merged_ob_h, reduction = "umap", group.by = "clusters", label = TRUE)
+plot_grid(p1, p2)
+
+DimPlot(merged_ob_h, group.by = c("Sample", "clusters"), ncol = 2, label = TRUE)
+
+FeaturePlot(merged_ob_h, features = c("STAR", "CD68", "CD1C", "FCGR3B", "CD3D", "CDH1", "SERPINE2", "CD163",
+    "FCER1A", "CXCR2", "CD3G", "EPCAM"))
+    
+ FeaturePlot(merged_ob_h, features = "SERPINE1")
+
+# DimPlot(object = merged_ob, reduction = "pca")
+# DimPlot(object = merged_ob, reduction = "umap")
 
 # Cells were separated into 23 clusters by FindClusters, by using the top 20 principle components and a resolution parameter of 1.2. 
 # For the clustering of GCs and macrophages, we set the resolution to 1.2 and applied the uniform mainfold approximation and projection (UMAP) algorithm to visualize cells in a two-dimensional space
 
-
-library(harmony)
-library(Seurat)
-library(SeuratData)
+# DimPlot(object = merged_ob, reduction = "pca")
+# DimPlot(object = merged_ob, reduction = "umap")
 
 ```
