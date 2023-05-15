@@ -82,6 +82,7 @@ merged_ob <- FindClusters(object = merged_ob,resolution = 1.2) -->
 merged_ob_h <- merged_ob2
 merged_ob_h[["Sample"]] <- Idents(object = merged_ob_h)
 
+# Without batch effect removal
 merged_ob <- merged_ob %>%
     NormalizeData() %>%
     FindVariableFeatures(nfeatures = 2000) %>%
@@ -99,6 +100,7 @@ p2 <- DimPlot(merged_ob, reduction = "umap", label = TRUE)
 plot_grid(p1, p2)
 # The batch effect is massive
 
+# With batch effect removal using harmony
 merged_ob_h <- merged_ob_h %>%
     NormalizeData() %>%
     FindVariableFeatures(nfeatures = 2000) %>%
@@ -136,4 +138,22 @@ FeaturePlot(merged_ob_h, features = c("STAR", "CD68", "CD1C", "FCGR3B", "CD3D", 
 # DimPlot(object = merged_ob, reduction = "pca")
 # DimPlot(object = merged_ob, reduction = "umap")
 
+# We can manually annotate... 
+# 9 GC clusters: 0,2,3,4,5,8,9,10,14
+# 5 macrophages?:1,6,7,11,13,15,16,19,21 - figure this out
+# DCs:
+# T cells:
+# neutrophils:
+
+FeaturePlot(merged_ob_h, features = c("STAR", "SERPINE2"))
+FeaturePlot(merged_ob_h, features = c("PTPRC", "CD68"))
+
 ```
+Canonical markers and highly differentially expressed genes (DEGs) enabled us to identify six major cell types: 
+- STAR+SERPINE2+ granulosa cells (GCs, 9614 cells, 66%) [44,45], 
+- PTPRC+CD68+ macrophages (3601 cells, 25%), 
+- PTPRC+CD1C+ dendritic cells (DCs, 754 cells, 5%), 
+- PTPRC+CXCR2+ neutrophils (168 cells, 1%), 
+- PTPRC+CD3D+CD3E+ T cells (260 cell, 2%)
+- EPCAM+KRT18+ epithelial cells (195 cells, 1%) (Figure 1D–F)
+
