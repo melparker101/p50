@@ -109,12 +109,15 @@ p1 <- DimPlot(merged_ob, reduction = "umap", group.by = "Sample")
 p2 <- DimPlot(merged_ob, reduction = "umap", group.by = "clusters", label = TRUE)
 plot_grid(p1, p2)
 
-DimPlot(merged_ob, group.by = c("Sample", "clusters"), ncol = 2, label = TRUE)
+# This does the same
+# DimPlot(merged_ob, group.by = c("Sample", "clusters"), ncol = 2, label = TRUE)
+
+DimPlot(merged_ob, group.by = "clusters", label = TRUE)
 
 FeaturePlot(merged_ob, features = c("STAR", "CD68", "CD1C", "FCGR3B", "CD3D", "CDH1", "SERPINE2", "CD163",
     "FCER1A", "CXCR2", "CD3G", "EPCAM"))
     
- FeaturePlot(merged_ob, features = "SERPINE1")
+FeaturePlot(merged_ob, features = "SERPINE1")
 
 # DimPlot(object = merged_ob, reduction = "pca")
 # DimPlot(object = merged_ob, reduction = "umap")
@@ -129,8 +132,12 @@ FeaturePlot(merged_ob, features = c("STAR", "CD68", "CD1C", "FCGR3B", "CD3D", "C
 # T cells:
 # neutrophils:
 
-FeaturePlot(merged_ob, features = c("STAR", "SERPINE2"))
-FeaturePlot(merged_ob, features = c("PTPRC", "CD68"))
+FeaturePlot(merged_ob, features = c("STAR", "SERPINE2"))  # Granulosa
+FeaturePlot(merged_ob, features = c("PTPRC", "CD68", "CD163")) # Macrophage
+FeaturePlot(merged_ob, features = c("PTPRC", "CD1C", "FCER1A"))  # DC
+FeaturePlot(merged_ob, features = c("PTPRC", "CXCR2", "FCGR3B"))  # Neutrophil
+FeaturePlot(merged_ob, features = c("PTPRC", "CD3D", "CD3E", "CD3G"))  # T_cell
+FeaturePlot(merged_ob, features = c("EPCAM", "KRT18", "CDH1"))  # Epithelium
 
 ```
 Canonical markers and highly differentially expressed genes (DEGs) enabled us to identify six major cell types: 
