@@ -63,27 +63,13 @@ VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), nco
 # We retained cells with 200–5000 genes, UMIs less than 30,000, and a mitochondrial gene expression percentage of less than 50% for the following analyses. 
 # We end up with 14,857 cells rather than 14,592 cells. I am not sure why and they do not provide extra filtering information, but it should not make a significant difference.
 
-NormalizeData
-and ScaleData to normalize and scale the gene expression matrix. For the PCA analysis, the top 2000 variable genes were chosen by FindVariableFeatures
+# NormalizeData and ScaleData to normalize and scale the gene expression matrix. For the PCA analysis, the top 2000 variable genes were chosen by FindVariableFeatures
 
-# merged_ob2 <- merged_ob
-merged_ob <- merged_ob2
-
-<!-- 
-merged_ob <- NormalizeData(object = merged_ob)
-merged_ob <- FindVariableFeatures(object = merged_ob, nfeatures = 2000)
-merged_ob <- ScaleData(object = merged_ob)
-merged_ob <- RunPCA(object = merged_ob)
-merged_ob <- RunUMAP(object = merged_ob, reduction = "pca", dims= 1:20)
-merged_ob <- FindNeighbors(object = merged_ob,dims = 1:20)
-merged_ob <- FindClusters(object = merged_ob,resolution = 1.2) -->
-
-
-merged_ob_h <- merged_ob2
-merged_ob_h[["Sample"]] <- Idents(object = merged_ob_h)
+# Clone the Seurat object to see how it clusters without batch effect removal
+merged_ob_noBER <- merged_ob
 
 # Without batch effect removal
-merged_ob <- merged_ob %>%
+merged_ob_noBER <- merged_ob_noBER %>%
     NormalizeData() %>%
     FindVariableFeatures(nfeatures = 2000) %>%
     ScaleData() %>%
@@ -95,13 +81,13 @@ merged_ob <- merged_ob %>%
     # DimPlot(reduction = "tsne")
 
 # Visualise the UMAP
-p1 <- DimPlot(merged_ob, reduction = "umap", group.by = "Sample")
-p2 <- DimPlot(merged_ob, reduction = "umap", label = TRUE)
+p1 <- DimPlot(merged_ob_noBER, reduction = "umap", group.by = "Sample")
+p2 <- DimPlot(merged_ob_noBER, reduction = "umap", label = TRUE)
 plot_grid(p1, p2)
 # The batch effect is massive
 
 # With batch effect removal using harmony
-merged_ob_h <- merged_ob_h %>%
+merged_ob <- merged_ob %>%
     NormalizeData() %>%
     FindVariableFeatures(nfeatures = 2000) %>%
     ScaleData() %>%
@@ -115,28 +101,26 @@ merged_ob_h <- merged_ob_h %>%
     # RunTSNE()
     # DimPlot(reduction = "tsne")
 
-table(Idents(object = merged_ob_h))
-merged_ob_h[["clusters"]] <- Idents(object = merged_ob_h)
+# Add the clusters as a column
+table(Idents(object = merged_ob))
+merged_ob[["clusters"]] <- Idents(object = merged_ob)
 
-p1 <- DimPlot(merged_ob_h, reduction = "umap", group.by = "Sample")
-p2 <- DimPlot(merged_ob_h, reduction = "umap", group.by = "clusters", label = TRUE)
+p1 <- DimPlot(merged_ob, reduction = "umap", group.by = "Sample")
+p2 <- DimPlot(merged_ob, reduction = "umap", group.by = "clusters", label = TRUE)
 plot_grid(p1, p2)
 
-DimPlot(merged_ob_h, group.by = c("Sample", "clusters"), ncol = 2, label = TRUE)
+DimPlot(merged_ob, group.by = c("Sample", "clusters"), ncol = 2, label = TRUE)
 
-FeaturePlot(merged_ob_h, features = c("STAR", "CD68", "CD1C", "FCGR3B", "CD3D", "CDH1", "SERPINE2", "CD163",
+FeaturePlot(merged_ob, features = c("STAR", "CD68", "CD1C", "FCGR3B", "CD3D", "CDH1", "SERPINE2", "CD163",
     "FCER1A", "CXCR2", "CD3G", "EPCAM"))
     
- FeaturePlot(merged_ob_h, features = "SERPINE1")
+ FeaturePlot(merged_ob, features = "SERPINE1")
 
 # DimPlot(object = merged_ob, reduction = "pca")
 # DimPlot(object = merged_ob, reduction = "umap")
 
 # Cells were separated into 23 clusters by FindClusters, by using the top 20 principle components and a resolution parameter of 1.2. 
 # For the clustering of GCs and macrophages, we set the resolution to 1.2 and applied the uniform mainfold approximation and projection (UMAP) algorithm to visualize cells in a two-dimensional space
-
-# DimPlot(object = merged_ob, reduction = "pca")
-# DimPlot(object = merged_ob, reduction = "umap")
 
 # We can manually annotate... 
 # 9 GC clusters: 0,2,3,4,5,8,9,10,14
@@ -145,8 +129,8 @@ FeaturePlot(merged_ob_h, features = c("STAR", "CD68", "CD1C", "FCGR3B", "CD3D", 
 # T cells:
 # neutrophils:
 
-FeaturePlot(merged_ob_h, features = c("STAR", "SERPINE2"))
-FeaturePlot(merged_ob_h, features = c("PTPRC", "CD68"))
+FeaturePlot(merged_ob, features = c("STAR", "SERPINE2"))
+FeaturePlot(merged_ob, features = c("PTPRC", "CD68"))
 
 ```
 Canonical markers and highly differentially expressed genes (DEGs) enabled us to identify six major cell types: 
