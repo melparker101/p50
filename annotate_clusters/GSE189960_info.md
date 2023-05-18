@@ -25,7 +25,8 @@ for(file in filelist){
   rownames(df) <- df$V1
   df <- df[,-1]
   name <- gsub(".*?([[:alnum:]]+)[.].*", "\\1", file)
-  seurat_ob <- CreateSeuratObject(counts = df, project=name)
+  seurat_ob <- CreateSeuratObject(counts = df, project=name, min.cells = 3, min.features = 200)
+  # seurat_ob <- CreateSeuratObject(counts = df, project=name)  # Try the above to see if it makes a difference with the cells
   
   # QC
   seurat_ob[["percent.mt"]] <- PercentageFeatureSet(seurat_ob, pattern = "^MT-")
