@@ -29,14 +29,18 @@ for(file in filelist){
   # seurat_ob <- CreateSeuratObject(counts = df, project=name)  # Try the above to see if it makes a difference with the cells
   
   # QC
-  seurat_ob[["percent.mt"]] <- PercentageFeatureSet(seurat_ob, pattern = "^MT-")
-  seurat_ob <- subset(seurat_ob, subset = nFeature_RNA > 200 & nFeature_RNA < 5000 & percent.mt < 50 & nCount_RNA < 30000)
+  # seurat_ob[["percent.mt"]] <- PercentageFeatureSet(seurat_ob, pattern = "^MT-")
+  # seurat_ob <- subset(seurat_ob, subset = nFeature_RNA > 200 & nFeature_RNA < 5000 & percent.mt < 50 & nCount_RNA < 30000)
   
   # Rename Seurat object
   assign(name, seurat_ob)
   rm(seurat_ob)
   patient_id <- append(patient_id,name)
 }
+
+
+
+14,592
 
 # print(max(seurat_ob@meta.data$nCount_RNA))
 
@@ -52,6 +56,12 @@ mergeSamples <- paste0("merged_ob <- merge(",patient_id[1],", y = c(", merge_lis
 
 # Run command to merge Seurat objects
 merged_ob <- eval(parse(text = mergeSamples))
+
+merged_ob[["percent.mt"]] <- PercentageFeatureSet(merged_ob, pattern = "^MT-")
+VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, split.by = "orig.ident")
+
+
+merged_ob <- subset(merged_ob, subset = nFeature_RNA > 200 & nFeature_RNA < 5000 & percent.mt < 50 & nCount_RNA < 30000)
 
 table(Idents(merged_ob))
 
@@ -140,6 +150,33 @@ FeaturePlot(merged_ob, features = c("PTPRC", "CXCR2", "FCGR3B"))  # Neutrophil
 FeaturePlot(merged_ob, features = c("PTPRC", "CD3D", "CD3E", "CD3G"))  # T_cell
 FeaturePlot(merged_ob, features = c("EPCAM", "KRT18", "CDH1"))  # Epithelium
 
+
+
+Theca2 <- merged_ob
+
+GC_clusters <- c("0","1","2","5","6","9","11","14","15","18","21")
+neutrophil_clusters <- "16"
+macrophage_clusters <- c("3","4","8","13","17","19")
+Tcell_clusters <- c("12","22")
+epithelium_clusters <- c("10","20")
+DC_clusters <- "7"
+
+
+Theca2 <- RenameIdents(Theca2, "Granulosa", GC_clusters)
+Theca2 <- RenameIdents(Theca2, neutrophil_clusters = "Neutrophil")
+Theca2 <- RenameIdents(Theca2, macrophage_clusters = "Mac")
+Theca2 <- RenameIdents(Theca2, Tcell_clusters = "T_cell")
+Theca2 <- RenameIdents(Theca2, epithelium_clusters = "Epithelium")
+Theca2 <- RenameIdents(Theca2, DC_clusters = "DC")
+
+Theca2[["cell_types"]] <- Idents(Theca2)
+
+new.cluster.ids <- c("Naive CD4 T", "CD14+ Mono", "Memory CD4 T", "B", "CD8 T", "FCGR3A+ Mono",
+    "NK", "DC", "Platelet")
+names(new.cluster.ids) <- levels(pbmc)
+pbmc <- RenameIdents(pbmc, new.cluster.ids)
+DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+
 ```
 Canonical markers and highly differentially expressed genes (DEGs) enabled us to identify six major cell types: 
 - STAR+SERPINE2+ granulosa cells (GCs, 9614 cells, 66%) [44,45], 
@@ -148,4 +185,16 @@ Canonical markers and highly differentially expressed genes (DEGs) enabled us to
 - PTPRC+CXCR2+ neutrophils (168 cells, 1%), 
 - PTPRC+CD3D+CD3E+ T cells (260 cell, 2%)
 - EPCAM+KRT18+ epithelial cells (195 cells, 1%) (Figure 1D–F)
+
+Using seurat v 4.3 and manually picking based on the above marker genes and comparing to the original cluster graph from the authors:
+16 - Neutrophil
+0,1,2,5,6,9,11,14,15,18,21 - GC
+3,4,8,13,17,19 - Macrophages
+7 - DC
+12,22 - T cells
+10,20 - Epithelium
+
+
+
+
 
