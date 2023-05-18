@@ -8,4 +8,6 @@ For clustering, try to follow the methods from the author's paper. This is usual
 -   FindNeighbors(reduction = "pca", dims = 1:30)
 -   FindClusters(resolution = 0.5)
 
+Also use harmony for batch correction.
+
 Use [X. Fan et al.](https://www.nature.com/articles/s41467-019-11036-9) as a reference for annotation.
