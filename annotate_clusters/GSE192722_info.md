@@ -18,13 +18,20 @@ seurat_object
 # "After routine quality control1, 48,147 cells remained for downstream for analysis."
 # We only have 5607. Try reading in separately
 
-# There are 8 different samples
-data_dirs <- list.files("data/counts/GSE192722/", "(Don|Pt)(?!.*\\.tar$)")
-data_dirs <- data_dirs[!grepl(".tar", data_dirs)]
+################################################
+# Load libraries
+library(Seurat)
 
+# Define data path
 path = "data/counts/GSE192722"
 
+# Make a list of the data directories for the 8 different samples
+data_dirs <- list.files(path, "(Don|Pt)")
+data_dirs <- data_dirs[!grepl(".tar", data_dirs)]
+
+# Make an empty vector to add sample names to
 samples <- c()
+
 # Loop through samples
 for(dir in paste(path,data_dirs, sep="/")){
   # Extract sample name
@@ -50,8 +57,10 @@ mergeSamples <- paste0("merged_ob <- merge(",samples[1],", y = c(", merge_list, 
 
 # Run command to merge Seurat objects
 merged_ob <- eval(parse(text = mergeSamples))
+merged_ob
 
 # Now we have 63301 features. Filter.
+# 62255
 
 # >200 but <4000 features and <20% of reads mapping to mitochondrial genes were retained.
 # They actually filtered for <7500 features
@@ -63,9 +72,6 @@ VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mt", "per
 merged_ob[["percent.mito"]] <- PercentageFeatureSet(merged_ob, pattern = "^MT-")
 merged_ob[["percent.ribo"]] <- PercentageFeatureSet(merged_ob, pattern = "^RP[SL]")
 
-ribo.genes <- grep(pattern = "^RP[SL]", x = rownames(x = Theca), value = TRUE)
-percent.ribo <- Matrix::colSums(Theca[ribo.genes, ]) / Matrix::colSums(Theca)
-
 VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mito", "percent.ribo"), pt.size = 0, ncol = 4)
 
 merged_ob <- subset(merged_ob, subset = nFeature_RNA > 200 & nFeature_RNA < 7500 & percent.mito < 20)
@@ -74,6 +80,7 @@ merged_ob <- subset(merged_ob, subset = nFeature_RNA > 200 & nFeature_RNA < 7500
 
 VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mito", "percent.ribo"), pt.size = 0, ncol = 4)
 
+# Checkpoint
 Theca <- merged_ob
 
 # Batch effect?
@@ -112,7 +119,7 @@ Theca <- ScaleData(Theca, verbose = FALSE)
 
 # Plot According to Cell Cycle
 Theca <- CellCycleScoring(Theca, g2m.features = cc.genes$g2m.genes, s.features = cc.genes$s.genes)
-#Regress Cell Cycle Effects (if desired)
+# Regress Cell Cycle Effects (if desired)
 Theca <- ScaleData(Theca, vars.to.regress = c("S.Score", "G2M.Score"), features = rownames(Theca))
 
 Theca <- RunPCA(object = Theca)
@@ -136,6 +143,14 @@ FeaturePlot(object = Theca, features = "OGN", reduction = "umap",cols = c("grey9
 FeaturePlot(object = Theca, features = "ACTA2", reduction = "umap",cols = c("grey90","red"),order = TRUE,pt.size = 0.25)
 FeaturePlot(object = Theca, features = "KRT8", reduction = "umap",cols = c("grey90","red"),order = TRUE,pt.size = 0.25)
 FeaturePlot(object = Theca, features = "MCAM", reduction = "umap",cols = c("grey90","red"),order = TRUE,pt.size = 0.25)
+
+# Plot for theca cells
+FeaturePlot(object = Theca, features = "AMH", reduction = "umap",cols = c("grey90","red"),order = TRUE,pt.size = 0.25)  # GC
+FeaturePlot(object = Theca, features = "PTPRC", reduction = "umap",cols = c("grey90","red"),order = TRUE,pt.size = 0.25)  # HEM
+FeaturePlot(object = Theca, features = "CDH5", reduction = "umap",cols = c("grey90","red"),order = TRUE,pt.size = 0.25)  # EC
+FeaturePlot(object = Theca, features = "RGS5", reduction = "umap",cols = c("grey90","red"),order = TRUE,pt.size = 0.25)  # SMC
+FeaturePlot(object = Theca, features = "TCF21", reduction = "umap",cols = c("grey90","red"),order = TRUE,pt.size = 0.25)  # Theca/stroma ?
+# OE? KRT8? PTGDS?
 
 # VlnPlot(object = ThecaProp, features = "TCF21", pt.size = 0, group.by = "seurat_clusters") +
 #   stat_summary(fun = median, geom='point', size = 25, colour = "black", shape = 95)+NoLegend()
