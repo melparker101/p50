@@ -1,5 +1,5 @@
 We have separate files for each sample, e.g. "GSM5761690_filtered_feature_bc_matrix_Don1.tar.gz". Unzip and extract from tar. They also provide R code on GEO.
-Supplementary files: https://static-content.springer.com/esm/art%3A10.1038%2Fs42003-022-04384-8/MediaObjects/42003_2022_4384_MOESM2_ESM.pdf 
+Supplementary file: https://static-content.springer.com/esm/art%3A10.1038%2Fs42003-022-04384-8/MediaObjects/42003_2022_4384_MOESM2_ESM.pdf 
 ``` R
 counts <- Read10X_h5(filename = "/Users/nicolelustgarten/Dropbox/Weill Cornell/DJames Lab/Theca Stroma/ATAC Seq/FP1 RNA_ATACSeq Data/filtered_feature_bc_matrix.h5")
 
