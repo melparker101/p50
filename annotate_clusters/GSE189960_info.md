@@ -40,7 +40,7 @@ for(file in filelist){
 
 
 
-14,592
+# 14,592
 
 # print(max(seurat_ob@meta.data$nCount_RNA))
 
