@@ -12,7 +12,9 @@ library(magrittr)
 library(cowplot)
 library(harmony)
 library(SeuratData)
+library(SeuratDisk)
 
+dataset <- "GSE189960"
 path <- "data/counts/GSE189960"
 
 filelist <- list.files(path,pattern='.expression_matrix.txt')
@@ -195,10 +197,20 @@ cluster_dict <- cluster_dict[as.character(sort(as.numeric(names(cluster_dict))))
 
 # Rename the idents and add as a column in seurat object
 merged_ob <- RenameIdents(merged_ob, cluster_dict)
-merged_ob[["cell_types"]] <- Idents(merged_ob)
+merged_ob[["cell_type"]] <- Idents(merged_ob)
 
 # Flip x and y axis and plot umap
 DimPlot(merged_ob, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend() + scale_x_reverse() + scale_y_reverse()
+
+# Remove scale data (there is an issue with seurat disk and the raw counts when converting to h5ad if not) - https://github.com/mojaveazure/seurat-disk/issues/75
+seurat_ob <- DietSeurat(merged_ob)
+
+i <- sapply(seurat_ob@meta.data, is.factor)
+seurat_ob@meta.data[i] <- lapply(seurat_ob@meta.data[i], as.character)
+
+# Save as a h5ad file
+SaveH5Seurat(seurat_ob, filename = out_seurat)
+Convert(out_seurat, dest = "h5ad")
 
 ```
 Canonical markers and highly differentially expressed genes (DEGs) enabled us to identify six major cell types: 
