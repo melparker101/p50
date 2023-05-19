@@ -155,18 +155,15 @@ new_annotations <- c("Cell Type 1", "Cell Type 1", "Cell Type 2", "Cell Type 3",
 # Rename and annotate clusters
 seurat_obj <- RenameIdents(seurat_obj, new_annotations)
 
+# Cell labels
+# GC_clusters <- c("0","1","2","5","6","9","11","14","15","18","21")
+# neutrophil_clusters <- "16"
+# macrophage_clusters <- c("3","4","8","13","17","19")
+# Tcell_clusters <- c("12","22")
+# epithelium_clusters <- c("10","20")
+# DC_clusters <- "7"
 
-new_annotations <- (
-
-Theca2 <- merged_ob
-
-GC_clusters <- c("0","1","2","5","6","9","11","14","15","18","21")
-neutrophil_clusters <- "16"
-macrophage_clusters <- c("3","4","8","13","17","19")
-Tcell_clusters <- c("12","22")
-epithelium_clusters <- c("10","20")
-DC_clusters <- "7"
-
+# Make a dictionary for the cell labels
 cluster_dict <- c(
   "0" = "GC",
   "1" = "GC",
@@ -193,39 +190,15 @@ cluster_dict <- c(
   "7" = "DC"
 )
 
-seurat_obj <- merged_ob
+# Reorder dictionary based on clusters
+cluster_dict <- cluster_dict[as.character(sort(as.numeric(names(cluster_dict))))]
 
+# Rename the idents and add as a column in seurat object
+merged_ob <- RenameIdents(merged_ob, cluster_dict)
+merged_ob[["cell_types"]] <- Idents(merged_ob)
 
-# RenameIdents(object = object, "old.ident" = "new.ident")
-
-
-old_idents <- names(cluster_dict)
-new_idents <- as.vector(cluster_dict)
-cluster_dict <- cluster_dict[as.character(sort(as.numeric(old_idents)))]
-
-
-cell_types <- as.vector(reordered_dict)
-names(cell_types) <- levels(seurat_obj)
-seurat_obj <- RenameIdents(seurat_obj, cell_types)
-seurat_obj[["cell_types"]] <- Idents(seurat_obj)
-
-seurat_obj <- RenameIdents(seurat_obj, cell_types)
-seurat_obj <- RenameIdents(seurat_obj, reordered_dict)
-
-Theca2 <- RenameIdents(Theca2, "Granulosa", GC_clusters)
-Theca2 <- RenameIdents(Theca2, neutrophil_clusters = "Neutrophil")
-Theca2 <- RenameIdents(Theca2, macrophage_clusters = "Mac")
-Theca2 <- RenameIdents(Theca2, Tcell_clusters = "T_cell")
-Theca2 <- RenameIdents(Theca2, epithelium_clusters = "Epithelium")
-Theca2 <- RenameIdents(Theca2, DC_clusters = "DC")
-
-Theca2[["cell_types"]] <- Idents(Theca2)
-
-new.cluster.ids <- c("Naive CD4 T", "CD14+ Mono", "Memory CD4 T", "B", "CD8 T", "FCGR3A+ Mono",
-    "NK", "DC", "Platelet")
-names(new.cluster.ids) <- levels(pbmc)
-pbmc <- RenameIdents(pbmc, new.cluster.ids)
-DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+# Flip x and y axis and plot umap
+DimPlot(merged_ob, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend() + scale_x_reverse() + scale_y_reverse()
 
 ```
 Canonical markers and highly differentially expressed genes (DEGs) enabled us to identify six major cell types: 
