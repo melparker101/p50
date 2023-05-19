@@ -38,8 +38,6 @@ for(file in filelist){
   patient_id <- append(patient_id,name)
 }
 
-
-
 # 14,592
 
 # print(max(seurat_ob@meta.data$nCount_RNA))
@@ -60,13 +58,12 @@ merged_ob <- eval(parse(text = mergeSamples))
 merged_ob[["percent.mt"]] <- PercentageFeatureSet(merged_ob, pattern = "^MT-")
 VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, split.by = "orig.ident")
 
-
 merged_ob <- subset(merged_ob, subset = nFeature_RNA > 200 & nFeature_RNA < 5000 & percent.mt < 50 & nCount_RNA < 30000)
 
 table(Idents(merged_ob))
 
 # Add a sample column
-merged_ob[["Sample"]] <- Idents(object = merged_ob)
+merged_ob[["sample"]] <- Idents(object = merged_ob)
 
 # This plot will be different to the original plot in supplementary figure 1 because theirs is produced before filtering
 VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, split.by = "orig.ident")
@@ -77,24 +74,24 @@ VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), nco
 # NormalizeData and ScaleData to normalize and scale the gene expression matrix. For the PCA analysis, the top 2000 variable genes were chosen by FindVariableFeatures
 
 # Clone the Seurat object to see how it clusters without batch effect removal
-merged_ob_noBER <- merged_ob
+# merged_ob_noBER <- merged_ob
 
 # Without batch effect removal
-merged_ob_noBER <- merged_ob_noBER %>%
-    NormalizeData() %>%
-    FindVariableFeatures(nfeatures = 2000) %>%
-    ScaleData() %>%
-    RunPCA() %>%
-    RunUMAP(reduction = "pca", dims = 1:20) %>%
-    FindNeighbors(dims = 1:20) %>%
-    FindClusters(resolution = 1.2)
-    # RunTSNE()
-    # DimPlot(reduction = "tsne")
+# merged_ob_noBER <- merged_ob_noBER %>%
+#     NormalizeData() %>%
+#     FindVariableFeatures(nfeatures = 2000) %>%
+#     ScaleData() %>%
+#     RunPCA() %>%
+#     RunUMAP(reduction = "pca", dims = 1:20) %>%
+#     FindNeighbors(dims = 1:20) %>%
+#     FindClusters(resolution = 1.2)
+#     # RunTSNE()
+#     # DimPlot(reduction = "tsne")
 
 # Visualise the UMAP
-p1 <- DimPlot(merged_ob_noBER, reduction = "umap", group.by = "Sample")
-p2 <- DimPlot(merged_ob_noBER, reduction = "umap", label = TRUE)
-plot_grid(p1, p2)
+# p1 <- DimPlot(merged_ob_noBER, reduction = "umap", group.by = "sample")
+# p2 <- DimPlot(merged_ob_noBER, reduction = "umap", label = TRUE)
+# plot_grid(p1, p2)
 # The batch effect is massive
 
 # With batch effect removal using harmony
@@ -114,9 +111,9 @@ merged_ob <- merged_ob %>%
 
 # Add the clusters as a column
 table(Idents(object = merged_ob))
-merged_ob[["clusters"]] <- Idents(object = merged_ob)
+merged_ob[["seurat_clusters"]] <- Idents(object = merged_ob)
 
-p1 <- DimPlot(merged_ob, reduction = "umap", group.by = "Sample")
+p1 <- DimPlot(merged_ob, reduction = "umap", group.by = "sample")
 p2 <- DimPlot(merged_ob, reduction = "umap", group.by = "clusters", label = TRUE)
 plot_grid(p1, p2)
 
@@ -198,40 +195,22 @@ cluster_dict <- c(
 
 seurat_obj <- merged_ob
 
-for (cluster in names(cluster_dict)){
-  print(cluster)
-  print(cluster_dict[cluster])
-}
-
-for (cluster in names(cluster_dict)){
-  print(values(cluster_dict))
-}
-
-for (cluster in names(cluster_dict)) {
-  cell_type <- as.vector(cluster_dict[cluster])
-  print(cell_type)
-}
-
-for (cluster in names(cluster_dict)) {
-  old_ident <- cluster
-  new_ident <- cluster_dict[cluster]
-  seurat_obj <- RenameIdents(seurat_obj, old_ident = new_ident)
-}
 
 # RenameIdents(object = object, "old.ident" = "new.ident")
 
-for (cluster in names(cluster_dict)) {
-  old_ident <- cluster
-  print(cluster)
-  new_ident <- as.vector(cluster_dict[cluster])
-  print(new_ident)
-  # seurat_obj <- RenameIdents(seurat_obj, old.ident = old_ident, new.ident = new_ident)
-  seurat_obj <- RenameIdents(seurat_obj, old.ident = old_ident, new.ident = new_ident)
-}
 
 old_idents <- names(cluster_dict)
 new_idents <- as.vector(cluster_dict)
+cluster_dict <- cluster_dict[as.character(sort(as.numeric(old_idents)))]
 
+
+cell_types <- as.vector(reordered_dict)
+names(cell_types) <- levels(seurat_obj)
+seurat_obj <- RenameIdents(seurat_obj, cell_types)
+seurat_obj[["cell_types"]] <- Idents(seurat_obj)
+
+seurat_obj <- RenameIdents(seurat_obj, cell_types)
+seurat_obj <- RenameIdents(seurat_obj, reordered_dict)
 
 Theca2 <- RenameIdents(Theca2, "Granulosa", GC_clusters)
 Theca2 <- RenameIdents(Theca2, neutrophil_clusters = "Neutrophil")
