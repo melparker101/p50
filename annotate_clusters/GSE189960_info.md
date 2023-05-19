@@ -205,6 +205,7 @@ DimPlot(merged_ob, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 # Remove scale data (there is an issue with seurat disk and the raw counts when converting to h5ad if not) - https://github.com/mojaveazure/seurat-disk/issues/75
 seurat_ob <- DietSeurat(merged_ob)
 
+# https://github.com/mojaveazure/seurat-disk/issues/23
 i <- sapply(seurat_ob@meta.data, is.factor)
 seurat_ob@meta.data[i] <- lapply(seurat_ob@meta.data[i], as.character)
 
