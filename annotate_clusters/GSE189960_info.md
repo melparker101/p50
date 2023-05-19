@@ -150,7 +150,16 @@ FeaturePlot(merged_ob, features = c("PTPRC", "CXCR2", "FCGR3B"))  # Neutrophil
 FeaturePlot(merged_ob, features = c("PTPRC", "CD3D", "CD3E", "CD3G"))  # T_cell
 FeaturePlot(merged_ob, features = c("EPCAM", "KRT18", "CDH1"))  # Epithelium
 
+# Assuming you have a Seurat object called 'seurat_obj'
 
+# Create a vector of new cluster annotations in the same order as the clusters
+new_annotations <- c("Cell Type 1", "Cell Type 1", "Cell Type 2", "Cell Type 3", "Cell Type 3")
+
+# Rename and annotate clusters
+seurat_obj <- RenameIdents(seurat_obj, new_annotations)
+
+
+new_annotations <- (
 
 Theca2 <- merged_ob
 
@@ -160,6 +169,68 @@ macrophage_clusters <- c("3","4","8","13","17","19")
 Tcell_clusters <- c("12","22")
 epithelium_clusters <- c("10","20")
 DC_clusters <- "7"
+
+cluster_dict <- c(
+  "0" = "GC",
+  "1" = "GC",
+  "2" = "GC",
+  "5" = "GC",
+  "6" = "GC",
+  "9" = "GC",
+  "11" = "GC",
+  "14" = "GC",
+  "15" = "GC",
+  "18" = "GC",
+  "21" = "GC",
+  "16" = "neutrophil",
+  "3" = "macrophage",
+  "4" = "macrophage",
+  "8" = "macrophage",
+  "13" = "macrophage",
+  "17" = "macrophage",
+  "19" = "macrophage",
+  "12" = "Tcell",
+  "22" = "Tcell",
+  "10" = "epithelium",
+  "20" = "epithelium",
+  "7" = "DC"
+)
+
+seurat_obj <- merged_ob
+
+for (cluster in names(cluster_dict)){
+  print(cluster)
+  print(cluster_dict[cluster])
+}
+
+for (cluster in names(cluster_dict)){
+  print(values(cluster_dict))
+}
+
+for (cluster in names(cluster_dict)) {
+  cell_type <- as.vector(cluster_dict[cluster])
+  print(cell_type)
+}
+
+for (cluster in names(cluster_dict)) {
+  old_ident <- cluster
+  new_ident <- cluster_dict[cluster]
+  seurat_obj <- RenameIdents(seurat_obj, old_ident = new_ident)
+}
+
+# RenameIdents(object = object, "old.ident" = "new.ident")
+
+for (cluster in names(cluster_dict)) {
+  old_ident <- cluster
+  print(cluster)
+  new_ident <- as.vector(cluster_dict[cluster])
+  print(new_ident)
+  # seurat_obj <- RenameIdents(seurat_obj, old.ident = old_ident, new.ident = new_ident)
+  seurat_obj <- RenameIdents(seurat_obj, old.ident = old_ident, new.ident = new_ident)
+}
+
+old_idents <- names(cluster_dict)
+new_idents <- as.vector(cluster_dict)
 
 
 Theca2 <- RenameIdents(Theca2, "Granulosa", GC_clusters)
