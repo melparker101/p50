@@ -13,6 +13,7 @@ library(cowplot)
 library(harmony)
 library(SeuratData)
 library(SeuratDisk)
+library(ggplot2)
 
 dataset <- "GSE189960"
 path <- "data/counts/GSE189960"
