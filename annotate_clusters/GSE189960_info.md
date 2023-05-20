@@ -149,14 +149,6 @@ FeaturePlot(merged_ob, features = c("PTPRC", "CXCR2", "FCGR3B"))  # Neutrophil
 FeaturePlot(merged_ob, features = c("PTPRC", "CD3D", "CD3E", "CD3G"))  # T_cell
 FeaturePlot(merged_ob, features = c("EPCAM", "KRT18", "CDH1"))  # Epithelium
 
-# Assuming you have a Seurat object called 'seurat_obj'
-
-# Create a vector of new cluster annotations in the same order as the clusters
-new_annotations <- c("Cell Type 1", "Cell Type 1", "Cell Type 2", "Cell Type 3", "Cell Type 3")
-
-# Rename and annotate clusters
-seurat_obj <- RenameIdents(seurat_obj, new_annotations)
-
 # Cell labels
 # GC_clusters <- c("0","1","2","5","6","9","11","14","15","18","21")
 # neutrophil_clusters <- "16"
