@@ -7,15 +7,15 @@ dataset_acc = "GSE189960"
 # Define data paths
 dirIn = 'data/counts/' + dataset_acc + '/'  
 dirOut = 'data/esmu'
-
-# Input files
+  
 input_file = dataset_acc + "_counts.h5ad"
+refixData_ens = dataset_acc + '_ens'
 
 # Read in data
 adata = sc.read_h5ad(dirIn + input_file)
 
 # Extract metadata
-metadata = adata.obs["cell_type"]
+metadata = pd.DataFrame(adata.obs["cell_type"], columns=["cell_type"])
 
 # Extract raw count data
 raw = adata.raw.to_adata()
@@ -35,7 +35,7 @@ eso.compute(verbose=True)
 
 # Save and inspect results
 # Save expression specificity mu and sd matrix for gene symbols
-eso.save_as_csv(file_prefix=prefixData_sym, path=dirOut, verbose=True)
+# eso.save_as_csv(file_prefix=prefixData_sym, path=dirOut, verbose=True)
 eso.results["esmu"].head()
 
 # Map symbols to ensembl ids
@@ -47,8 +47,3 @@ eso.save_as_csv(file_prefix=prefixData_ens, path=dirOut, verbose=True)
 
 # Delete object to release memory
 del eso
-
-
-
-
-
