@@ -116,13 +116,13 @@ table(Idents(object = merged_ob))
 merged_ob[["seurat_clusters"]] <- Idents(object = merged_ob)
 
 p1 <- DimPlot(merged_ob, reduction = "umap", group.by = "sample")
-p2 <- DimPlot(merged_ob, reduction = "umap", group.by = "clusters", label = TRUE)
+p2 <- DimPlot(merged_ob, reduction = "umap", group.by = "seurat_clusters", label = TRUE)
 plot_grid(p1, p2)
 
 # This does the same
-# DimPlot(merged_ob, group.by = c("sample", "clusters"), ncol = 2, label = TRUE)
+# DimPlot(merged_ob, group.by = c("sample", "seurat_clusters"), ncol = 2, label = TRUE)
 
-DimPlot(merged_ob, group.by = "clusters", label = TRUE)
+DimPlot(merged_ob, group.by = "seurat_clusters", label = TRUE)
 
 FeaturePlot(merged_ob, features = c("STAR", "CD68", "CD1C", "FCGR3B", "CD3D", "CDH1", "SERPINE2", "CD163",
     "FCER1A", "CXCR2", "CD3G", "EPCAM"))
