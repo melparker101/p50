@@ -31,11 +31,6 @@ for(file in filelist){
   df <- df[,-1]
   name <- gsub(".*?([[:alnum:]]+)[.].*", "\\1", file)
   seurat_ob <- CreateSeuratObject(counts = df, project=name, min.cells = 3, min.features = 200)
-  # seurat_ob <- CreateSeuratObject(counts = df, project=name)  # Try the above to see if it makes a difference with the cells
-  
-  # QC
-  # seurat_ob[["percent.mt"]] <- PercentageFeatureSet(seurat_ob, pattern = "^MT-")
-  # seurat_ob <- subset(seurat_ob, subset = nFeature_RNA > 200 & nFeature_RNA < 5000 & percent.mt < 50 & nCount_RNA < 30000)
   
   # Rename Seurat object
   assign(name, seurat_ob)
