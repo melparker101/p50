@@ -120,7 +120,7 @@ p2 <- DimPlot(merged_ob, reduction = "umap", group.by = "clusters", label = TRUE
 plot_grid(p1, p2)
 
 # This does the same
-# DimPlot(merged_ob, group.by = c("Sample", "clusters"), ncol = 2, label = TRUE)
+# DimPlot(merged_ob, group.by = c("sample", "clusters"), ncol = 2, label = TRUE)
 
 DimPlot(merged_ob, group.by = "clusters", label = TRUE)
 
