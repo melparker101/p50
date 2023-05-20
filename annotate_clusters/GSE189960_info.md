@@ -102,7 +102,7 @@ merged_ob <- merged_ob %>%
     FindVariableFeatures(nfeatures = 2000) %>%
     ScaleData() %>%
     RunPCA() %>%
-    RunHarmony(group.by.vars = "Sample") %>%
+    RunHarmony(group.by.vars = "sample") %>%
     RunUMAP(reduction = "harmony", dims = 1:20) %>%
     # RunUMAP(reduction = "pca", dims = 1:20) %>%
     FindNeighbors(reduction = "harmony", dims = 1:20) %>%
