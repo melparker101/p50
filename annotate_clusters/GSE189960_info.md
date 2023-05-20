@@ -18,6 +18,8 @@ library(ggplot2)
 dataset <- "GSE189960"
 path <- "data/counts/GSE189960"
 
+out_seurat <- paste0(path, "/", dataset, "_counts.h5Seurat")
+
 filelist <- list.files(path,pattern='.expression_matrix.txt')
 patient_id <- c()
 
