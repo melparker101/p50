@@ -180,7 +180,7 @@ DimPlot(Theca, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend() + s
 clusters_keep <- unique(as.vector(cluster_dict))
 
 # Subset to only include the labelled clusters. Rename the object again so we can reuse code from another dataset when saving
-seurat_ob <- subset(x = Theca, idents = clusters_keep)
+merged_ob <- subset(x = Theca, idents = clusters_keep)
 
 # Remove scale data (there is an issue with seurat disk and the raw counts when converting to h5ad if not) - https://github.com/mojaveazure/seurat-disk/issues/75
 seurat_ob <- DietSeurat(merged_ob)
@@ -192,4 +192,8 @@ seurat_ob@meta.data[i] <- lapply(seurat_ob@meta.data[i], as.character)
 # Save as a h5ad file
 SaveH5Seurat(seurat_ob, filename = out_seurat)
 Convert(out_seurat, dest = "h5ad")
+
+# Theca = Seurat object with all clusters
+# merged_ob = Seurat object with only annotated cell types in
+# seurat_ob = Seurat object with scale data removed and metadata factor type changed to character
 ```
