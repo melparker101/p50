@@ -183,7 +183,7 @@ Theca[["cell_type"]] <- Idents(Theca)
 Theca <- SetAssayData(object = Theca, slot = "counts", new.data = raw_counts)
 
 # Flip and plot umap
-DimPlot(Theca, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend() + scale_x_reverse()
+DimPlot(Theca, reduction = "umap", label = TRUE, pt.size = 0.5, font.size = 5) + NoLegend() + scale_x_reverse()
 
 # Make a list of cluster names to keep
 clusters_keep <- unique(as.vector(cluster_dict))
