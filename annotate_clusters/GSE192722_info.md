@@ -100,8 +100,14 @@ Theca.list <- lapply(X = Theca.list, FUN = function(x) {
   x <- ScaleData(x, features = features, verbose = FALSE)
   x <- RunPCA(x, features = features, verbose = FALSE)
 })
+
+# Create a copy of the raw counts because the IntegrateData() command below will write over them - add them in later
+raw_counts <- GetAssayData(object = Theca, slot = "counts")
+
 Theca.anchors <- FindIntegrationAnchors(object.list = Theca.list, anchor.features = 2000, reduction = "rpca", dims = 1:50)
 Theca <- IntegrateData(anchorset = Theca.anchors, dims = 1:50)
+
+# Scale data
 Theca <- ScaleData(Theca, verbose = FALSE)
 
 # Plot According to Cell Cycle
@@ -172,6 +178,9 @@ cluster_dict <- cluster_dict[as.character(sort(as.numeric(names(cluster_dict))))
 # Rename the idents and add as a column in seurat object
 Theca <- RenameIdents(Theca, cluster_dict)
 Theca[["cell_type"]] <- Idents(Theca)
+
+# Add the raw count data back in
+Theca <- SetAssayData(object = Theca, slot = "counts", new.data = raw_counts)
 
 # Flip and plot umap
 DimPlot(Theca, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend() + scale_x_reverse()
