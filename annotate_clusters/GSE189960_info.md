@@ -190,7 +190,7 @@ merged_ob <- RenameIdents(merged_ob, cluster_dict)
 merged_ob[["cell_type"]] <- Idents(merged_ob)
 
 # Flip x and y axis and plot umap
-DimPlot(merged_ob, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend() + scale_x_reverse() + scale_y_reverse()
+DimPlot(merged_ob, reduction = "umap", label = TRUE, pt.size = 0.5, label.size = 5) + NoLegend() + scale_x_reverse() + scale_y_reverse()
 
 # Remove scale data (there is an issue with seurat disk and the raw counts when converting to h5ad if not) - https://github.com/mojaveazure/seurat-disk/issues/75
 seurat_ob <- DietSeurat(merged_ob)
