@@ -1,29 +1,15 @@
 We have separate files for each sample, e.g. "GSM5761690_filtered_feature_bc_matrix_Don1.tar.gz". Unzip and extract from tar. They also provide R code on GEO.
 Supplementary file: https://static-content.springer.com/esm/art%3A10.1038%2Fs42003-022-04384-8/MediaObjects/42003_2022_4384_MOESM2_ESM.pdf 
 ``` R
-counts <- Read10X_h5(filename = "/Users/nicolelustgarten/Dropbox/Weill Cornell/DJames Lab/Theca Stroma/ATAC Seq/FP1 RNA_ATACSeq Data/filtered_feature_bc_matrix.h5")
-
-data_dir <- "data/counts/GSE192722/filtered_feature_bc_matrix"
-list.files(data_dir)
-# "barcodes.tsv.gz" "features.tsv.gz" "matrix.mtx.gz"
-data <- Read10X(data.dir = data_dir)
-# 10X data contains more than one type and is being returned as a list containing matrices of each type.
-
-seurat_object = CreateSeuratObject(counts = data$`Gene Expression`)
-seurat_object
-# An object of class Seurat
-# 36601 features across 5607 samples within 1 assay
-# Active assay: RNA (36601 features, 0 variable features)
-
-# "After routine quality control1, 48,147 cells remained for downstream for analysis."
-# We only have 5607. Try reading in separately
-
-################################################
 # Load libraries
 library(Seurat)
+library(SeuratDisk)
+library(ggplot2)
 
-# Define data path
-path = "data/counts/GSE192722"
+# Define dataset, data path and seurat outfile
+dataset <- "GSE192722"
+path <- paste0("data/counts/",dataset)
+out_seurat <- paste0(path, "/", dataset, "_counts.h5Seurat")
 
 # Make a list of the data directories for the 8 different samples
 data_dirs <- list.files(path, "(Don|Pt)")
@@ -66,18 +52,19 @@ merged_ob
 # They actually filtered for <7500 features
 # table(Theca@meta.data$percent.mito < 0.20 & Theca@meta.data$nFeature_RNA > 200 & Theca@meta.data$nFeature_RNA < 7500)
 
-VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mt", "percent.ribo"), pt.size = 0, ncol = 4)
-
 # QC
+# Add mitochondria percent and ribosomal percent columns
 merged_ob[["percent.mito"]] <- PercentageFeatureSet(merged_ob, pattern = "^MT-")
 merged_ob[["percent.ribo"]] <- PercentageFeatureSet(merged_ob, pattern = "^RP[SL]")
 
+# Plot
 VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mito", "percent.ribo"), pt.size = 0, ncol = 4)
 
+# Filter
 merged_ob <- subset(merged_ob, subset = nFeature_RNA > 200 & nFeature_RNA < 7500 & percent.mito < 20)
-
 # 48147
 
+# Plot again
 VlnPlot(merged_ob, features = c("nFeature_RNA", "nCount_RNA", "percent.mito", "percent.ribo"), pt.size = 0, ncol = 4)
 
 # Checkpoint
@@ -134,6 +121,8 @@ DimPlot(Theca, reduction = "umap", group.by = "samples", pt.size = .05, label = 
 DimPlot(Theca, reduction = "umap", group.by = "seurat_clusters", pt.size = .05, label = TRUE)+ NoLegend()
 DimPlot(Theca, reduction = "umap", group.by = "Phase", pt.size = .05, label = TRUE)+ NoLegend()
 
+DimPlot(Theca, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+
 FeaturePlot(object = Theca, features = "PTPRC", reduction = "umap",cols = c("grey90","red"),order = TRUE,pt.size = 0.25)
 FeaturePlot(object = Theca, features = "CDH5", reduction = "umap",cols = c("white","red"),order = TRUE,pt.size = 0.25)
 FeaturePlot(object = Theca, features = "RGS5", reduction = "umap",cols = c("grey90","red"),order = TRUE,pt.size = 0.25)
@@ -155,61 +144,55 @@ FeaturePlot(object = Theca, features = "TCF21", reduction = "umap",cols = c("gre
 # VlnPlot(object = ThecaProp, features = "TCF21", pt.size = 0, group.by = "seurat_clusters") +
 #   stat_summary(fun = median, geom='point', size = 25, colour = "black", shape = 95)+NoLegend()
 
-# Histogram of library contribution to each cluster
-# Idents(Theca) <- "seurat_clusters"
-Theca[["seurat_clusters"]] <- Idents(Theca)
-Clus0 <- subset(Theca, idents = c("0"))
-Clus1 <- subset(Theca, idents = c("1"))
-Clus2 <- subset(Theca, idents = c("2"))
-Clus3 <- subset(Theca, idents = c("3"))
-Clus4 <- subset(Theca, idents = c("4"))
-Clus5 <- subset(Theca, idents = c("5"))
-Clus6 <- subset(Theca, idents = c("6"))
-Clus7 <- subset(Theca, idents = c("7"))
-Clus8 <- subset(Theca, idents = c("8"))
-Clus9 <- subset(Theca, idents = c("9"))
-Clus10 <- subset(Theca, idents = c("10"))
-Clus11 <- subset(Theca, idents = c("11"))
-Clus12 <- subset(Theca, idents = c("12"))
-Clus13 <- subset(Theca, idents = c("13"))
-Clus14 <- subset(Theca, idents = c("14"))
-Clus15 <- subset(Theca, idents = c("15"))
-Clus16 <- subset(Theca, idents = c("16"))
-Clus17 <- subset(Theca, idents = c("17"))
-Clus18 <- subset(Theca, idents = c("18"))
-Clus19 <- subset(Theca, idents = c("19"))
-Clus20 <- subset(Theca, idents = c("20"))
-Clus21 <- subset(Theca, idents = c("21"))
-table(Clus0@meta.data$labels)
-table(Clus1@meta.data$labels)
-table(Clus2@meta.data$labels)
-table(Clus3@meta.data$labels)
-table(Clus4@meta.data$labels)
-table(Clus5@meta.data$labels)
-table(Clus6@meta.data$labels)
-table(Clus7@meta.data$labels)
-table(Clus8@meta.data$labels)
-table(Clus9@meta.data$labels)
-table(Clus10@meta.data$labels)
-table(Clus11@meta.data$labels)
-table(Clus12@meta.data$labels)
-table(Clus13@meta.data$labels)
-table(Clus14@meta.data$labels)
-table(Clus15@meta.data$labels)
-table(Clus16@meta.data$labels)
-table(Clus17@meta.data$labels)
-table(Clus18@meta.data$labels)
-table(Clus19@meta.data$labels)
-table(Clus20@meta.data$labels)
-table(Clus21@meta.data$labels)
-
 # Subset Theca Cells
 ThecaStroma <- subset(Theca, idents = c("1","2","3","4","5","12"))
 # 24033 cells. They have 23,736 cells for this
 
+# Assign cluster numbers to a cell type
+Theca_stroma_clusters <- c("1","2","3","4","5","12")
+OE_clusters <- c("6","11","16")
+GC_clusters <- c("7","15")
+SMC_clusters <- c("14","20")
+EC_clusters <- c("9","13")
+HEM_clusters <- c("17","18")
 
+# Create the cluster_dict dictionary
+cluster_dict <- c(
+  setNames(rep("Theca_stroma", length(Theca_stroma_clusters)), Theca_stroma_clusters),
+  setNames(rep("OE", length(OE_clusters)), OE_clusters),
+  setNames(rep("GC", length(GC_clusters)), GC_clusters),
+  setNames(rep("SMC", length(SMC_clusters)), SMC_clusters),
+  setNames(rep("EC", length(EC_clusters)), EC_clusters),
+  setNames(rep("HEM", length(HEM_clusters)), HEM_clusters)
+)
 
+# Reorder dictionary based on clusters
+cluster_dict <- cluster_dict[as.character(sort(as.numeric(names(cluster_dict))))]
 
+# Go back to merged ob
+# merged_ob <- Theca
 
+# Rename the idents and add as a column in seurat object
+Theca <- RenameIdents(Theca, cluster_dict)
+Theca[["cell_type"]] <- Idents(Theca)
 
+# Flip and plot umap
+DimPlot(Theca, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend() + scale_x_reverse()
+
+# Make a list of cluster names to keep
+clusters_keep <- unique(as.vector(cluster_dict))
+
+# Subset to only include the labelled clusters. Rename the object again so we can reuse code from another dataset when saving
+seurat_ob <- subset(x = Theca, idents = clusters_keep)
+
+# Remove scale data (there is an issue with seurat disk and the raw counts when converting to h5ad if not) - https://github.com/mojaveazure/seurat-disk/issues/75
+seurat_ob <- DietSeurat(merged_ob)
+
+# https://github.com/mojaveazure/seurat-disk/issues/23
+i <- sapply(seurat_ob@meta.data, is.factor)
+seurat_ob@meta.data[i] <- lapply(seurat_ob@meta.data[i], as.character)
+
+# Save as a h5ad file
+SaveH5Seurat(seurat_ob, filename = out_seurat)
+Convert(out_seurat, dest = "h5ad")
 ```
