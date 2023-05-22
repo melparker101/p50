@@ -169,9 +169,6 @@ cluster_dict <- c(
 # Reorder dictionary based on clusters
 cluster_dict <- cluster_dict[as.character(sort(as.numeric(names(cluster_dict))))]
 
-# Go back to merged ob
-# merged_ob <- Theca
-
 # Rename the idents and add as a column in seurat object
 Theca <- RenameIdents(Theca, cluster_dict)
 Theca[["cell_type"]] <- Idents(Theca)
