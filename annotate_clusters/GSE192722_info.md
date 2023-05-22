@@ -145,7 +145,7 @@ FeaturePlot(object = Theca, features = "TCF21", reduction = "umap",cols = c("gre
 #   stat_summary(fun = median, geom='point', size = 25, colour = "black", shape = 95)+NoLegend()
 
 # Subset Theca Cells
-ThecaStroma <- subset(Theca, idents = c("1","2","3","4","5","12"))
+# ThecaStroma <- subset(Theca, idents = c("1","2","3","4","5","12"))
 # 24033 cells. They have 23,736 cells for this
 
 # Assign cluster numbers to a cell type
