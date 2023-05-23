@@ -21,6 +21,7 @@ metadata = pd.DataFrame(adata.obs["cell_type"], columns=["cell_type"])
 # Extract raw count data
 raw = adata.raw.to_adata()
 raw = raw.transpose()
+raw.obs_names = adata.var_names  # Re-add gene symbols as index
 mat = raw.to_df()
 mat
 
