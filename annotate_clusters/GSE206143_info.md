@@ -28,6 +28,8 @@ for f in *IVF4*.gz ; do mv $f "data_dir_IVF4/"$(echo "$f" | sed 's/.*_//'); done
 "A UMAP shows 19 clusters (0–18) of 7609 cells via unsupervised clustering analyses."
 
 ``` R
+# Code copied and edited from https://github.com/nurungji82/scRNA-seq_of_IVF_samples/blob/main/R%20script%20for%204%20human%20follicular%20aspirates.R
+
 # Load libraries
 library(Seurat)
 library(SeuratDisk)
@@ -71,29 +73,12 @@ for(dir in data_dirs){
   rm(seurat_object)
 }
 
-################################################################
-# Create a command for merging seurat objects
-# Create a list of P2-P5 separated by commas
-merge_list <- paste(samples[2:length(samples)], collapse = ",")
-
-# "add.cell.ids = patient_id" to avoid duplicate cell names
-mergeSamples <- paste0("merged_ob <- merge(",samples[1],", y = c(", merge_list, "), add.cell.ids = samples, project = \"ovaries, min.cells=3, min.features = 200 \")")
-
-# Run command to merge Seurat objects
-merged_ob <- eval(parse(text = mergeSamples))
-merged_ob
-
-# Extract raw data
-raw_counts <- GetAssayData(object = merged_ob, slot = "counts")
-################################################################
 ## Find Anchors
 anchors <- FindIntegrationAnchors(object.list = list(IVF1, IVF2, IVF3, IVF4), dims = 1:20)
 combined <- IntegrateData(anchorset = anchors, dims = 1:20)
 DefaultAssay(object = combined) <- "integrated"
 
-## visualization and clustering
-
-
+## Visualisation and clustering
 combined <- ScaleData(object = combined, verbose = FALSE)
 combined <- RunPCA(object = combined, npcs = 30, verbose = FALSE)
 combined <- RunUMAP(object = combined, reduction = "pca", dims = 1:20)
@@ -101,31 +86,17 @@ combined <- FindNeighbors(object = combined, reduction = "pca", dims = 1:20)
 combined <- FindClusters(combined, resolution = 0.5)
 DefaultAssay(object = combined) <- "RNA"
 
-
-# checkpoint
-# combined_backup <- combined
-# combined <- combined_backup
-
-# Changing the resolution for find clusters changes the number of clusters, but not their location
-# combined <- FindClusters(combined, resolution = 0.7)  # 0.5
-# DefaultAssay(object = combined) <- "RNA"
-
 DimPlot(combined, reduction = "umap", pt.size = 0.5, label = TRUE, label.size = 5) + NoLegend()
 
 # saveRDS(combined, file="integrated_IVFs.rds")
 # readRDS("integrated_IVFs.rds")
-
-p1 <- DimPlot(object = combined, reduction = "umap", group.by = "patient")
-p2 <- DimPlot(object = combined, reduction = "umap", label = TRUE)
-plot_grid(p1)
-plot_grid(p2)
 
 DimPlot(combined, reduction = "umap", pt.size = 0.5, label = TRUE, label.size = 5) + NoLegend()
 
 ## UMAPs showing 4 individual IVF patients
 # DimPlot(object = combined, reduction = "umap", split.by = "patient")
 
-
+# Plot by sample/patient
 p1 <- DimPlot(combined, reduction = "umap", group.by = "orig.ident")
 p2 <- DimPlot(combined, reduction = "umap", label = TRUE)
 plot_grid(p1, p2)
@@ -133,8 +104,7 @@ plot_grid(p1, p2)
 length(table(Idents(combined)))
 
 # After filtering we have the same number of cells (7609)
-# After clustering we do not have the same number of cells... we have 18
-
+# After clustering we do not have the same number of cells... we have 18. It's okay, just carry on
 
 ###########################################################
 
@@ -227,25 +197,6 @@ FeaturePlot(combined, features = c("VWF", "TIE1"))
 
 ###########################################################
 ##Re-cluster by localization of cell-specific markers
-new.cluster.ids <- c("0- GC", #
-                     "1- T-helper", #
-                     "2- GC", #
-                     "3- M2-Macrophage", #
-                     "4- M1-Macrophage", #
-                     "5- NKT", #
-                     "6- NK", #
-                     "7- Cytotoxic T", #
-                     "8- Neutrophil", # M1?
-                     "9- Baso/eosinophil", #
-                     "10- GC", #
-                     "11- GC", #
-                     "12- GC", #
-                     "13- M1-Macrophage", #
-                     "14- B", # 
-                     "15- RBC/Platelet", #
-                     "16- Dendritic", #
-                     "17- TC") #
-                     
 new.cluster.ids <- list(
   "0" = "GC",
   "1" = "T-helper",
@@ -267,40 +218,23 @@ new.cluster.ids <- list(
   "17" = "TC"
 )
 
-
-# Also try with more clusters
-combined <- combined
+# Add cell type names to metadata
 combined <- RenameIdents(combined, new.cluster.ids)
 combined[["cell_type"]] <- Idents(combined)
 
+# Plot
 DimPlot(combined, reduction = "umap", pt.size = 0.5, label = TRUE, label.size = 5) + NoLegend()
 
-#########################################
-# Edit this code
+# Remove scale data (there is an issue with seurat disk and the raw counts when converting to h5ad if not) - https://github.com/mojaveazure/seurat-disk/issues/75
+seurat_ob <- DietSeurat(combined)
 
-##Re-cluster by localization of cell-specific markers
-new.cluster.ids <- c("0- GC_3", 
-                     "1- T-helper", 
-                     "2- GC_4", 
-                     "3- M1-Macrophage", 
-                     "4- Cytotoxic T", 
-                     "5- M2-Macrophage", 
-                     "6- NK", 
-                     "7- NKT", 
-                     "8- Neutrophil", 
-                     "9- GC_1", 
-                     "10- Baso/eosinophil", 
-                     "11- GC_5", 
-                     "12- GC_2", 
-                     "13- M2-Macrophage", 
-                     "14- M1-Macrophage", 
-                     "15- B", 
-                     "16- RBC/Platelet", 
-                     "17- Dendritic", 
-                     "18- TC")
-names(new.cluster.ids) <- levels(combined)
-combined1 <- RenameIdents(combined, new.cluster.ids)
-DimPlot(combined1, reduction = "umap", label = TRUE, label.size = 9, pt.size = 1) + NoLegend()
+# https://github.com/mojaveazure/seurat-disk/issues/23
+i <- sapply(seurat_ob@meta.data, is.factor)
+seurat_ob@meta.data[i] <- lapply(seurat_ob@meta.data[i], as.character)
+
+# Save as a h5ad file
+SaveH5Seurat(seurat_ob, filename = out_seurat)
+Convert(out_seurat, dest = "h5ad")
 
 
 ```
@@ -320,7 +254,7 @@ Women (age: 30–38 years) exhibiting regular menstrual cycles and had not tak
 - Leukocytes			PTPRC
 - Macrophage		CD14, CD68
 - M1-macrophage		ITGAX, HLA-DRA, HLA-DRB1
--  M2-macrophage		CD163, MSR1, MRC1
+- M2-macrophage		CD163, MSR1, MRC1
 - Helper/cytotoxic T cell	CD3E, CD8A, CD4
 - NK cell			NKG7, NCR1
 - Neutrophil			FCER1A, CRLF2 
