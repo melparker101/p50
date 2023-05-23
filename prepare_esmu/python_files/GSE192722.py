@@ -10,6 +10,7 @@ dirOut = 'data/esmu'
   
 input_file = dataset_acc + "_counts.h5ad"
 prefixData_ens = dataset_acc + '_ens'
+esmu_out = dirOut + "/" + prefixData_ens + ".esmu.csv.gz"
 
 # Read in data
 adata = sc.read_h5ad(dirIn + input_file)
@@ -20,6 +21,7 @@ metadata = pd.DataFrame(adata.obs["cell_type"], columns=["cell_type"])
 # Extract raw count data
 raw = adata.raw.to_adata()
 raw = raw.transpose()
+raw.obs_names = adata.var_names
 mat = raw.to_df()
 mat
 
@@ -43,7 +45,8 @@ cellex.utils.mapping.human_symbol_to_human_ens(eso.results["esmu"], drop_unmappe
 eso.results["esmu"].head()
 
 # Save expression specificity matrix for gene ensembl ids
-eso.save_as_csv(file_prefix=prefixData_ens, path=dirOut, verbose=True)
+# eso.save_as_csv(file_prefix=prefixData_ens, path=dirOut, verbose=True)
+eso.results["esmu"].to_csv(esmu_out)
 
 # Delete object to release memory
 del eso
