@@ -205,15 +205,15 @@ new.cluster.ids <- list(
   "4" = "M1-Macrophage",
   "5" = "NKT",
   "6" = "NK",
-  "7" = "Cytotoxic T",
+  "7" = "Cytotoxic_T",
   "8" = "Neutrophil",
-  "9" = "Baso/eosinophil",
+  "9" = "Baso_eosinophil",
   "10" = "GC",
   "11" = "GC",
   "12" = "GC",
   "13" = "M1-Macrophage",
   "14" = "B",
-  "15" = "RBC/Platelet",
+  "15" = "RBC_Platelet",
   "16" = "Dendritic",
   "17" = "TC"
 )
