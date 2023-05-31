@@ -4,13 +4,14 @@
 # This code find cluster markers for single cell RNA-seq datasets. 
 # It takes a h5seurat as input and outputs tables with p-values.
 #################################################################
+
 library(Seurat)
 library(SeuratDisk)
 library(dplyr)
 
 dataset_list <- c("GSE189960", "GSE192722","GSE206143")
-# Make a nice loop
 
+# Loop through datasets
 for(dataset in dataset_list){
     
     # Define input and output variables
