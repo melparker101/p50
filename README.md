@@ -4,7 +4,8 @@ This repository contains code used for the p50 infertility project. There are tw
 - Finding marker genes for clusters from the ovary datasets.
 
 ### Preparing datasets
-See [datasets](https://github.com/melparker101/p50_Infertility/tree/main/datasets) for more information on the datasets used for this project. 
+- See [datasets](https://github.com/melparker101/p50_Infertility/tree/main/datasets) for more information on the datasets used for this project. 
+- The [create_h5seurat_h5ad](https://github.com/melparker101/p50_Infertility/tree/main/create_h5seurat_h5ad) directory contains code for creating h5seurat files (R Seurat object) from the scRNA-seq data required for finding cluster gene markers and then converting to h5ad files (python Anndata object) to prepare for CELLEX. Where cell-type annotations are not availible online, the code includes clustering and annotating cell types using Seurat. 
 
 ## Using CELLEX and CELLECT on single cell RNA-seq ovary datasets with infertility GWAS summary statistics
 To use CELLEX and CELLECT, follow the instructions on their github repositories. Once the CELLECT directory is cloned from their github, create a subdirectory **p50** for this project.
