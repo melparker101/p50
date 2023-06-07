@@ -12,7 +12,7 @@ The GSE .md files in this sub directory contain general information about each d
 
 \* Dataset used for CELLECT
 
-† Dataset used for FindMarkers()
+† Dataset used for finding gene markers
 
 ### GWAS Sumstats (build 37/hg19)
 Move the in-house GWAS summary statistic files into p50/data/sumstats/original.
