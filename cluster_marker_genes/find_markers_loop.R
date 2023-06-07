@@ -9,7 +9,7 @@ library(Seurat)
 library(SeuratDisk)
 library(dplyr)
 
-dataset_list <- c("GSE189960", "GSE192722","GSE206143")
+dataset_list <- c("GSE189960", "GSE192722", "GSE206143")
 
 # Loop through datasets
 for(dataset in dataset_list){
