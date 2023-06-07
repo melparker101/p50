@@ -16,7 +16,10 @@ p50
 |   `-- CELLECT-MAGMA
 |-- cluster_markers
 |   |-- GSE118127
+|   |-- GSE189960
+|   |-- GSE192722
 |   |-- GSE202601
+|   |-- GSE206143
 |   `-- GSE213216
 |-- data
 |   |-- counts
