@@ -1,3 +1,6 @@
+## Finding marker genes for clusters
+Find cluster gene markers for three single cell RNA-seq ovary datasets. See [cluster_marker_genes](https://github.com/melparker101/p50/tree/main/cluster_marker_genes).
+
 # Find cluster marker genes
 The following scripts find marker genes for the cell-type clusters of the single cell ovary datasets. Only clusters defined by the original study authors were used for each dataset.
 
