@@ -1,7 +1,7 @@
 # p50 Infertility Project
 This repository contains code used for the p50 infertility project. There are two separate tasks:
-- Running CELLECT on ovary datasets with infertility and hormone GWAS sumstats to prioritise etiologic cell types.
-- Finding marker genes for clusters from the ovary datasets.
+- Running [CELLECT](https://github.com/melparker101/p50_Infertility/tree/main/CELLECT) on ovary datasets with infertility and hormone GWAS sumstats to prioritise etiologic cell types.
+- Finding [marker genes](https://github.com/melparker101/p50_Infertility/tree/main/cluster_marker_genes) for clusters from the ovary datasets.
 
 ### Preparing datasets
 - See [datasets](https://github.com/melparker101/p50_Infertility/tree/main/datasets) for more information on the datasets used for this project. 
