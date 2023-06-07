@@ -1,7 +1,7 @@
 #################################################################
 # Find Cluster Markers
 # melodyjparker14@gmail.com - May 2023
-# This code find cluster markers for single cell RNA-seq datasets. 
+# This code finds cluster markers for single cell RNA-seq datasets. 
 # It takes a h5seurat as input and outputs tables with p-values.
 #################################################################
 
