@@ -1,11 +1,16 @@
 # Datasets
-Three single cell RNA-seq ovary datasets were used, availible online. Seven in-house summary statistics were used.
 
 ### Ovary scRNA-seq datasets
-Download the relevant files to p50/data/counts/<geo_accession>. The GSE .md files in this sub directory contain general information about each dataset used.
-- GSE202601
-- GSE118127
-- GSE213216
+The GSE .md files in this sub directory contain general information about each dataset used.
+- GSE202601 *†
+- GSE118127 *†
+- GSE213216 †
+- GSE189960 *†
+- GSE192722 *†
+- GSE206143 *†
+
+* Dataset used for CELLECT
+† Dataset used for FindMarkers()
 
 ### GWAS Sumstats (build 37/hg19)
 Move the in-house GWAS summary statistic files into p50/data/sumstats/original.
@@ -25,6 +30,10 @@ p50
     |-- counts
         |-- GSE118127
         |-- GSE202601
+        |-- GSE189960
+        |-- GSE192722
+        |-- GSE202601
+        |-- GSE206143
         `-- GSE213216
     `-- sumstats
         `-- original
