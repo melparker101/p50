@@ -6,7 +6,7 @@ for f in *IVF1*.gz ; do mv $f "data_dir_IVF1/"$(echo "$f" | sed 's/.*_//'); done
 for f in *IVF2*.gz ; do mv $f "data_dir_IVF2/"$(echo "$f" | sed 's/.*_//'); done
 for f in *IVF3*.gz ; do mv $f "data_dir_IVF3/"$(echo "$f" | sed 's/.*_//'); done
 for f in *IVF4*.gz ; do mv $f "data_dir_IVF4/"$(echo "$f" | sed 's/.*_//'); done
-
+```
 Organise like this:
 ```text
 |-- data_dir_IVF1
