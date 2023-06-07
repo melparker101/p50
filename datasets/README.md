@@ -1,7 +1,7 @@
 # Datasets
 
 ### Ovary scRNA-seq datasets
-The GSE .md files in this sub directory contain general information about each dataset used.
+Download the scRNA-seq datasets into their corresponding directory in p50/data/counts. The GSE .md files in this sub directory contain general information about each dataset used.
 - GSE202601
 - GSE118127 
 - GSE213216 *
