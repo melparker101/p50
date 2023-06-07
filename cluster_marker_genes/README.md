@@ -1,7 +1,14 @@
 # Find cluster marker genes
 The following scripts find marker genes for the cell-type clusters of the single cell ovary datasets. Only clusters defined by the original study authors were used for each dataset.
 
-Make a table.
+| Acc No.   | Paper URL                                                                           | Dataset URL                                                   | Cells  | Number of clusters | Github                                                                           | Cell-type annotations provided? |
+|-----------|-------------------------------------------------------------------------------------|---------------------------------------------------------------|--------|--------------------|----------------------------------------------------------------------------------|---------------------------------|
+| GSE189960 | https://pubmed.ncbi.nlm.nih.gov/35204732/                                           | https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE189960  | 14,592 | 13                 | -                                                                                | No                              |
+| GSE202601 | https://www.biorxiv.org/content/biorxiv/early/2022/05/19/2022.05.18.492547.full.pdf | https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE202601  | 42,568 | 8                  | https://github.com/ChenJin2020/The-regulatory-landscapes-of-human-ovarian-ageing | Yes                             |
+| GSE192722 | https://www.nature.com/articles/s42003-022-04384-8                                  | https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE192722  | 48,147 | 22,6               | https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE192722                     | No                              |
+| GSE118127 | https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6639403/                               | https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE118127  | 20,676 | 19,5               | https://github.com/johnmous/singleCell                                           | Yes                             |
+| GSE213216 | https://www.nature.com/articles/s41588-022-01254-1                                  | https://cedars.app.box.com/s/1ks3eyzlpnjbrseefw3j4k7nx6p2ut02 | 22,219 | 9                  | https://github.com/lawrenson-lab/AtlasEndometriosis                              | Yes                             |
+| GSE206143 | https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.202201746RR                    | https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE206143  | 7609   | 19,13              | https://github.com/nurungji82/scRNA-seq_of_IVF_samples                           | No                              |
 
 ### GSE118127
 The object is filtered and preprocessed already. The data was normalised using the "LogNormalize" method, with some [C++ code](https://github.com/johnmous/singleCell/blob/master/workflow.Rmd).
