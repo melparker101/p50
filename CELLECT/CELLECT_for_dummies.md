@@ -1,5 +1,17 @@
-# CELLECT
-This file goes through how to set up and use CELLEX and CELLECT and gives a few tips to avoid making the same mistakes that I did...
+# CELLECT Tutorial
+
+## CELLEX and CELLECT Set Up
+This markdown file goes through how to set up and use CELLEX and CELLECT and gives a few tips to avoid making the same mistakes that I did...
+
+General important things to note:
+- **Run CELLECT on rescomp the first time** as it creates conda environments (internet connection is required for necessary package installation). After this, send slurm scripts off. CELLECT creates these conda environments in a directory called '.snakemake'.
+- For CELLECT-ldsc, make sure the ldsc folder is properly downloaded - 'git clone' does not download this directory. **Make sure --recurse-submodules argument is used** to clone the ldsc directory.
+git clone --recurse-submodules https://github.com/perslab/CELLECT.git
+- For CELLECT-magma, use the 'keep p-val' option for munging - the summary stats must have a p-val column
+- When running CELLECT-magma, I was given an error message "ModuleNotFoundError: No module named 'statsmodels'; import statsmodels.api as sm". Although CELLECT is meant to install all packages automatically on the first run (apart from snakemake), I had to install this manually (conda install statsmodels) in the snakemake conda environment before attempting to run CELLECT-magma again - this fixed the issue.
+- For CELLECT-genes, use this temporary bug fix: perslab/CELLECT#81
+- Make sure summary stats do not contain "." in the column names (there was an error caused by this in the tutorial when I tried it)
+- When preprocessing the count data in R and saving as a h5ad file ready for python ready for input for CELLEX, remove the scale data from the Seurat object first. There is an issue with Seurat disk and the raw counts do not get transferred to the h5ad if not! See https://github.com/mojaveazure/seurat-disk/issues/75 for more info.
 
 ### 1. Ensure conda is set up
 I installed miniforge/mambaforge, but BMRC recommends to load their software module.
@@ -118,6 +130,8 @@ plotnine>=0.6.0
 ### 3. Install CELLECT
 IMPORTANT: Make sure to use git lfs and --recurse-submodules when cloning the CELLECT repository!
 https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial
+
+Clone the CELLECT github.
 ```
 # Create software folder
 mkdir //well/lindgren/users/yourusername/software
@@ -127,61 +141,109 @@ git lfs env
 
 # Clone the repository
 git clone --recurse-submodules https://github.com/perslab/CELLECT.git
-```
 
+# Check that the ldsc folder isn't empty, if so then git lfs didn't work properly
 
+Create a munging conda environment. This uses python 2.
 
-
-#https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial
-
-#go into CELLECT folder and check if ldsc folder empty, if so git lfs didn't work properly
-
-
-#only run once when setting it all up
 conda env create -f ldsc/environment_munge_ldsc.yml
+# The environment will be called "munge_ldsc"
 
-#this you will aleays need to run when running new data
-source activate activate munge_ldsc
-
-#then run examples from tutorial -> works to munge data
-#(you will have to remove dots from colnames in examples/tabula_muris-test.csv)
-
-#to make sure second part of tutorial works run all this only once
-#actually its the 3rd part, they mention CELLEX in the 2nd part but that is not set up yet but they provide example data
-
-
-#make a new environment that installs snakemake
-
+# Make a new environment with snakemake
 conda create -c conda-forge -c bioconda -n snakemake snakemake
 
-
+# Install other packages?
 pip install pybedtools 
-
 conda install bedops
-
-#back to tutorial
-
 module load BEDTools/2.29.2-GCC-8.3.0
 
 #the next command  we only run the first time on an login node for the tutorial since it
 #will try to download stuff which we cant when on an interactive node
 #when running with real data make sure to pack in script
 
+# Run the example on rescomp 
+# AN INTERNET CONNECTION IS NEEDED THE FIRST TIME YOU RUN IT
 snakemake --use-conda -j -s cellect-ldsc.snakefile --configfile config.yml
+```
+## Running CELLEX (preparing ESMU files)
+Now that the CELLEX and CELLECT are set up and the example given by the authors has run smoothly, it is time to use them for our own choice of datasets. The next step is running CELLEX to generate ESMU files.
+CELLEX requires as input
+- Raw count data
+- Cell type annotation data
 
+### 1. Filter and prepare count and cell-type annotations data
+I used Seurat in R to filter and manipulate the count data beforehand. If cell-type annotations were not provided as metadata, I did the clustering and annotations in Seurat here. I then saved the Seurat object as a H5Seurat file, then converted this to a h5ad file which can be easily used in python. I found that using the R code below was best for reproducability when saving the h5ad.
+```
+# Remove scale data (there is an issue with seurat disk and the raw counts when converting to h5ad if not) - https://github.com/mojaveazure/seurat-disk/issues/75
+seurat_ob <- DietSeurat(seurat_ob)
 
+# Make sure any metadata that is of type factor is converted to charater
+# https://github.com/mojaveazure/seurat-disk/issues/23
+i <- sapply(seurat_ob@meta.data, is.factor)
+seurat_ob@meta.data[i] <- lapply(seurat_ob@meta.data[i], as.character)
 
+# Save as a h5ad file
+SaveH5Seurat(seurat_ob, filename = out_seurat)
+Convert(out_seurat, dest = "h5ad")
+```
+### 2. Run CELLEX
+1. Activate the cellex conda env - also make sure scanpy is installed.
+2. Load the h5ad file into python with scanpy.
+3. Extract the count data and cell type annotations metadata from the scanpy AnnData object (the python version of a Seurat object in R).
+4. Run CELLEX.
+5. Save the ESMU file.
 
+## Preparing the summary statistics
+.
+.
+.
+.
+.
 
-
-
-
-
-
-
-
-
-2.
-3.
-4. p50/config_p50.yml has the following edits from the config.yml file provided by CELLECT:
+## Preparing summary statistics files
+## Run CELLECT
+1. 
+2. I have edited the config.yml file provided by CELLECT to include the ovary datasets and summary statistics [p50/config_p50.yml](https://github.com/melparker101/p50_Infertility/blob/main/CELLECT/run_cellect/config_p50.yml) in three places:
+```
 BASE_OUTPUT_DIR: p50/CELLECT_OUT_p50
+```
+```
+SPECIFICITY_INPUT:
+  - id: GSE118127
+    path: p50/data/esmu/GSE118127_ens.esmu.csv.gz
+  - id: GSE202601
+    path: p50/data/esmu/GSE202601_ens.esmu.csv.gz
+  - id: GSE213216
+    path: p50/data/esmu/GSE213216_ens.esmu.csv.gz
+  - id: GSE189960
+    path: p50/data/esmu/GSE189960_ens.esmu.csv.gz
+  - id: GSE192722
+    path: p50/data/esmu/GSE192722_ens.esmu.csv.gz
+  - id: GSE206143
+    path: p50/data/esmu/GSE206143_ens.esmu.csv.gz
+```
+```
+GWAS_SUMSTATS:
+  - id: Testosterone_F_EUR
+    path: p50/data/sumstats/munged/munged_Testosterone_F_EUR.sumstats.gz
+  - id: Testosterone_sex_comb_EUR
+    path: p50/data/sumstats/munged/munged_Testosterone_sex_comb_EUR.sumstats.gz
+  - id: LH_F_EUR
+    path: p50/data/sumstats/munged/munged_LH_F_EUR.sumstats.gz
+  - id: FSH_F_EUR
+    path: p50/data/sumstats/munged/munged_FSH_F_EUR.sumstats.gz
+  - id: Infertility1_F_EUR
+    path: p50/data/sumstats/munged/munged_Infertility1_F_EUR.sumstats.gz
+  - id: Progesterone_F_EUR
+    path: p50/data/sumstats/munged/munged_Progesterone_F_EUR.sumstats.gz
+  - id: Oestradiol_F_EUR
+    path: p50/data/sumstats/munged/munged_Oestradiol_F_EUR.sumstats.gz
+```
+2. Go back into the CELLECT directory and run the [run_CELLECT.sh](https://github.com/melparker101/p50_Infertility/blob/main/CELLECT/run_cellect/run_CELLECT.sh) script on the cluster so that we can use more nodes. This runs
+- CELLECT-ldsc
+- CELLECT-magma
+- CELLECT-genes
+using the same config file. 
+MAKE SURE THE EXAMPLES OF ALL VERSIONS OF CELLECT HAVE BEEN SUCESSFULLY RUN ON RESCOMP WHERE THERE IS INTERNET FIRST - the first time it is run it creates conda environments that are required. There is less data in the example files so it will take less time to run than all of our data which we will send off to slurm.
+3. Visualise the results in R or python. Plot the log of the p-values.
+
