@@ -42,6 +42,10 @@ Using the counts and cell type annotations metadata as input, we use [CELLEX](ht
 4. **Prepare sumstats file**  
 Use the pipeline provided in [prepare_sumstats](https://github.com/melparker101/p50/tree/main/prepare_sumstats) to prepare the GWAS summary statistics for input to CELLECT.  
 5. **Run CELLECT**  
-Using munged summary stats and ESMU files as input, we use [CELLECT](https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial) to prioritise etilogical cell types. Use the **config_p50.yml** file provided. See [run_cellect](https://github.com/melparker101/p50/tree/main/run_cellect).  
+Using munged summary stats and ESMU files as input, we use [CELLECT](https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial) to prioritise etilogical cell types. Use the **config_p50.yml** file provided. See [run_cellect](https://github.com/melparker101/p50/tree/main/run_cellect). 
 6. **Visualisation**  
 Use R to visualise the results. See [visualisation](https://github.com/melparker101/p50/tree/main/visualisation).  
+
+
+
+source ~/.bashrc so that conda can be activated. make sure the conda path is in bashrc.
