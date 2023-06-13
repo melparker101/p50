@@ -28,6 +28,13 @@ SPECIFICITY_INPUT:
     path: p50/data/esmu/GSE202601_ens.esmu.csv.gz
   - id: GSE213216
     path: p50/data/esmu/GSE213216_ens.esmu.csv.gz
+  - id: GSE189960
+    path: p50/data/esmu/GSE189960_ens.esmu.csv.gz
+  - id: GSE192722
+    path: p50/data/esmu/GSE192722_ens.esmu.csv.gz
+  - id: GSE206143
+    path: p50/data/esmu/GSE206143_ens.esmu.csv.gz
+    
 
 ### GWAS_SUMSTATS: list of dictionaries
 # id: identifier for GWAS. MUST be unique and NO double underscores allowed
