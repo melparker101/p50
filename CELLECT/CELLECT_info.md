@@ -38,7 +38,7 @@ envs_dirs:
 # ctrl D  
 ```
 
-- Loading BMRC module
+** (i) Loading BMRC module **
 ```
 # Check what versions of Anaconda are availible on the cluster
 module avail Anaconda
@@ -61,7 +61,7 @@ module use -a /apps/eb/dev/{skylake,ivybridge}/modules/all
 # By executing this command, you are adding the specified module paths (/apps/eb/dev/skylake/modules/all and /apps/eb/dev/ivybridge/modules/all) to the module search path.
 ```
 
-- Installing mambaforge manually (BMRC does not recommend this, but it has worked fine for me)
+** (ii) Installing mambaforge manually (BMRC does not recommend this, but it has worked fine for me) **
 Follow the instructions on the [mamba website](https://mamba.readthedocs.io/en/latest/installation.html) and install either mambaforge or miniforge.
 ```
 # Add mambaforge to the END of the path (Adding it to the start of the path in .bashrc caused issues for me)
