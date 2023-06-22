@@ -169,12 +169,12 @@ snakemake --use-conda -j -s cellect-ldsc.snakefile --configfile config.yml
 ```
 ## Running CELLEX (preparing ESMU files)
 Now that the CELLEX and CELLECT are set up and the example given by the authors has run smoothly, it is time to use them for our own choice of datasets. The next step is running CELLEX to generate ESMU files.
-CELLEX requires as input
+CELLEX requires as input:
 - Raw count data
 - Cell type annotation data
 
 ### 1. Filter and prepare count and cell-type annotations data
-I used Seurat in R to filter and manipulate the count data beforehand. If cell-type annotations were not provided as metadata, I did the clustering and annotations in Seurat here. I then saved the Seurat object as a H5Seurat file, then converted this to a h5ad file which can be easily used in python. I found that using the R code below was best for reproducability when saving the h5ad.
+I used Seurat in R to filter and manipulate the count data beforehand. If cell-type annotations were not provided as metadata, I performed the clustering and annotations in Seurat. I saved the annotated Seurat object as a H5Seurat file, then converted this to a h5ad file where the data can be easily extracted using scanpy in python. I found that using the R code below was best for reproducability when saving the Seurat object and converting to h5ad format:
 ```
 # Remove scale data (there is an issue with seurat disk and the raw counts when converting to h5ad if not) - https://github.com/mojaveazure/seurat-disk/issues/75
 seurat_ob <- DietSeurat(seurat_ob)
