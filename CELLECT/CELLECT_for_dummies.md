@@ -194,11 +194,27 @@ Convert(out_seurat, dest = "h5ad")
 5. Save the ESMU file.
 
 ## Preparing the summary statistics
-.
-.
-.
-.
-.
+[CELLECT INPUT info](https://github.com/perslab/CELLECT/wiki/Input-&-Output):
+```
+For CELLECT-LDSC, the required columns are:
+
+SNP: the unique SNP identifier (e.g. rsID number)
+N: sample size (which may vary from SNP to SNP)
+Z: the Z-score associated with the SNP effect sizes for the GWAS Additional columns are allowed but will be ignored.
+For CELLECT-MAGMA, the required columns are:
+
+SNP: the unique SNP identifier (e.g. rsID number)
+N: sample size (which may vary from SNP to SNP)
+PVAL: the P-value associated with the SNP effect sizes for the GWAS Additional columns are allowed but will be ignored.
+```
+The summary stats need to be in a specific format to use as input for CELLECT. 
+
+1. Add N column to sumstats ([add_N_col.sh](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/add_N_col.sh))
+2. Create a map file for chr:pos:a1_a2 to rsid (dbSNP/MarkerName_map_GRCh37.txt) ([create_snp_map.md](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/create_snp_map.md) and [manipulate_map_file.sh](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/manipulate_map_file.sh))
+2. Add MarkerName column to hormones sumstats files (infertility sumstats already contains this) ([add_MarkerName_col_hormones.sh](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/add_MarkerName_col_hormones.sh))
+3. Filter for MAF >1% in R ([MAF_filter_all_sumstats.R](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/MAF_filter_all_sumstats.R))
+4. Add rsid column to all sumstats using map file ([add_rsid.sh](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/add_rsid.sh))
+5. Munge using ldsc munge script ([munge_sumstats.sh](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/munge_sumstats.sh))
 
 ## Preparing summary statistics files
 ## Run CELLECT
