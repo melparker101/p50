@@ -3,7 +3,7 @@
 ## CELLEX and CELLECT Set Up
 This markdown file goes through how to set up and use CELLEX and CELLECT and gives a few tips to avoid making the same mistakes that I did...
 
-General important things to note:
+### General tips:
 - **Run CELLECT on rescomp the first time** as it creates conda environments (internet connection is required for necessary package installation). After this, send slurm scripts off. CELLECT creates these conda environments in a directory called '.snakemake'.
 - For CELLECT-ldsc, make sure the ldsc folder is properly downloaded - 'git clone' does not download this directory. **Make sure --recurse-submodules argument is used** to clone the ldsc directory.
 git clone --recurse-submodules https://github.com/perslab/CELLECT.git
