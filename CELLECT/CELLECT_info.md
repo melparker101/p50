@@ -44,7 +44,8 @@ envs_dirs:
 module avail Anaconda
 
 # Load and initialise conda
-# These commands would need to be run every time you want to use conda in your bash session. I would add these commands to your ~/.bashrc so that it is always automatically loaded and initiated when you start a session. 
+# These commands would need to be run every time you want to use conda in your bash session.
+# I would add these commands to your ~/.bashrc so that it is always automatically loaded and initiated when you start a session. 
 module load Anaconda3/2022.05
 eval "$(conda shell.bash hook)"
 ```
