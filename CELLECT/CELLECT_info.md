@@ -71,10 +71,8 @@ export PATH=$PATH:/users/lindgren/mzf347/mambaforge/bin/
 
 # See if mamba has installed properly - this command should give an output
 mamba
-
-# #(make sure envs and pcks is set to not install in home dir, 
-#see here under anaconda https://www.medsci.ox.ac.uk/divisional-services/support-services-1/bmrc/scientific-software-directory)
 ```
+Make sure envs and pcks is set to not install in home dir, see above and [here](https://www.medsci.ox.ac.uk/divisional-services/support-services-1/bmrc/scientific-software-directory).
 
 My ~/.bashrc contains the following lines which initiate conda automatically when I start my bash session.
 ```
@@ -100,7 +98,7 @@ fi
 ```
 
 ### 2. Install CELLEX
-https://github.com/perslab/CELLEX#quick-start
+Read the [CELLEX github](https://github.com/perslab/CELLEX#quick-start).
 I created a conda environment and installed CELLEX inside it.
 ```
 # Create conda env for cellex
@@ -127,10 +125,11 @@ loompy>=3.0.6
 adjustText>=0.7.3
 plotnine>=0.6.0
 ```
+Follow the CELLEX tutorials provided online: [demo_mousebrain_vascular_cells](https://github.com/perslab/CELLEX/blob/master/tutorials/demo_mousebrain_vascular_cells.ipynb) and [demo_moca_100k](https://github.com/perslab/CELLEX/blob/master/tutorials/demo_moca_100k.ipynb). We will need the ESMU output files that CELLEX produces to run the CELLECT example.
 
 ### 3. Install CELLECT
-IMPORTANT: Make sure to use git lfs and --recurse-submodules when cloning the CELLECT repository!
-https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial
+**IMPORTANT: Make sure to use git lfs and --recurse-submodules when cloning the CELLECT repository!**
+Have a read of the [CELLECT-LDSC tutorial](https://github.com/perslab/CELLECT/wiki/CELLECT-LDSC-Tutorial). Before running on our own data, set up and run their example on rescomp. This will download some extra conda environments required to run CELLECT. Once they are downloaded, CELLECT can be used offline (we can run it using slurm scripts).
 
 Clone the CELLECT github.
 ```
@@ -144,26 +143,28 @@ git lfs env
 git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 
 # Check that the ldsc folder isn't empty, if so then git lfs didn't work properly
+```
 
-Create a munging conda environment. This uses python 2.
-
+Create a munging conda environment. This environment is for running their munging script on the summary statistics in, which requires python 2.
+```
+# Create munge env
 conda env create -f ldsc/environment_munge_ldsc.yml
 # The environment will be called "munge_ldsc"
-
+```
+Now make another conda enviroment containing snakemake for running CELLECT in. We can then run CELLECT using snakemake. **IMPORTANT: AN INTERNET CONNECTION IS REQUIRED THE FIRST TIME YOU RUN CELLECT - run their example on rescomp when running for the first time**
+```
 # Make a new environment with snakemake
 conda create -c conda-forge -c bioconda -n snakemake snakemake
+
+conda activate snakemake
 
 # Install other packages?
 pip install pybedtools 
 conda install bedops
 module load BEDTools/2.29.2-GCC-8.3.0
 
-#the next command  we only run the first time on an login node for the tutorial since it
-#will try to download stuff which we cant when on an interactive node
-#when running with real data make sure to pack in script
-
-# Run the example on rescomp 
-# AN INTERNET CONNECTION IS NEEDED THE FIRST TIME YOU RUN IT
+# Run their example on rescomp 
+# IMPORTANT: AN INTERNET CONNECTION IS NEEDED THE FIRST TIME YOU RUN IT
 snakemake --use-conda -j -s cellect-ldsc.snakefile --configfile config.yml
 ```
 ## Running CELLEX (preparing ESMU files)
