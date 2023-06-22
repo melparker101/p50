@@ -14,7 +14,7 @@ git clone --recurse-submodules https://github.com/perslab/CELLECT.git
 - When preprocessing the count data in R and saving as a h5ad file ready for python ready for input for CELLEX, remove the scale data from the Seurat object first. There is an issue with Seurat disk and the raw counts do not get transferred to the h5ad if not! See https://github.com/mojaveazure/seurat-disk/issues/75 for more info.
 
 ### 1. Ensure conda is set up
-I installed miniforge/mambaforge, but BMRC recommends to load their software module.
+I installed miniforge/mambaforge manually, but BMRC recommends not to do this and to load their software module instead (it has worked fine for me though).
 https://www.medsci.ox.ac.uk/for-staff/resources/bmrc/python-on-the-bmrc-cluster
 
 By default, conda stores environments and packages in your home directory, but we do not have much space here. We want to change this configuration and redirect this.
