@@ -195,8 +195,11 @@ Convert(out_seurat, dest = "h5ad")
 4. Run CELLEX.
 5. Save the ESMU file.
 
+The python scripts I used are deposited [here](https://github.com/melparker101/p50_Infertility/tree/main/CELLECT/prepare_esmu).
+
 ## Preparing the summary statistics
-[CELLECT INPUT info](https://github.com/perslab/CELLECT/wiki/Input-&-Output):
+The summary stats need to be in a specific format to use as input for CELLECT. The
+[CELLECT Input-&-Output](https://github.com/perslab/CELLECT/wiki/Input-&-Output) page states which columns are required:
 ```
 For CELLECT-LDSC, the required columns are:
 
@@ -209,7 +212,7 @@ SNP: the unique SNP identifier (e.g. rsID number)
 N: sample size (which may vary from SNP to SNP)
 PVAL: the P-value associated with the SNP effect sizes for the GWAS Additional columns are allowed but will be ignored.
 ```
-The summary stats need to be in a specific format to use as input for CELLECT. 
+**IMPORTANT: the SNP column must contain rsids**. Follow this workflow to prepare the sumstats:
 
 1. Add N column to sumstats ([add_N_col.sh](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/add_N_col.sh))
 2. Create a map file for chr:pos:a1_a2 to rsid (dbSNP/MarkerName_map_GRCh37.txt) ([create_snp_map.md](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/create_snp_map.md) and [manipulate_map_file.sh](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/manipulate_map_file.sh))
@@ -218,10 +221,11 @@ The summary stats need to be in a specific format to use as input for CELLECT.
 4. Add rsid column to all sumstats using map file ([add_rsid.sh](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/add_rsid.sh))
 5. Munge using ldsc munge script ([munge_sumstats.sh](https://github.com/melparker101/p50/blob/main/CELLECT/prepare_sumstats/munge_sumstats.sh))
 
+When munging the sumstats, make sure you use the argument to keep PVAL - even though this sumstats column is not required for CELLECT-ldsc, it is for CELLECT-magma and thus for CELLECT-genes. 
+
 ## Preparing summary statistics files
 ## Run CELLECT
-1. 
-2. I have edited the config.yml file provided by CELLECT to include the ovary datasets and summary statistics [p50/config_p50.yml](https://github.com/melparker101/p50_Infertility/blob/main/CELLECT/run_cellect/config_p50.yml) in three places:
+1. I have edited the config.yml file provided by CELLECT to include the ovary datasets and summary statistics [p50/config_p50.yml](https://github.com/melparker101/p50_Infertility/blob/main/CELLECT/run_cellect/config_p50.yml) in three places:
 ```
 BASE_OUTPUT_DIR: p50/CELLECT_OUT_p50
 ```
@@ -257,7 +261,7 @@ GWAS_SUMSTATS:
   - id: Oestradiol_F_EUR
     path: p50/data/sumstats/munged/munged_Oestradiol_F_EUR.sumstats.gz
 ```
-2. Go back into the CELLECT directory and run the [run_CELLECT.sh](https://github.com/melparker101/p50_Infertility/blob/main/CELLECT/run_cellect/run_CELLECT.sh) script on the cluster so that we can use more nodes. This runs
+2. Go back into the CELLECT directory (/p50/..) and run the [run_CELLECT.sh](https://github.com/melparker101/p50_Infertility/blob/main/CELLECT/run_cellect/run_CELLECT.sh) script on the cluster so that we can use more nodes. This runs
 - CELLECT-ldsc
 - CELLECT-magma
 - CELLECT-genes
