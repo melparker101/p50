@@ -12,8 +12,8 @@
 # Paths
 ###########################################
 # Path for sumstats files
-IN=data/sumstats/original
-OUT=data/sumstats/other
+IN="data/sumstats/original"
+OUT="data/sumstats/other"
 COHORTS="data/sumstats/cohorts"
 
 ###########################################
