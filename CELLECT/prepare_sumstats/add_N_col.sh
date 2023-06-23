@@ -5,6 +5,7 @@
 # 1 = SNP present in study, 0 = SNP not present in study
 # It then creates an N column
 # It assumes there exists text files with cohort sample sizes for each hormone phenotype
+# It assumes the output file exists
 ###########################################
 
 ###########################################
